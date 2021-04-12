@@ -24,7 +24,7 @@ public class UserService {
     public UserService(UserRepository pRepository, PasswordEncoder pPasswordEncoder) {
         this.repository = pRepository;
         this.passwordEncoder = pPasswordEncoder;
-        this.createDefaultUser();
+        //this.createDefaultUser();
     }
 
     public User registerNewUser(User user) {

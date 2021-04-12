@@ -26,7 +26,7 @@ public class UserRepositoryTest {
     @Test
     void itShouldReturnAnUserFromUsername() {
         //given
-        User user = new User("Test", "test", LocalDate.now());
+        User user = new User("Test", "test@test.fr", "test");
         underTest.save(user);
         //when
         Optional<User> expected = underTest.findByUsername(user.getUsername());

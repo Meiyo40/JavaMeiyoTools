@@ -35,7 +35,7 @@ class UserServiceTests {
     @Test
     void itShouldAddAnUser() {
         //given
-        User user = new User("Test", "test", null);
+        User user = new User("Test", "test@test.fr", "test", "ROLE_ADMIN", LocalDate.now());
         //when
         underTest.registerNewUser(user);
         //then
@@ -49,10 +49,10 @@ class UserServiceTests {
     @Test
     void itShouldFailToAddUserBecauseNameAlreadyExist() {
         //given
-        User user = new User("Test", "test", null);
+        User user = new User("Test", "test@test.fr", "test", "ROLE_ADMIN", LocalDate.now());
         //when
         given(repository.findByUsername(user.getUsername())).willReturn(
-                Optional.of(new User("Test", "test", null))
+                Optional.of(user)
         );
         //then
         assertThatThrownBy( () -> underTest.registerNewUser(user))

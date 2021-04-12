@@ -15,7 +15,7 @@ public class User {
     private String username;
     @Column(nullable = false)
     private String password;
-    @Column(columnDefinition = "varchar(255) default ROLE_USER")
+    @Column(columnDefinition = "varchar(255) default 'ROLE_USER'")
     private String rank;
     private LocalDate lastConnection;
 
