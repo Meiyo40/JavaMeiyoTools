@@ -1,21 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.springframework.org/schema/mvc">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel='stylesheet' type='text/css' href='../assets/css/login.css'>
+    <link rel='stylesheet' type='text/css' th:href='@{/assets/css/login.css}'>
 
     <title>Connexion..</title>
 </head>
 
 <body>
     <div class="container">
-        <form action="/login" id="loginForm" method="POST">
+        <form th:action="@{/auth/login}" id="loginForm" method="POST">
             <label for="username">Identifiant:</label>
-            <input type="text" name="username">
+            <input type="text" name="username" id ="username">
             <label for="password">Mot de passe:</label>
-            <input type="password" name="password">
+            <input type="password" name="password" id="password">
             <input type="submit" value="Connexion" id="login-submit">
         </form>
     </div>
