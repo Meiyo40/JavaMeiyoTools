@@ -9,26 +9,57 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Column(nullable = false, unique = true)
+    private String email;
+    @Column(nullable = false, unique = true)
     private String username;
+    @Column(nullable = false)
     private String password;
+    @Column(columnDefinition = "varchar(255) default ROLE_USER")
+    private String rank;
     private LocalDate lastConnection;
 
     public User() {
     }
 
-
-    public User(String username, String password, LocalDate lastConnection) {
+    public User(String username, String email, String password) {
+        this.email = email;
         this.username = username;
         this.password = password;
+    }
+
+    public User(String username, String email, String password, String rank, LocalDate lastConnection) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.rank = rank;
         this.lastConnection = lastConnection;
     }
 
 
-    public User(Long id, String username, String password, LocalDate lastConnection) {
+    public User(Long id, String username, String email, String password, String rank, LocalDate lastConnection) {
         this.id = id;
         this.username = username;
+        this.email = email;
         this.password = password;
+        this.rank = rank;
         this.lastConnection = lastConnection;
+    }
+
+    public String getRank() {
+        return rank;
+    }
+
+    public void setRank(String rank) {
+        this.rank = rank;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Long getId() {
@@ -67,6 +98,7 @@ public class User {
     public String toString() {
         final StringBuffer sb = new StringBuffer("User{");
         sb.append("id=").append(id);
+        sb.append(", email='").append(email).append('\'');
         sb.append(", username='").append(username).append('\'');
         sb.append(", password='").append(password).append('\'');
         sb.append(", lastConnection=").append(lastConnection);
