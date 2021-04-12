@@ -1,0 +1,39 @@
+* {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+.container,
+#loginForm {
+    display: flex;
+}
+
+.container {
+    margin-top: 5rem;
+    justify-content: center;
+}
+
+#loginForm {
+    width: 12rem;
+    flex-direction: column;
+    padding: 2rem;
+    background-color: #1F1F1F;
+    color: white;
+    box-shadow: 12px 12px 2px 1px rgba(8, 94, 0, 0.199);
+}
+
+#loginForm label,
+#loginForm input {
+    padding: 5px;
+    margin: 2px;
+}
+
+#login-submit {
+    color: white;
+    font-weight: bold;
+    background-color: rgba(21, 255, 0, 0.329);
+    border: none;
+}
+
+#login-submit:hover {
+    background-color: rgba(19, 231, 0, 0.774);
+}
