@@ -5,9 +5,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface PlanRepository extends JpaRepository<Plan, Long> {
-    Plan findByPlanName(String planName);
-    List<Plan> findAllByRaidName(String raidName);
+    Optional<Plan> findByPlanName(String planName);
+    Optional<List<Plan>> findAllByRaidName(String raidName);
 }

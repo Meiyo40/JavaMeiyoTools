@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PlanService {
@@ -17,11 +18,13 @@ public class PlanService {
     }
 
     public Plan getPlan(String planName) {
-        return this.repository.findByPlanName(planName);
+        Optional<Plan> plan = this.repository.findByPlanName(planName);
+        return plan.isPresent() ? plan.get() : null;
     }
 
     public List<Plan> getRaidPlans(String raidName) {
-        return this.repository.findAllByRaidName(raidName);
+        Optional<List<Plan>> list = this.repository.findAllByRaidName(raidName);
+        return list.isPresent() ? list.get() : null;
     }
 
     public Plan setPlan(Plan plan) {
