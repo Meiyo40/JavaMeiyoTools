@@ -7,6 +7,24 @@ html {
     font-family: Verdana, Arial, Helvetica, sans-serif;
 }
 
+label {
+    margin: 2px;
+    padding: 2px;
+}
+
+#select-container,
+.selectElement {
+    display: flex;
+}
+
+#select-container {
+    flex-direction: column;
+}
+
+.selectElement {
+    margin: 6px;
+}
+
 #public-container {
     display: flex;
     justify-content: center;
@@ -16,6 +34,7 @@ html {
 }
 
 #PlanContainer {
+    margin-top: 2rem;
     height: 400px;
     width: 400px;
     border: 1px solid white;

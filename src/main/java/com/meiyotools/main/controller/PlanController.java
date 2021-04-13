@@ -28,9 +28,9 @@ public class PlanController {
         return new ResponseEntity<>(this.service.getAllPlans(), HttpStatus.OK);
     }
 
-    @GetMapping("/plan/{planName}")
-    public ResponseEntity<Plan> getPlan(@PathVariable String planName) {
-        return new ResponseEntity<>(this.service.getPlan(planName), HttpStatus.OK);
+    @GetMapping("/plan/{raidName]/{planName}")
+    public ResponseEntity<Plan> getPlan(@PathVariable String raidName, @PathVariable String planName) {
+        return new ResponseEntity<>(this.service.getPlan(raidName, planName), HttpStatus.OK);
     }
 
     @GetMapping("/raid/{raidName}")

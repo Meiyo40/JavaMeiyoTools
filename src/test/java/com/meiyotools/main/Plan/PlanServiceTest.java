@@ -70,6 +70,34 @@ public class PlanServiceTest {
     }
 
     @Test
+    void itShouldReturnAPlanFromRaidNameAndPlanName() {
+        //given
+        String planName = "planName";
+        String raidName = "raidName";
+        given(repository.findByRaidNameAndPlanName(raidName, planName)).willReturn(
+                Optional.of(sample)
+        );
+        //when
+        Plan expected = underTest.getPlan(raidName, planName);
+        //then
+        assertThat(expected).isEqualTo(sample);
+    }
+
+    @Test
+    void itShouldReturnNULLFromRaidNameAndPlanName() {
+        //given
+        String planName = "planName";
+        String raidName = "raidName";
+        given(repository.findByRaidNameAndPlanName(raidName, planName)).willReturn(
+                Optional.empty()
+        );
+        //when
+        Plan expected = underTest.getPlan(raidName, planName);
+        //then
+        assertThat(expected).isEqualTo(null);
+    }
+
+    @Test
     void itShouldReturnAListOfPlanFromRaidName() {
         //given
         String raidName = sample.getRaidName();

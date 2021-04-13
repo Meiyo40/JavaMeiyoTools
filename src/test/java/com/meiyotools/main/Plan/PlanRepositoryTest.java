@@ -36,6 +36,18 @@ public class PlanRepositoryTest {
     }
 
     @Test
+    void itShouldReturnAPlanFromRaidNameAndPlanName() {
+        //given
+        String raidName = sample.getRaidName();
+        String planName = sample.getPlanName();
+        underTest.save(sample);
+        //when
+        Optional<Plan> expected = underTest.findByRaidNameAndPlanName(raidName, planName);
+        //then
+        assertThat(expected.get()).isEqualTo(sample);
+    }
+
+    @Test
     void itShouldReturnAListOfPlanFromRaidName() {
         //given
         underTest.save(sample);

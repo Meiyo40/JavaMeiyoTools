@@ -10,5 +10,6 @@ import java.util.Optional;
 @Repository
 public interface PlanRepository extends JpaRepository<Plan, Long> {
     Optional<Plan> findByPlanName(String planName);
+    Optional<Plan> findByRaidNameAndPlanName(String raidName, String planName);
     Optional<List<Plan>> findAllByRaidName(String raidName);
 }

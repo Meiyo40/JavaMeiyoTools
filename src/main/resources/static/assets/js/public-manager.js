@@ -5,7 +5,6 @@ $(document).ready(function() {
     const REFRESH_TIMER = 30000;
     let CURRENT_PLAN = $_GET("current");
 
-    alert(CURRENT_PLAN)
 
     function $_GET(param) {
         var vars = {};

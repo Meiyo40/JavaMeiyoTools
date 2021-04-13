@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <link rel="stylesheet" href="../../static/assets/css/public-manager.css"/>
+    <link rel="stylesheet" href="../../static/assets/css/select.css"/>
 </head>
 <body>
 
@@ -18,18 +19,23 @@
         <div id="public-container">
             <h1>SMB Group Manager</h1>
             <div id="select-container">
-                <label for="RaidSelector">Sélecteur de raid: </label>
-                <select id="RaidSelector">
-                    <option value="test">test</option>
-                    <option value="test">test2</option>
-                    <option value="test">test3</option>
-                </select>
-                <label for="PlanSelector">Sélecteur de plan: </label>
-                <select id="PlanSelector">
-                    <option value="test">test</option>
-                    <option value="test">test2</option>
-                    <option value="test">test3</option>
-                </select>
+                <div class="selectElement">
+                    <label for="RaidSelector">Raid: </label>
+                    <select id="RaidSelector" class="select-css">
+                        <option value="test">test</option>
+                        <option value="test">test2</option>
+                        <option value="test">test3</option>
+                    </select>
+                </div>
+                <div class="selectElement">
+                    <label for="PlanSelector">Plan: </label>
+                    <select id="PlanSelector" class="select-css">
+                        <option value="test">testtesttesttest</option>
+                        <option value="test">test2</option>
+                        <option value="test">test3</option>
+                    </select>
+                </div>
+                <button id="selectBtn">Afficher</button>
             </div>      
             <div id="PlanContainer">
             

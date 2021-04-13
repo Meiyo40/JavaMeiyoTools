@@ -22,6 +22,11 @@ public class PlanService {
         return plan.isPresent() ? plan.get() : null;
     }
 
+    public Plan getPlan(String raidName, String planName) {
+        Optional<Plan> plan = this.repository.findByRaidNameAndPlanName(raidName, planName);
+        return plan.isPresent() ? plan.get() : null;
+    }
+
     public List<Plan> getRaidPlans(String raidName) {
         Optional<List<Plan>> list = this.repository.findAllByRaidName(raidName);
         return list.isPresent() ? list.get() : null;
