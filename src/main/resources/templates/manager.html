@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.springframework.org/schema/mvc">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="SMB Manager V2" />
+    <meta name="author" content="Meiyo" />
+
+    <title th:text="${title}"></title>
+
+    <!-- Place your stylesheet here-->
+    <link th:href="@{/assets/css/style.css}" rel="stylesheet" type="text/css" />
+    <link rel="icon" type="image/png" th:href="@{/assets/image/SMB_small.png}" />
+
+    <th:block th:if="${page == 'index-manager'}">
+        <th:block th:replace="fragments/header :: index-manager" /></th:block>
+    </th:block>
+
+</head>
+
+<body>
+<th:block th:replace="fragments/admin/admin-navbar :: navbar(${user})" /></th:block>
+
+<th:block th:if="${page == 'player-manager'}">
+    <th:block th:replace="fragments/admin/player-manager :: player-manager(${user}, ${players})" /></th:block>
+</th:block>
+
+<th:block th:if="${page == 'plan-manager'}">
+    <th:block th:replace="fragments/admin/plan-manager :: player-manager(${user}, ${plans})" /></th:block>
+</th:block>
+
+<script th:src="@{/assets/js/lib/jquery.js}"></script>
+
+<th:block th:replace="fragments/script :: manager(${logged})"> </th:block>
+</body>
+
+</html>

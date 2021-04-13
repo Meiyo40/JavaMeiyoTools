@@ -86,4 +86,13 @@ public class UserService {
         }
         return false;
     }
+
+    public User getUser(String username) {
+        Optional<User> user = repository.findByUsername(username);
+        if(user.isPresent()) {
+            return user.get();
+        } else {
+            throw new RequestRejectedException("User not found.");
+        }
+    }
 }

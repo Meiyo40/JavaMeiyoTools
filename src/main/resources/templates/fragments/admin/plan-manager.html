@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="../../../static/assets/css/admin/manager.css"/>
+    <link rel="stylesheet" href="../../../static/assets/css/select.css"/>
+    <link rel="stylesheet" href="../../../static/assets/css/style.css"/>
+</head>
+<body>
+
+<th:block th:fragment="plan-manager(user, plans)">
+
+    <div id="admin-container">
+        <h1>Manager Administration</h1>
+
+        <div id="nav">
+            <a class="nav-el" href="@{/auth/logout}">Se déconnecter (${user})</a>
+            <a class="nav-el" href="@{/manager/players}" id="managePlayerButton">Gérer joueur</a>
+            <a class="nav-el" href="@{/manager/plans}" id="managePlanButton">Gérer plans</a>
+        </div>
+    </div>
+
+</th:block>
+
+<script src="../../../static/assets/js/lib/jquery.js"></script>
+<script src="../../../static/assets/js/public-manager.js"></script>
+
+</body>
+
+</html>
