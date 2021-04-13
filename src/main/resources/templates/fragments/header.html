@@ -1,24 +1,14 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:fragment="ListPosts">
-    <link rel='stylesheet' type='text/css' th:href="@{/assets/css/responsive.css}">
-</head>
+<th:block th:fragment="manager(isLogged)">
+    <link rel='stylesheet' type='text/css' th:href="@{/assets/css/select.css}">
 
-<head th:fragment="article">
-    <link rel="stylesheet" th:href="@{/assets/css/postview.css}">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
-</head>
+    <th:block th:if="${isLogged} == 'false'">
+        <link rel='stylesheet' type='text/css' th:href="@{/assets/css/public-manager.css}">
+    </th:block>
 
-<head th:fragment="userPage">
-    <link th:href="@{/assets/css/adminpanel.css}" rel='stylesheet' type='text/css'>
-    <link th:href="@{/assets/css/userPage.css}" rel='stylesheet' type='text/css'>
-    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.8.2/css/all.css' integrity='sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay' crossorigin='anonymous'>
-</head>
-
-<head th:fragment="loginPage">
-    <link rel='stylesheet' type='text/css' th:href="@{/assets/css/Login-Form-Dark.css}">
-</head>
+</th:block>
 
 <body>
 </body>

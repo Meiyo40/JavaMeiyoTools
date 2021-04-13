@@ -4,67 +4,29 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="Projet Blog Java Spring" />
+    <meta name="description" content="SMB Manager V2" />
     <meta name="author" content="Meiyo" />
-    <link rel="icon" href="assets/image/icon.jpg" />
-
-    <meta property="og:title" content="Spring Blog" />
-    <meta property="og:description" content="Projet Blog Java Spring" />
-    <meta property="og:image" content="./resources/siteImg/JulesVernes.jpg" />
-    <meta property="og:url" content="https://opcblog.herokuapp.com/index.php" />
-
-    <meta name="twitter:title" content="Spring Blog" />
-    <meta name="twitter:description" content="Projet Blog Java Spring" />
-    <meta name="twitter:image" content="./resources/siteImg/JulesVernes.jpg" />
-    <meta name="twitter:card" content="summary_large_image" />
 
     <title th:text="${title}"></title>
-
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
 
     <!-- Place your stylesheet here-->
     <link th:href="@{/assets/css/style.css}" rel="stylesheet" type="text/css" />
 
-    <div th:replace="fragments/header :: ${page}" /></div>
+    <th:block th:if="${page == 'manager'}">
+        <th:block th:replace="fragments/header :: manager(${logged})" /></th:block>
+    </th:block>
 
-    <link rel="stylesheet" th:href="@{/assets/css/custom/skin.min.css}" />
 </head>
 
 <body>
 
-    <th:block th:if="${page == 'ListPosts'}">
-        <th:block th:replace="@{'fragments/' + ${page}} :: content(${posts})" /></th:block>
-    </th:block>
-    <th:block th:if="${page == 'article'}">
-        <th:block th:replace="fragments/content :: article(${post}, ${comments})" /></th:block>
+    <th:block th:if="${page == 'manager'}">
+        <th:block th:replace="fragments/content :: manager(${logged})" /></th:block>
     </th:block>
 
-    <div id="admin-btn" />
-    <a th:href="@{/login}" class="btn btn-info" />Administration</a>
-    <a th:href="@{/}" class="btn btn-info" />Accueil</a>
-    </div>
-    <!-- Bootstrap core JavaScript
-        ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous" /></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous" /></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous" /></script>
-    <script th:src="@{/assets/js/tinymce/tinymce.min.js}" /></script>
+    <script th:src="@{/assets/js/lib/jquery.js}"></script>
 
-    <div th:replace="fragments/script :: ${page}" /></div>
-
+    <th:block th:replace="fragments/script :: manager(${logged})"> </th:block>
 </body>
-
-<footer>
-    <p>
-        Site apprentissage Spring et Thymeleaf
-        <br>
-        <a th:href="@{/policy}" />Politique de confidentialité</a>
-    </p>
-    <div>
-        &copy;2021
-    </div>
-</footer>
 
 </html>

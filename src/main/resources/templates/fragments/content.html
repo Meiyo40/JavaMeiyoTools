@@ -1,42 +1,52 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-
+<head>
+    <link rel="stylesheet" href="../../static/assets/css/public-manager.css"/>
+    <link rel="stylesheet" href="../../static/assets/css/select.css"/>
+</head>
 <body>
 
-    <div th:fragment="article(post, comments)">
-        <div class="news">
-            <article>
-                <div id="post" class="${'post' + post.id}">
-                    <img src="" alt="" class="largeImg">
-                    <div class="article-content" th:text="${post.content}"></div>
+    <th:block th:fragment="manager(logged)">
+        <th:block th:if="${logged} == 'true'">
+        
+        <div id="admin-container">
+
+        </div>
+
+        </th:block>
+        <th:block th:if="${logged} == 'false'">
+            
+        <div id="public-container">
+            <h1>SMB Group Manager</h1>
+            <div id="select-container">
+                <div class="selectElement">
+                    <label for="RaidSelector">Raid: </label>
+                    <select id="RaidSelector" class="select-css">
+                        <option value="test">test</option>
+                        <option value="test">test2</option>
+                        <option value="test">test3</option>
+                    </select>
                 </div>
-
-                <p class="article-signature">
-                    Publié par <span th:text="${post.author}"></span>, le <span th:text="${post.dateOfCreation}"></span>
-                    <button id='btnPost' class='btn btn-primary' th:value="${post.id}">Commenter</button>
-                </p>
-            </article>
+                <div class="selectElement">
+                    <label for="PlanSelector">Plan: </label>
+                    <select id="PlanSelector" class="select-css">
+                        <option value="test">testtesttesttest</option>
+                        <option value="test">test2</option>
+                        <option value="test">test3</option>
+                    </select>
+                </div>
+                <button id="selectBtn">Afficher</button>
+            </div>      
+            <div id="PlanContainer">
+            
+            </div>  
         </div>
-        <div th:each="comment: ${comments}">
-            <div class="commentGroup">
-                <p class="comment-content">
 
-                </p>
-                <p class="comment-signature">
+        </th:block>
+    </th:block>
 
-                </p>
-                <button onclick='displayForm({{ comment.id }},{{ comment.depth }})' class='comment-answer btn btn-primary' data-comment-id={{ comment.id }}>Répondre</button>
-                <button onclick='reportComment({{ comment.id }},{{ post.id }})' class='btn-report btn btn-warning'><i class='far fa-bell'></i> Signaler</button>
-            </div>
-        </div>
-        <form id='comment-form' class='comment-form' method='POST' th:attr="data-postId=${post.id}">
-            <label for="name">Nom/Pseudo: </label>
-            <input id="name" type='text' name='name' required>
-            <textarea form='comment-form' name="commentContent"></textarea>
-            <input type='hidden' id="node-depth-form" name='depth' value="">
-            <input type='submit' value='Envoyer'>
-        </form>
-    </div>
+    <script src="../../static/assets/js/lib/jquery.js"></script>
+    <script src="../../static/assets/js/public-manager.js"></script>
 
 </body>
 

@@ -1,10 +1,23 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:fragment="script">
-</head>
-
 <body>
+
+
+<div th:fragment="index"></div>
+
+<th:block th:fragment="manager(isLogged)">
+
+    <th:block th:if="${isLogged} == 'false'">
+        <script th:src="@{/assets/js/public-manager.js}"></script>
+    </th:block>
+    <th:block th:if="${isLogged} == 'true'">
+        <script th:src="@{/assets/js/lib/tinymce/tinymce.min.js}"></script>
+    </th:block>
+
+</th:block>
+
+
 </body>
 
 </html>
