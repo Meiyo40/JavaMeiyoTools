@@ -32,4 +32,14 @@ public class AdminController {
             return "redirect:/auth/login";
         }
     }
+
+    @GetMapping("/players")
+    public String getPlayerManager(HttpServletRequest request, Model model) {
+        if(userService.isLogged(request)) {
+            this.pageService.setPlayerManager(request, model);
+            return "manager";
+        } else {
+            return "redirect:/auth/login";
+        }
+    }
 }

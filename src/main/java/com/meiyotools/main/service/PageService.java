@@ -1,5 +1,6 @@
 package com.meiyotools.main.service;
 
+import com.meiyotools.main.model.entity.Player;
 import com.meiyotools.main.model.entity.User;
 import com.meiyotools.main.model.repository.PlanRepository;
 import com.meiyotools.main.model.repository.PlayerRepository;
@@ -12,6 +13,7 @@ import org.springframework.ui.Model;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @Service
 public class PageService {
@@ -35,5 +37,18 @@ public class PageService {
         model.addAttribute("page", "index-manager");
         model.addAttribute("title", "Admin Index");
         model.addAttribute("logged", "true");
+    }
+
+    public void setPlayerManager(HttpServletRequest request, Model model) {
+        String username = request.getSession().getAttribute("user").toString();
+        User user = userService.getUser(username);
+        List<Player> playerList = playerService.getAllPlayers();
+
+        model.addAttribute("user", user.getUsername());
+        model.addAttribute("page", "player-manager");
+        model.addAttribute("title", "Player Manager");
+        model.addAttribute("logged", "true");
+
+        model.addAttribute("players", playerList);
     }
 }

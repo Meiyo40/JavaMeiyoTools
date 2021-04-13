@@ -23,7 +23,8 @@ public class PlayerService {
     }
 
     public List<Player> getAllPlayers() {
-        return this.repository.findAll();
+        Optional<List<Player>> list = repository.findAllByOrderByClassName();
+        return list.isPresent() ? list.get() : null;
     }
 
     public List<Player> getPlayersByRole(String role) {

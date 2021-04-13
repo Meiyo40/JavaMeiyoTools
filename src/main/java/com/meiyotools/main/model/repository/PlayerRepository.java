@@ -12,4 +12,5 @@ public interface PlayerRepository extends JpaRepository<Player, Long> {
     Optional<Player> findByName(String playerName);
     Optional<List<Player>> findByClassName(String className);
     Optional<List<Player>> findByRole(String role);
+    Optional<List<Player>> findAllByOrderByClassName();
 }
