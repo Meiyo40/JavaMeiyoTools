@@ -43,7 +43,6 @@ public class UserService {
         this.registerNewUser(
                 new User("admin", "meiyo40@gmail.com", "apedemak40")
         );
-        System.out.println("SELF: Default User created");
     }
 
     public User logUser(String username, String password) {
@@ -76,11 +75,13 @@ public class UserService {
                     break;
                 }
             }
-            try {
-                Jwts.parserBuilder().setSigningKey(LoginController.SECRET).build().parseClaimsJws(token);
-                return true;
-            }catch (JwtException e) {
-                return false;
+            if(token != null) {
+                try {
+                    Jwts.parserBuilder().setSigningKey(LoginController.SECRET).build().parseClaimsJws(token);
+                    return true;
+                }catch (JwtException e) {
+                    return false;
+                }
             }
         }
         return false;

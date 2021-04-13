@@ -12,7 +12,10 @@
     <!-- Place your stylesheet here-->
     <link th:href="@{/assets/css/style.css}" rel="stylesheet" type="text/css" />
 
-    <link rel="stylesheet" th:href="@{/assets/css/custom/skin.min.css}" />
+    <th:block th:if="${page == 'manager'}">
+        <th:block th:replace="fragments/header :: manager(${logged})" /></th:block>
+    </th:block>
+
 </head>
 
 <body>
@@ -21,11 +24,9 @@
         <th:block th:replace="fragments/content :: manager(${logged})" /></th:block>
     </th:block>
 
-    <script th:src="@{/assets/js/tinymce/tinymce.min.js}" /></script>
-
-    <div th:replace="fragments/script :: ${page}" /></div>
-
     <script th:src="@{/assets/js/lib/jquery.js}"></script>
+
+    <th:block th:replace="fragments/script :: manager(${logged})"> </th:block>
 </body>
 
 </html>

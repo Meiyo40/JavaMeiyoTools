@@ -6,7 +6,7 @@
 </head>
 <body>
 
-    <div th:fragment="manager(logged)">
+    <th:block th:fragment="manager(logged)">
         <th:block th:if="${logged} == 'true'">
         
         <div id="admin-container">
@@ -43,7 +43,7 @@
         </div>
 
         </th:block>
-    </div>
+    </th:block>
 
     <script src="../../static/assets/js/lib/jquery.js"></script>
     <script src="../../static/assets/js/public-manager.js"></script>

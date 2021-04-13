@@ -35,4 +35,16 @@ public class PlayerService {
         Optional<List<Player>> list = repository.findByClassName(className);
         return list.isPresent() ? list.get() : null;
     }
+
+    public Player newPlayer(Player player) {
+        return repository.save(player);
+    }
+
+    public Player updatePlayer(Player player) {
+        return repository.save(player);
+    }
+
+    public void deletePlayer(Long id) {
+        repository.deleteById(id);
+    }
 }
