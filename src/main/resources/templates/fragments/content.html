@@ -1,16 +1,46 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-
+<head>
+    <link rel="stylesheet" href="../../static/assets/css/public-manager.css"/>
+</head>
 <body>
 
     <div th:fragment="manager(logged)">
         <th:block th:if="${logged} == 'true'">
-            Admin
+        
+        <div id="admin-container">
+
+        </div>
+
         </th:block>
         <th:block th:if="${logged} == 'false'">
-            Pas Admin
+            
+        <div id="public-container">
+            <h1>SMB Group Manager</h1>
+            <div id="select-container">
+                <label for="RaidSelector">Sélecteur de raid: </label>
+                <select id="RaidSelector">
+                    <option value="test">test</option>
+                    <option value="test">test2</option>
+                    <option value="test">test3</option>
+                </select>
+                <label for="PlanSelector">Sélecteur de plan: </label>
+                <select id="PlanSelector">
+                    <option value="test">test</option>
+                    <option value="test">test2</option>
+                    <option value="test">test3</option>
+                </select>
+            </div>      
+            <div id="PlanContainer">
+            
+            </div>  
+        </div>
+
         </th:block>
     </div>
+
+    <script src="../../static/assets/js/lib/jquery.js"></script>
+    <script src="../../static/assets/js/public-manager.js"></script>
 
 </body>
 
