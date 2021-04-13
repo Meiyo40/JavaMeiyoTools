@@ -23,19 +23,22 @@ $(document).ready(function() {
 
     for(let i = 0; i < deletePlayer.length ; i++) {
         deletePlayer[i].addEventListener("click", () => {
-            let url = "/player/" + deletePlayer[i].dataset.playerid;
-            $.ajax({
-                url: url,
-                type: "DELETE",
-                success: () => {
-                    alert("Succès.")
-                    let row = document.getElementById(deletePlayer[i].dataset.playerid);
-                    row.parentNode.removeChild(row);
-                },
-                error: () => {
-                    alert("Erreur.")
-                }
-            })
+            let deleteHim = confirm("Voulez vous réellement supprimer ce joueur ?");
+            if(deleteHim) {
+                let url = "/player/" + deletePlayer[i].dataset.playerid;
+                $.ajax({
+                    url: url,
+                    type: "DELETE",
+                    success: () => {
+                        alert("Succès.")
+                        let row = document.getElementById(deletePlayer[i].dataset.playerid);
+                        row.parentNode.removeChild(row);
+                    },
+                    error: () => {
+                        alert("Erreur.")
+                    }
+                })
+            }
         })
     }
 
@@ -130,5 +133,30 @@ $(document).ready(function() {
         }
 
         comment.value = element.children[3].innerText;
+
+        let modalSubmit = document.getElementById("modalButtonAdd");
+        modalSubmit.addEventListener("click", () => {
+            let url = "/player/" + PlayerId;
+            let data = {
+                name: name.value,
+                className: playerClass.value,
+                role: role.value,
+                comment: comment.value
+            }
+            $.ajax({
+                contentType: 'application/json',
+                type:"PUT",
+                url: url,
+                data: JSON.stringify(data),
+                dataType: "json",
+                success: (data) => {
+                    alert("Joueur modifié.")
+                    createNewRow(data)
+                },
+                error: () => {
+                    alert("Erreur.")
+                }
+            });
+        })
     }
 })
