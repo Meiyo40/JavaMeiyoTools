@@ -5,6 +5,7 @@ import com.meiyotools.main.model.repository.PlanRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,6 +34,7 @@ public class PlanService {
     }
 
     public Plan setPlan(Plan plan) {
+        plan.setCreatedAt(LocalDate.now());
         return this.repository.save(plan);
     }
 
@@ -44,4 +46,8 @@ public class PlanService {
         return this.repository.findAll();
     }
 
+    public Plan getPlanById(Long planId) {
+        Optional<Plan> plan = this.repository.findById(planId);
+        return plan.isPresent() ? plan.get() : null;
+    }
 }

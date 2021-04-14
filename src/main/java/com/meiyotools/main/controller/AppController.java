@@ -1,5 +1,6 @@
 package com.meiyotools.main.controller;
 
+import com.meiyotools.main.service.PageService;
 import com.meiyotools.main.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,22 +13,18 @@ import javax.servlet.http.HttpServletRequest;
 public class AppController {
 
     private final UserService userService;
+    private final PageService pageService;
 
     @Autowired
-    public AppController(UserService pUserService) {
+    public AppController(UserService pUserService, PageService pageService) {
+        this.pageService = pageService;
         this.userService = pUserService;
     }
 
-    @GetMapping("/index")
+    @GetMapping(value = {"/index", "/"})
     public String getIndex(Model model, HttpServletRequest request) {
 
-        if(userService.isLogged(request)) {
-            model.addAttribute("logged", "true");
-        } else {
-            model.addAttribute("logged", "false");
-        }
-        model.addAttribute("title", "SMB Plan");
-        model.addAttribute("page", "manager");
+        this.pageService.setPublicIndex(request, model);
 
         return "index";
     }

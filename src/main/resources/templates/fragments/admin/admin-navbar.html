@@ -12,9 +12,10 @@
     <h1>Administration</h1>
 
     <div id="nav">
+        <a class="nav-el" th:href="@{/}">Accueil</a>
         <a class="nav-el" th:href="@{/auth/logout}">Se déconnecter (<th:block th:text="${user}"></th:block>)</a>
         <a class="nav-el" th:href="@{/manager/players}" id="managePlayerButton">Gérer joueur</a>
-        <a class="nav-el" th:href="@{/manager/plans}" id="managePlanButton">Gérer plans</a>
+        <a class="nav-el" th:href="@{/manager/plan}" id="managePlanButton">Gérer plans</a>
     </div>
 </th:block>
 

@@ -1,0 +1,35 @@
+#planSelectors {
+    text-align: center;
+    padding: 2rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+#planSelectors select {
+    max-width: 10rem;
+}
+#planSelectors > * {
+    padding: 4px;
+    margin: 4px;
+}
+
+#previewContainer {
+    margin-top: 4rem;
+    max-width: 80%;
+    padding: 4rem;
+    border: 1px solid #006014;
+}
+
+#roster{
+    display: none;
+}
+#rosterDisplay{
+    display: flex;
+    flex-direction: column;
+    margin-right: 2rem;
+}
+
+#editorContainer {
+    display: flex;
+    flex-direction: row;
+}

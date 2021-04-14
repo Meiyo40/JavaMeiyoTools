@@ -6,7 +6,7 @@
 </head>
 <body>
 
-    <th:block th:fragment="manager(logged)">
+    <th:block th:fragment="manager(logged, players)">
         <th:block th:if="${logged} == 'true'">
         
         <div id="admin-container">
@@ -18,28 +18,35 @@
             
         <div id="public-container">
             <h1>SMB Group Manager</h1>
+            <a class="smbBtn" th:href="@{/auth/login}">Administration</a>
             <div id="select-container">
                 <div class="selectElement">
                     <label for="RaidSelector">Raid: </label>
                     <select id="RaidSelector" class="select-css">
-                        <option value="test">test</option>
-                        <option value="test">test2</option>
-                        <option value="test">test3</option>
+                        <option value="karazhan">Karazhan</option>
+                        <option value="gruul_mag">Gruul/Mag</option>
+                        <option value="ssc">SSC</option>
+                        <option value="tempestKeep">TK</option>
+                        <option value="hyjal">Hyjal</option>
+                        <option value="blackTemple">Temple noir</option>
+                        <option value="sunwell">Sunwell</option>
                     </select>
                 </div>
                 <div class="selectElement">
                     <label for="PlanSelector">Plan: </label>
                     <select id="PlanSelector" class="select-css">
-                        <option value="test">testtesttesttest</option>
-                        <option value="test">test2</option>
-                        <option value="test">test3</option>
+                        <option value="default">default</option>
                     </select>
                 </div>
-                <button id="selectBtn">Afficher</button>
             </div>      
             <div id="PlanContainer">
             
-            </div>  
+            </div>
+            <div id="roster" style="display: none">
+                <th:block th:each="player: ${players}">
+                    <span th:classappend="${player.className} + '-color'" th:text="${player.name}"></span>
+                </th:block>
+            </div>
         </div>
 
         </th:block>

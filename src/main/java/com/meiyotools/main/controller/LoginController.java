@@ -7,6 +7,8 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.web.authentication.logout.HeaderWriterLogoutHandler;
+import org.springframework.security.web.header.writers.ClearSiteDataHeaderWriter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.security.Key;
 
 @Controller
@@ -30,14 +33,23 @@ public class LoginController {
         this.pageService = pPageService;
     }
 
+    @GetMapping("/logout")
+    public String disconnect(HttpServletRequest request, HttpServletResponse response, Model model) {
+        HttpSession session = request.getSession();
+        if(session != null) {
+            session.invalidate();
+        }
+        return "redirect:/index";
+    }
+
     @GetMapping("/login")
     public String getLoginPage(Model model) {
         return "login";
     }
 
     @PostMapping("/login")
-    public String logUser(@RequestParam(name="username") String username, @RequestParam(name="password") String password, HttpServletRequest request, HttpServletResponse response) {
-        User user = userService.logUser(username, password);
+    public String logUser(@RequestBody User logs, HttpServletRequest request, HttpServletResponse response) {
+        User user = userService.logUser(logs.getUsername(), logs.getPassword());
         if(user != null) {
             request.getSession().setAttribute("user", user.getUsername());
             String jws = Jwts.builder().setSubject(user.getUsername()).signWith(SECRET).compact();

@@ -49,22 +49,26 @@ $(document).ready(function() {
             className: document.getElementById("class").value,
             role: document.getElementById("role").value,
             comment: document.getElementById("comment").value
+        };
+        if(data.name == "") {
+            alert("Vous ne pouvez pas ajouter de joueur sans pseudo.")
+        } else {
+            $.ajax({
+                contentType: 'application/json',
+                type:"POST",
+                url: url,
+                data: JSON.stringify(data),
+                dataType: "json",
+                success: (data) => {
+                    alert("Joueur ajouté.")
+                    createNewRow(data)
+                },
+                error: () => {
+                    alert("Erreur.")
+                }
+            });
         }
-        $.ajax({
-            contentType: 'application/json',
-            type:"POST",
-            url: url,
-            data: JSON.stringify(data),
-            dataType: "json",
-            success: (data) => {
-                alert("Joueur ajouté.")
-                createNewRow(data)
-            },
-            error: () => {
-                alert("Erreur.")
-            }
-        });
-    })
+    });
 
     function createNewRow(data) {
         let table = document.getElementById("tableBody");

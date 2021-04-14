@@ -7,16 +7,86 @@
 </head>
 <body>
 
-<th:block th:fragment="plan-manager(user, plans)">
+<th:block th:fragment="plan-manager(user, plans, players)">
 
-    <div id="admin-container">
-        <h1>Manager Administration</h1>
+    <div id="addPlanContainer">
+        <div id="planSelectors">
 
-        <div id="nav">
-            <a class="nav-el" href="@{/auth/logout}">Se déconnecter (${user})</a>
-            <a class="nav-el" href="@{/manager/players}" id="managePlayerButton">Gérer joueur</a>
-            <a class="nav-el" href="@{/manager/plans}" id="managePlanButton">Gérer plans</a>
+            <label for="action">Action:</label>
+            <select class="select-css" name="action" id="action">
+                <option value="update">Modifier</option>
+                <option value="create">Créer</option>
+                <option value="delete">Supprimer</option>
+            </select>
+
+            <label for="raidName">Raid:</label>
+            <select class="select-css" name="raidName" id="raidName">
+                <option value="karazhan">Karazhan</option>
+                <option value="gruul_mag">Gruul/Mag</option>
+                <option value="ssc">SSC</option>
+                <option value="tempestKeep">TK</option>
+                <option value="hyjal">Hyjal</option>
+                <option value="blackTemple">Temple noir</option>
+                <option value="sunwell">Sunwell</option>
+            </select>
+
+            <label for="planName">Plan:</label>
+            <select class="select-css" name="planName" id="planName">
+                <option value="null" id="optionNull">Null.</option>
+            </select>
+
         </div>
+        <div id="editorContainer">
+            <div id="roster">
+                <th:block th:each="player: ${players}">
+                    <span th:classappend="${player.className} + '-color'" th:text="${player.name}"></span>
+                </th:block>
+            </div>
+            <div id="rosterDisplay">
+                <th:block th:each="player: ${players}">
+                    <th:block th:if="${player.role} == 'tank'">
+                        <span>
+                            <i class="fal fa-shield-alt"></i>
+                            <span th:classappend="${player.className} + '-color'" th:text="${player.name}"></span>
+                        </span>
+                    </th:block>
+                    <th:block th:if="${player.role} == 'heal'">
+                        <span>
+                            <i class="far fa-cross"></i>
+                            <span th:classappend="${player.className} + '-color'" th:text="${player.name}"></span>
+                        </span>
+                    </th:block>
+                    <th:block th:if="${player.role} == 'dps'">
+                        <span>
+                            <i class="fad fa-swords"></i>
+                            <span th:classappend="${player.className} + '-color'" th:text="${player.name}"></span>
+                        </span>
+                    </th:block>
+
+                </th:block>
+            </div>
+            <div id="tinyMce">
+                <div style="display: flex; flex-direction: row">
+                    <label for="rosterBox">Afficher liste joueurs:</label>
+                    <input type="checkbox" id="rosterBox" name="rosterBox"checked  style="margin-right: 1rem;">
+                    <label for="planTitle">Nom du plan:</label>
+                    <input type="text" id="planTitle">
+                </div>
+                <br>
+                <div id='textarea-container'>
+                    <textarea id="tinyTextArea"></textarea>
+                </div>
+                <br>
+                <br>
+                <div>
+                    <a id="subBtn" class="smbBtn" href="#">Envoyer</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="previewContainer">
+
     </div>
 
 </th:block>
