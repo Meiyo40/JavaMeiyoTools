@@ -9,14 +9,50 @@
 
 <th:block th:fragment="plan-manager(user, plans)">
 
-    <div id="admin-container">
-        <h1>Manager Administration</h1>
+    <div id="addPlanContainer">
+        <div id="planSelectors">
 
-        <div id="nav">
-            <a class="nav-el" href="@{/auth/logout}">Se déconnecter (${user})</a>
-            <a class="nav-el" href="@{/manager/players}" id="managePlayerButton">Gérer joueur</a>
-            <a class="nav-el" href="@{/manager/plans}" id="managePlanButton">Gérer plans</a>
+            <label for="action">Action:</label>
+            <select class="select-css" name="action" id="action">
+                <option value="create">Créer</option>
+                <option value="update">Modifier</option>
+                <option value="delete">Supprimer</option>
+            </select>
+
+            <label for="raidName">Raid:</label>
+            <select class="select-css" name="raidName" id="raidName">
+                <option value="karazhan">Karazhan</option>
+                <option value="gruul_mag">Gruul/Mag</option>
+                <option value="ssc">SSC</option>
+                <option value="tempestKeep">TK</option>
+                <option value="hyjal">Hyjal</option>
+                <option value="blackTemple">Temple noir</option>
+                <option value="sunwell">Sunwell</option>
+            </select>
+
+            <label for="planName">Plan:</label>
+            <select class="select-css" name="planName" id="planName">
+                <option value="null" id="optionNull">Null.</option>
+            </select>
+
         </div>
+        <div id="tinyMce">
+            <label for="planTitle">Nom du plan:</label>
+            <input type="text" id="planTitle">
+            <br>
+            <div id='textarea-container'>
+                <textarea id="tinyTextArea"></textarea>
+            </div>
+            <br>
+            <br>
+            <div>
+                <a id="subBtn" class="smbBtn" href="#">Envoyer</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="previewContainer">
+
     </div>
 
 </th:block>

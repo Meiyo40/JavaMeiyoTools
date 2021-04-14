@@ -28,6 +28,11 @@ public class PlanController {
         return new ResponseEntity<>(this.service.getAllPlans(), HttpStatus.OK);
     }
 
+    @GetMapping("/plan/{planId}")
+    public ResponseEntity<Plan> getPlanById(@PathVariable Long planId) {
+        return new ResponseEntity<>(this.service.getPlanById(planId), HttpStatus.OK);
+    }
+
     @GetMapping("/plan/{raidName]/{planName}")
     public ResponseEntity<Plan> getPlan(@PathVariable String raidName, @PathVariable String planName) {
         return new ResponseEntity<>(this.service.getPlan(raidName, planName), HttpStatus.OK);
@@ -40,11 +45,13 @@ public class PlanController {
 
     @PostMapping("/plan")
     public ResponseEntity<Plan> setPlan(@RequestBody Plan plan, HttpServletRequest request) {
-        if(userService.isLogged(request)) {
-            return new ResponseEntity<>(this.service.setPlan(plan), HttpStatus.CREATED);
-        } else {
-            return new ResponseEntity<>(plan, HttpStatus.FORBIDDEN);
-        }
+        return new ResponseEntity<>(this.service.setPlan(plan), HttpStatus.CREATED);
+
+//        if(userService.isLogged(request)) {
+//            return new ResponseEntity<>(this.service.setPlan(plan), HttpStatus.CREATED);
+//        } else {
+//            return new ResponseEntity<>(plan, HttpStatus.FORBIDDEN);
+//        }
     }
 
     @PutMapping("/plan")
@@ -56,13 +63,13 @@ public class PlanController {
         }
     }
 
-    @DeleteMapping("/plan/{planId}")
-    public ResponseEntity<Long> deletePlan(@PathVariable Long id, HttpServletRequest request) {
+    @GetMapping("/delete/{planId}")
+    public ResponseEntity<Long> deletePlan(@PathVariable Long planId, HttpServletRequest request) {
         if(userService.isLogged(request)) {
-            this.service.deletePlan(id);
-            return new ResponseEntity<>(id, HttpStatus.OK);
+            this.service.deletePlan(planId);
+            return new ResponseEntity<>(planId, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(id, HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(planId, HttpStatus.FORBIDDEN);
         }
     }
 }

@@ -24,6 +24,9 @@
     <th:block th:if="${page == 'player-manager'}">
         <th:block th:replace="fragments/header :: player-manager" /></th:block>
     </th:block>
+    <th:block th:if="${page == 'plan-manager'}">
+        <th:block th:replace="fragments/header :: plan-manager" /></th:block>
+    </th:block>
 
 </head>
 
@@ -37,14 +40,14 @@
     </th:block>
 
     <th:block th:if="${page == 'plan-manager'}">
-        <th:block th:replace="fragments/admin/plan-manager :: player-manager(${user}, ${plans})" /></th:block>
+        <th:block th:replace="fragments/admin/plan-manager :: plan-manager(${user}, ${plans})" /></th:block>
     </th:block>
 
 </div>
 
 <script th:src="@{/assets/js/lib/jquery.js}"></script>
 
-<th:block th:replace="fragments/script :: manager(${logged})"> </th:block>
+<th:block th:replace="fragments/script :: manager(${logged}, ${page})"> </th:block>
 </body>
 
 </html>

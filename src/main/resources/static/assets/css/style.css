@@ -46,3 +46,26 @@ html {
     visibility: visible;
     opacity: 1;
 }
+
+.nav-el,
+.smbBtn{
+    margin: 1rem;
+    padding: 3px;
+    border: 2px solid #006014;
+    border-radius: 5px;
+    box-shadow: 5px 5px rgb(0, 58, 14);
+}
+
+.nav-el:hover,
+.smbBtn:hover{
+    color: #070a0d;
+    background-color: snow;
+    border: 2px solid #070a0d;
+    cursor: grab;
+}
+
+.nav-el:active,
+.smbBtn:hover{
+    box-shadow: 2px 2px rgb(0, 58, 14);
+    transform: translateY(2px);
+}

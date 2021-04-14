@@ -11,6 +11,7 @@ public class Plan {
     private Long id;
     private String planName;
     private String raidName;
+    @Lob
     private String content;
     private LocalDate createdAt;
 

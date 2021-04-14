@@ -6,14 +6,22 @@
 
 <div th:fragment="index"></div>
 
-<th:block th:fragment="manager(isLogged)">
+<th:block th:fragment="manager(isLogged, page)">
 
     <th:block th:if="${isLogged} == 'false'">
         <script th:src="@{/assets/js/public-manager.js}"></script>
     </th:block>
+
     <th:block th:if="${isLogged} == 'true'">
-        <script th:src="@{/assets/js/admin/player-manager.js}"></script>
-        <script th:src="@{/assets/js/lib/tinymce/tinymce.min.js}"></script>
+
+        <th:block th:if="${page} == 'player-manager'">
+            <script th:src="@{/assets/js/admin/player-manager.js}"></script>
+        </th:block>
+        <th:block th:if="${page} == 'plan-manager'">
+            <script th:src="@{/assets/js/lib/tiny/tinymce/tinymce.min.js}"></script>
+            <script th:src="@{/assets/js/lib/tiny/tiny.js}"></script>
+            <script th:src="@{/assets/js/admin/plan-manager.js}"></script>
+        </th:block>
     </th:block>
 
 </th:block>

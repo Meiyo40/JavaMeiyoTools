@@ -42,4 +42,14 @@ public class AdminController {
             return "redirect:/auth/login";
         }
     }
+
+    @GetMapping("/plan")
+    public String getPlanManager(HttpServletRequest request, Model model) {
+        if(userService.isLogged(request)) {
+            this.pageService.setPlanManager(request, model);
+            return "manager";
+        } else {
+            return "redirect:/auth/login";
+        }
+    }
 }

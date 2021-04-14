@@ -1,0 +1,14 @@
+#planSelectors {
+    text-align: center;
+    padding: 2rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+#planSelectors select {
+    max-width: 10rem;
+}
+#planSelectors > * {
+    padding: 4px;
+    margin: 4px;
+}

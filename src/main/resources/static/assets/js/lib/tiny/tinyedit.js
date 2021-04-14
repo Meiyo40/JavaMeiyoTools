@@ -11,7 +11,7 @@ $(document).ready(function() {
         let title = document.getElementById('article-title');
         title.value = article.title;
         await sleep(500);
-        let content = tinymce.activeEditor.getBody();;
+        let content = tinymce.activeEditor.getBody();
         content.innerHTML = article.content;
     }
 
