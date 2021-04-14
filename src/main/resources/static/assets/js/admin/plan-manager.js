@@ -4,6 +4,7 @@ $(document).ready( () => {
     let selectRaid = document.getElementById("raidName");
     let submitBtn = document.getElementById("subBtn");
     let preview = document.getElementById("previewContainer");
+    let rosterBox = document.getElementById("rosterBox");
     let PLAYERS = setPlayers();
     let isTinyNotSet = true;
 
@@ -27,6 +28,13 @@ $(document).ready( () => {
         getPlans();
     });
 
+    rosterBox.addEventListener("change", () => {
+        if(rosterBox.checked === true) {
+            document.getElementById("rosterDisplay").style.display = "flex";
+        } else {
+            document.getElementById("rosterDisplay").style.display = "none";
+        }
+    });
 
     selectPlan.addEventListener("change", () => {
         getPlan(selectPlan.value);

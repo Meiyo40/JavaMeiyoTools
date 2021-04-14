@@ -57,7 +57,18 @@
             </thead>
             <tbody id="tableBody">
             <tr th:each="player: ${players}" th:id="${player.id}">
-                <td th:text="${player.name}" th:classappend="${player.className}"></td>
+                <td th:classappend="${player.className}">
+                    <th:block th:if="${player.role} == 'tank'">
+                        <i class="fal fa-shield-alt"></i>
+                    </th:block>
+                    <th:block th:if="${player.role} == 'heal'">
+                        <i class="far fa-cross"></i>
+                    </th:block>
+                    <th:block th:if="${player.role} == 'dps'">
+                        <i class="fad fa-swords"></i>
+                    </th:block>
+                    <th:block th:text="${player.name}"></th:block>
+                </td>
                 <td th:text="${player.className}"></td>
                 <td th:text="${player.role}"></td>
                 <td th:text="${player.comment}"></td>

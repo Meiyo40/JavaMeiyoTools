@@ -2,12 +2,11 @@ $(document).ready(function() {
     let PlanContainer = document.getElementById("PlanContainer");
     let RaidSelector = document.getElementById("RaidSelector");
     let PlanSelector = document.getElementById("PlanSelector");
-    let PLAYERS = null;
+    let PLAYERS = setPlayers();
     const REFRESH_TIMER = 10000;
 
     setTimeout( () => {
         getPlans();
-        setPlayers();
     }, 1000);
 
     RaidSelector.addEventListener("change", () => {
@@ -46,7 +45,7 @@ $(document).ready(function() {
                 option.innerText = data[i].planName;
                 PlanSelector.appendChild(option);
                 //default
-                PlanContainer.innerHTML = data[0].content;
+                PlanContainer.innerHTML = coloredClass(data[0].content);
             }
         }
     }

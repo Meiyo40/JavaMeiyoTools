@@ -42,9 +42,36 @@
                     <span th:classappend="${player.className} + '-color'" th:text="${player.name}"></span>
                 </th:block>
             </div>
+            <div id="rosterDisplay">
+                <th:block th:each="player: ${players}">
+                    <th:block th:if="${player.role} == 'tank'">
+                        <span>
+                            <i class="fal fa-shield-alt"></i>
+                            <span th:classappend="${player.className} + '-color'" th:text="${player.name}"></span>
+                        </span>
+                    </th:block>
+                    <th:block th:if="${player.role} == 'heal'">
+                        <span>
+                            <i class="far fa-cross"></i>
+                            <span th:classappend="${player.className} + '-color'" th:text="${player.name}"></span>
+                        </span>
+                    </th:block>
+                    <th:block th:if="${player.role} == 'dps'">
+                        <span>
+                            <i class="fad fa-swords"></i>
+                            <span th:classappend="${player.className} + '-color'" th:text="${player.name}"></span>
+                        </span>
+                    </th:block>
+
+                </th:block>
+            </div>
             <div id="tinyMce">
-                <label for="planTitle">Nom du plan:</label>
-                <input type="text" id="planTitle">
+                <div style="display: flex; flex-direction: row">
+                    <label for="rosterBox">Afficher liste joueurs:</label>
+                    <input type="checkbox" id="rosterBox" name="rosterBox"checked  style="margin-right: 1rem;">
+                    <label for="planTitle">Nom du plan:</label>
+                    <input type="text" id="planTitle">
+                </div>
                 <br>
                 <div id='textarea-container'>
                     <textarea id="tinyTextArea"></textarea>

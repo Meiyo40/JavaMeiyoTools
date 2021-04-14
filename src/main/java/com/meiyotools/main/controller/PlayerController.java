@@ -47,7 +47,11 @@ public class PlayerController {
     @PostMapping
     public ResponseEntity<Player> createPlayer (@RequestBody Player player, HttpServletRequest request) {
         if(userService.isLogged(request)) {
-            return new ResponseEntity<>(service.newPlayer(player), HttpStatus.CREATED);
+            if("".equals(player.getName())) {
+                return new ResponseEntity<>(service.newPlayer(player), HttpStatus.NOT_ACCEPTABLE);
+            } else {
+                return new ResponseEntity<>(service.newPlayer(player), HttpStatus.CREATED);
+            }
         } else {
             return new ResponseEntity<>(player, HttpStatus.FORBIDDEN);
         }
