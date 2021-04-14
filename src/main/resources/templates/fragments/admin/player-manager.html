@@ -1,0 +1,125 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="../../../static/assets/css/admin/manager.css"/>
+    <link rel="stylesheet" href="../../../static/assets/css/select.css"/>
+    <link rel="stylesheet" href="../../../static/assets/css/style.css"/>
+</head>
+<body>
+
+<th:block th:fragment="player-manager(user, players)">
+
+    <div id="addPlayerContainer">
+        <h4>Ajout joueur</h4>
+        <div class="apc-el">
+            <label for="playername">Pseudo:</label>
+            <input type="text" id="playername">
+        </div>
+        <div class="apc-el">
+            <label for="class">Classe:</label>
+            <select name="class" id="class">
+                <option value="priest">Prêtre</option>
+                <option value="shaman">Chaman</option>
+                <option value="paladin">Paladin</option>
+                <option value="druid">Druide</option>
+                <option value="warrior">Guerrier</option>
+                <option value="rogue">Voleur</option>
+                <option value="hunt">Chasseur</option>
+                <option value="mage">Mage</option>
+                <option value="warlock">Démoniste</option>
+            </select>
+            <label for="role">Rôle:</label>
+            <select name="role" id="role">
+                <option value="heal">heal</option>
+                <option value="tank">tank</option>
+                <option value="dps">dps</option>
+            </select>
+        </div>
+        <div class="apc-el">
+            <label for="comment">Comment:</label>
+            <input type="text" id="comment" placeholder="Non obligatoire">
+        </div>
+        <button class="greenButton" id="PlayerAddButton">Ajouter</button>
+    </div>
+
+    <div>
+        <h4>Liste des joueurs</h4>
+        <table id="listPlayers">
+
+            <thead>
+            <tr>
+                <th>Pseudo</th>
+                <th>Classe</th>
+                <th>Role</th>
+                <th>Comment</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody id="tableBody">
+            <tr th:each="player: ${players}" th:id="${player.id}">
+                <td th:text="${player.name}" th:classappend="${player.className}"></td>
+                <td th:text="${player.className}"></td>
+                <td th:text="${player.role}"></td>
+                <td th:text="${player.comment}"></td>
+                <td>
+                    <i class="fas fa-user-minus tooltip grab deletePlayer" id="deletePlayer" th:attr="data-playerId=${player.id}">
+                        <span class="tooltiptext">Supprimer joueur</span>
+                    </i>
+                    <i class="fas fa-cogs tooltip grab editPlayer" id="editPlayer" th:attr="data-playerId=${player.id}">
+                        <span class="tooltiptext">Modifier joueur</span>
+                    </i>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="modalEdit" class="modal">
+        <div class="modal-content">
+            <div>
+                <span class="close">&times;</span>
+                <h4>Edition du joueurs</h4>
+            </div>
+            <div>
+                <div class="apc-el">
+                    <label for="modalPlayerName">Pseudo:</label>
+                    <input type="text" id="modalPlayerName">
+                </div>
+                <div class="apc-el">
+                    <label for="modalClassName">Classe:</label>
+                    <select name="class" id="modalClassName">
+                        <option value="priest">Prêtre</option>
+                        <option value="shaman">Chaman</option>
+                        <option value="paladin">Paladin</option>
+                        <option value="druid">Druide</option>
+                        <option value="warrior">Guerrier</option>
+                        <option value="rogue">Voleur</option>
+                        <option value="hunt">Chasseur</option>
+                        <option value="mage">Mage</option>
+                        <option value="warlock">Démoniste</option>
+                    </select>
+                    <label for="modalRoleName">Rôle:</label>
+                    <select name="role" id="modalRoleName">
+                        <option value="heal">heal</option>
+                        <option value="tank">tank</option>
+                        <option value="dps">dps</option>
+                    </select>
+                </div>
+                <div class="apc-el">
+                    <label for="modalComment">Comment:</label>
+                    <input type="text" id="modalComment" placeholder="Non obligatoire">
+                </div>
+                <button class="greenButton" id="modalButtonAdd">Modifier</button>
+            </div>
+        </div>
+    </div>
+
+
+</th:block>
+
+<script src="../../../static/assets/js/lib/jquery.js"></script>
+<script src="../../../static/assets/js/public-manager.js"></script>
+
+</body>
+
+</html>

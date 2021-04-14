@@ -1,0 +1,22 @@
+#addPlayerContainer {
+    border: 1px solid snow;
+    padding: 5px;
+}
+
+h4{
+    text-align: center;
+}
+
+.apc-el {
+    display: flex;
+    flex-direction: row;
+    margin: 5px;
+}
+
+#listPlayers {
+    margin-top: 1rem;
+}
+
+.grab:hover{
+    cursor: grab;
+}

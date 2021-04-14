@@ -29,7 +29,7 @@ public class PlayerController {
         return new ResponseEntity<>(service.getAllPlayers(), HttpStatus.OK);
     }
 
-    @GetMapping("/name/{name}")
+    @GetMapping("/name/{playerName}")
     public ResponseEntity<Player> getPlayerByName(@PathVariable String playerName) {
         return new ResponseEntity<>(service.getPlayerByName(playerName), HttpStatus.OK);
     }
@@ -53,16 +53,17 @@ public class PlayerController {
         }
     }
 
-    @PutMapping
-    public ResponseEntity<Player> updatePlayer(@RequestBody Player player, HttpServletRequest request) {
+    @PutMapping("/{id}")
+    public ResponseEntity<Player> updatePlayer(@RequestBody Player player, @PathVariable Long id, HttpServletRequest request) {
         if(userService.isLogged(request)) {
+            player.setId(id);
             return new ResponseEntity<>(service.updatePlayer(player), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(player, HttpStatus.FORBIDDEN);
         }
     }
 
-    @DeleteMapping("/id/{id}")
+    @DeleteMapping("/{id}")
     public void deletePlayer(@PathVariable Long id) {
         service.deletePlayer(id);
     }

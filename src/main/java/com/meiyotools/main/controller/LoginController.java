@@ -1,6 +1,7 @@
 package com.meiyotools.main.controller;
 
 import com.meiyotools.main.model.entity.User;
+import com.meiyotools.main.service.PageService;
 import com.meiyotools.main.service.UserService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -20,11 +21,13 @@ import java.security.Key;
 @RequestMapping("/auth")
 public class LoginController {
     private final UserService userService;
+    private final PageService pageService;
     public static final Key SECRET = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
     @Autowired
-    public LoginController (UserService pService) {
+    public LoginController (UserService pService, PageService pPageService) {
         this.userService = pService;
+        this.pageService = pPageService;
     }
 
     @GetMapping("/login")
@@ -42,7 +45,7 @@ public class LoginController {
             token.setMaxAge(5*60);
             token.setPath("/");
             response.addCookie(token);
-            return "redirect:/index";
+            return "redirect:/manager";
         }
         return "redirect:/login";
     }
