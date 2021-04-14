@@ -22,12 +22,12 @@
 <body>
 
     <th:block th:if="${page == 'manager'}">
-        <th:block th:replace="fragments/content :: manager(${logged})" /></th:block>
+        <th:block th:replace="fragments/content :: manager(${logged}, ${players})" /></th:block>
     </th:block>
 
     <script th:src="@{/assets/js/lib/jquery.js}"></script>
 
-    <th:block th:replace="fragments/script :: manager(${logged})"> </th:block>
+    <th:block th:replace="fragments/script :: manager(${logged}, ${page})"> </th:block>
 </body>
 
 </html>

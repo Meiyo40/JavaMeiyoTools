@@ -57,6 +57,7 @@ public class PageService {
         String username = request.getSession().getAttribute("user").toString();
         User user = userService.getUser(username);
         List<Plan> plans = planService.getAllPlans();
+        List<Player> players = playerService.getAllPlayers();
 
         model.addAttribute("user", user.getUsername());
         model.addAttribute("page", "plan-manager");
@@ -64,5 +65,15 @@ public class PageService {
         model.addAttribute("logged", "true");
 
         model.addAttribute("plans", plans);
+        model.addAttribute("players", players);
+    }
+
+    public void setPublicIndex(HttpServletRequest request, Model model) {
+        List<Player> players = playerService.getAllPlayers();
+
+        model.addAttribute("logged", "false");
+        model.addAttribute("title", "SMB Plan");
+        model.addAttribute("page", "manager");
+        model.addAttribute("players", players);
     }
 }

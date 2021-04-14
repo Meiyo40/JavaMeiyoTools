@@ -7,15 +7,15 @@
 </head>
 <body>
 
-<th:block th:fragment="plan-manager(user, plans)">
+<th:block th:fragment="plan-manager(user, plans, players)">
 
     <div id="addPlanContainer">
         <div id="planSelectors">
 
             <label for="action">Action:</label>
             <select class="select-css" name="action" id="action">
-                <option value="create">Créer</option>
                 <option value="update">Modifier</option>
+                <option value="create">Créer</option>
                 <option value="delete">Supprimer</option>
             </select>
 
@@ -36,17 +36,24 @@
             </select>
 
         </div>
-        <div id="tinyMce">
-            <label for="planTitle">Nom du plan:</label>
-            <input type="text" id="planTitle">
-            <br>
-            <div id='textarea-container'>
-                <textarea id="tinyTextArea"></textarea>
+        <div id="editorContainer">
+            <div id="roster">
+                <th:block th:each="player: ${players}">
+                    <span th:classappend="${player.className} + '-color'" th:text="${player.name}"></span>
+                </th:block>
             </div>
-            <br>
-            <br>
-            <div>
-                <a id="subBtn" class="smbBtn" href="#">Envoyer</a>
+            <div id="tinyMce">
+                <label for="planTitle">Nom du plan:</label>
+                <input type="text" id="planTitle">
+                <br>
+                <div id='textarea-container'>
+                    <textarea id="tinyTextArea"></textarea>
+                </div>
+                <br>
+                <br>
+                <div>
+                    <a id="subBtn" class="smbBtn" href="#">Envoyer</a>
+                </div>
             </div>
         </div>
     </div>

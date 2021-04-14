@@ -63,7 +63,7 @@ public class PlanController {
         }
     }
 
-    @GetMapping("/delete/{planId}")
+    @GetMapping("/delete/{planId}")//Ajax fail to call a DELETE request
     public ResponseEntity<Long> deletePlan(@PathVariable Long planId, HttpServletRequest request) {
         if(userService.isLogged(request)) {
             this.service.deletePlan(planId);

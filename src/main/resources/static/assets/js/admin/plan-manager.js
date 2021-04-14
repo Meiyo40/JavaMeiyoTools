@@ -3,6 +3,10 @@ $(document).ready( () => {
     let selectPlan = document.getElementById("planName");
     let selectRaid = document.getElementById("raidName");
     let submitBtn = document.getElementById("subBtn");
+    let preview = document.getElementById("previewContainer");
+    let PLAYERS = null;
+
+    setTimeout( getPlans, 1000);
 
     selectRaid.addEventListener("change", () => {
         getPlans();
@@ -17,11 +21,73 @@ $(document).ready( () => {
         e.preventDefault();
 
         if(action.value === "delete") {
-            deletePlan(selectPlan.value);
+            let deleteIt = confirm("Voulez vous réellement ce plan ?");
+            if(deleteIt) {
+                deletePlan(selectPlan.value);
+            }
         } else {
             postPlan();
         }
     });
+
+    action.addEventListener("change", () => {
+        if(action === "create") {
+            tinymce.activeEditor.getBody().innerHTML = '';
+            document.getElementById('planTitle').value = '';
+            document.getElementById('planTitle').innerText = '';
+        }
+    });
+
+    setInterval(() => {
+        let text = tinymce.activeEditor.getBody().innerHTML;
+        preview.innerHTML = coloredClass(text);
+    }, 5000);
+
+    function coloredClass(text) {
+        if(PLAYERS != null) {
+            for(let i = 0; i < PLAYERS.length; i++) {
+                let coloredName = "<span class='" + PLAYERS[i].className + "'>" + PLAYERS[i].name + "</span>";
+                text = text.replaceAll(PLAYERS[i].name, coloredName);
+            }
+        } else {
+            PLAYERS = setPlayers();
+            console.log(PLAYERS);
+        }
+
+        return text;
+    }
+
+    function setPlayers() {
+        let playersContainer = document.getElementById("roster").children;
+        let players = [playersContainer.length];
+        for(let i = 0; i < playersContainer.length ; i++) {
+            players[i] = {
+                name: playersContainer[i].innerText,
+                className: playersContainer[i].className
+            }
+        }
+        return players;
+    }
+
+    function getPlayers() {
+        let getUrl = "/player";
+        $.ajax({
+            url: getUrl,
+            type: "GET",
+            success: (data) => {
+                return data;
+            },
+            error: () => {
+                console.log("GET::Impossible de récupérer les joueurs.");
+                return null;
+            }
+        });
+    }
+
+    let players = new Promise( (resolve, reject) => {
+
+    })
+
     function getPlan(id) {
         let getUrl = "/manager/plan/" + id;
         $.ajax({
@@ -42,6 +108,7 @@ $(document).ready( () => {
             type: "GET",
             success: () => {
                 alert('Plan supprimé');
+                getPlans();
             },
             error: () => {
                 alert("Erreur.")
@@ -103,7 +170,7 @@ $(document).ready( () => {
         }
     }
 
-    async function setTextAreaContent(plan) {
+    function setTextAreaContent(plan) {
         let title = document.getElementById('planTitle');
         title.value = plan.planName;
         let content = tinymce.activeEditor.getBody();

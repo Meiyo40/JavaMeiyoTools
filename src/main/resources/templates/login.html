@@ -4,6 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="icon" type="image/png" th:href="@{/assets/image/SMB_small.png}" />
     <link rel='stylesheet' type='text/css' th:href='@{/assets/css/login.css}'>
 
     <title>Connexion..</title>
@@ -17,8 +19,11 @@
             <label for="password">Mot de passe:</label>
             <input type="password" name="password" id="password">
             <input type="submit" value="Connexion" id="login-submit">
+            <span id="errorLogin">Identifiants invalide.</span>
         </form>
     </div>
+    <script th:src="@{/assets/js/lib/jquery.js}"></script>
+    <script th:src="@{/assets/js/login.js}"></script>
 </body>
 
 </html>

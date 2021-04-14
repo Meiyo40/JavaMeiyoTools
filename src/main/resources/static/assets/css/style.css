@@ -8,6 +8,11 @@ html {
     color: snow;
 }
 
+a{
+    text-decoration: none;
+    color: white;
+}
+
 .tooltip {
     position: relative;
     display: inline-block;
@@ -68,4 +73,42 @@ html {
 .smbBtn:hover{
     box-shadow: 2px 2px rgb(0, 58, 14);
     transform: translateY(2px);
+}
+
+
+
+.warrior-color{
+    color: #934c05;
+}
+
+.priest-color {
+    color: #fff;
+}
+
+.paladin-color {
+    color: #c65eac;
+}
+
+.rogue-color {
+    color: #d5d200;
+}
+
+.hunter-color{
+    color: #249305;
+}
+
+.mage-color {
+    color: #118de6;
+}
+
+.warlock-color {
+    color: #7a00c6;
+}
+
+.shaman-color {
+    color: #0050ff;
+}
+
+.druid-color {
+    color: orange;
 }
