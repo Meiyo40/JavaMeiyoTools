@@ -4,9 +4,24 @@ $(document).ready( () => {
     let selectRaid = document.getElementById("raidName");
     let submitBtn = document.getElementById("subBtn");
     let preview = document.getElementById("previewContainer");
-    let PLAYERS = null;
+    let PLAYERS = setPlayers();
+    let isTinyNotSet = true;
 
-    setTimeout( getPlans, 1000);
+
+    setTimeout( () => {
+        if(isTinyNotSet) {
+            let pValues = [PLAYERS.length];
+            for(let i = 0; i < PLAYERS.length; i++) {
+                pValues[i] = {
+                    text: PLAYERS[i].name.toLowerCase(),
+                    value: PLAYERS[i].name
+                }
+            }
+            newTinyMCE(pValues);
+            isTinyNotSet = false;
+            setTimeout(getPlans, 500);
+        }
+    }, 500);
 
     selectRaid.addEventListener("change", () => {
         getPlans();
@@ -41,7 +56,7 @@ $(document).ready( () => {
     setInterval(() => {
         let text = tinymce.activeEditor.getBody().innerHTML;
         preview.innerHTML = coloredClass(text);
-    }, 5000);
+    }, 2000);
 
     function coloredClass(text) {
         if(PLAYERS != null) {
@@ -67,6 +82,84 @@ $(document).ready( () => {
             }
         }
         return players;
+    }
+
+    function newTinyMCE(specialChars) {
+        console.log("Tiny Setup");
+        //var specialChars = val;
+        tinymce.init({
+            selector: 'textarea',
+            height: 300,
+            menubar: false,
+            plugins: [
+                'advlist autolink lists link image charmap print preview anchor',
+                'searchreplace visualblocks code fullscreen',
+                'insertdatetime media table paste code help wordcount'
+            ],
+            forced_root_block: "",
+            entity_encoding: 'raw',
+            encoding: "UTF-8",
+            toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor emoticons',
+            content_css: [
+                '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
+                '//www.tiny.cloud/css/codepen.min.css'
+            ],
+            setup: function (editor) {
+                var onAction = function (autocompleteApi, rng, value) {
+                    editor.selection.setRng(rng);
+                    editor.insertContent(value);
+                    autocompleteApi.hide();
+                };
+
+                var getMatchedChars = function (pattern) {
+                    return specialChars.filter(function (char) {
+                        return char.text.indexOf(pattern) !== -1;
+                    });
+                };
+
+                /**
+                 * An autocompleter that allows you to insert special characters.
+                 * Items are built using the CardMenuItem.
+                 */
+                editor.ui.registry.addAutocompleter('specialchars_cardmenuitems', {
+                    ch: '@',
+                    minChars: 1,
+                    columns: 1,
+                    highlightOn: ['char_name'],
+                    onAction: onAction,
+                    fetch: function (pattern) {
+                        return new tinymce.util.Promise(function (resolve) {
+                            var results = getMatchedChars(pattern).map(function (char) {
+                                return {
+                                    type: 'cardmenuitem',
+                                    value: char.value,
+                                    label: char.text,
+                                    items: [
+                                        {
+                                            type: 'cardcontainer',
+                                            direction: 'vertical',
+                                            items: [
+                                                {
+                                                    type: 'cardtext',
+                                                    text: char.text,
+                                                    name: 'char_name'
+                                                },
+                                                {
+                                                    type: 'cardtext',
+                                                    text: char.value
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            });
+                            resolve(results);
+                        });
+                    }
+                });
+            },
+            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+        });
     }
 
     function getPlayers() {
