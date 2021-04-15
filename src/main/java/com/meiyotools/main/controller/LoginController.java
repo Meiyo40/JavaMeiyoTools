@@ -43,8 +43,13 @@ public class LoginController {
     }
 
     @GetMapping("/login")
-    public String getLoginPage(Model model) {
-        return "login";
+    public String getLoginPage(Model model, HttpServletRequest request) {
+        if(userService.isLogged(request)) {
+            this.pageService.setPlayerManager(request, model);
+            return "manager";
+        } else {
+            return "login";
+        }
     }
 
     @PostMapping("/login")
