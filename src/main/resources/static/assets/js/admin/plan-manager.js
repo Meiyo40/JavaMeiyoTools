@@ -1,4 +1,4 @@
-$(document).ready( () => {
+$(document).ready(() => {
     let action = document.getElementById("action");
     let selectPlan = document.getElementById("planName");
     let selectRaid = document.getElementById("raidName");
@@ -11,10 +11,10 @@ $(document).ready( () => {
     let TIMER = null;
 
 
-    setTimeout( () => {
-        if(isTinyNotSet) {
+    setTimeout(() => {
+        if (isTinyNotSet) {
             let pValues = [PLAYERS.length];
-            for(let i = 0; i < PLAYERS.length; i++) {
+            for (let i = 0; i < PLAYERS.length; i++) {
                 pValues[i] = {
                     text: PLAYERS[i].name.toLowerCase(),
                     value: PLAYERS[i].name
@@ -31,7 +31,7 @@ $(document).ready( () => {
     });
 
     rosterBox.addEventListener("change", () => {
-        if(rosterBox.checked === true) {
+        if (rosterBox.checked === true) {
             document.getElementById("rosterDisplay").style.display = "flex";
         } else {
             document.getElementById("rosterDisplay").style.display = "none";
@@ -39,7 +39,7 @@ $(document).ready( () => {
     });
 
     dropzoneBox.addEventListener("change", () => {
-        if(dropzoneBox.checked === true) {
+        if (dropzoneBox.checked === true) {
             document.getElementById("drop-area").style.display = "flex";
         } else {
             document.getElementById("drop-area").style.display = "none";
@@ -53,9 +53,9 @@ $(document).ready( () => {
     submitBtn.addEventListener("click", (e) => {
         e.preventDefault();
 
-        if(action.value === "delete") {
+        if (action.value === "delete") {
             let deleteIt = confirm("Voulez vous réellement ce plan ?");
-            if(deleteIt) {
+            if (deleteIt) {
                 deletePlan(selectPlan.value);
             }
         } else {
@@ -64,7 +64,7 @@ $(document).ready( () => {
     });
 
     action.addEventListener("change", () => {
-        if(action === "create") {
+        if (action === "create") {
             tinymce.activeEditor.getBody().innerHTML = '';
             document.getElementById('planTitle').value = '';
             document.getElementById('planTitle').innerText = '';
@@ -72,8 +72,8 @@ $(document).ready( () => {
     });
 
     function coloredClass(text, PLAYERS) {
-        if(PLAYERS != null) {
-            for(let i = 0; i < PLAYERS.length; i++) {
+        if (PLAYERS != null) {
+            for (let i = 0; i < PLAYERS.length; i++) {
                 let coloredName = "<span class='" + PLAYERS[i].className + "'>" + PLAYERS[i].name + "</span>";
                 text = text.replaceAll(PLAYERS[i].name, coloredName);
             }
@@ -93,7 +93,7 @@ $(document).ready( () => {
     function setPlayers() {
         let playersContainer = document.getElementById("roster").children;
         let players = [playersContainer.length];
-        for(let i = 0; i < playersContainer.length ; i++) {
+        for (let i = 0; i < playersContainer.length; i++) {
             players[i] = {
                 name: playersContainer[i].innerText,
                 className: playersContainer[i].className
@@ -105,7 +105,7 @@ $(document).ready( () => {
     function newTinyMCE(specialChars) {
         //var specialChars = val;
         tinymce.init({
-            onchange_callback : "updatePreview",
+            onchange_callback: "updatePreview",
             selector: 'textarea',
             height: 300,
             menubar: false,
@@ -122,20 +122,20 @@ $(document).ready( () => {
                 '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
                 '//www.tiny.cloud/css/codepen.min.css'
             ],
-            setup: function (editor) {
+            setup: function(editor) {
 
                 editor.on("keyup", function(e) {
                     updatePreview(e);
                 });
 
-                var onAction = function (autocompleteApi, rng, value) {
+                var onAction = function(autocompleteApi, rng, value) {
                     editor.selection.setRng(rng);
                     editor.insertContent(value);
                     autocompleteApi.hide();
                 };
 
-                var getMatchedChars = function (pattern) {
-                    return specialChars.filter(function (char) {
+                var getMatchedChars = function(pattern) {
+                    return specialChars.filter(function(char) {
                         return char.text.indexOf(pattern) !== -1;
                     });
                 };
@@ -150,30 +150,27 @@ $(document).ready( () => {
                     columns: 1,
                     highlightOn: ['char_name'],
                     onAction: onAction,
-                    fetch: function (pattern) {
-                        return new tinymce.util.Promise(function (resolve) {
-                            var results = getMatchedChars(pattern).map(function (char) {
+                    fetch: function(pattern) {
+                        return new tinymce.util.Promise(function(resolve) {
+                            var results = getMatchedChars(pattern).map(function(char) {
                                 return {
                                     type: 'cardmenuitem',
                                     value: char.value,
                                     label: char.text,
-                                    items: [
-                                        {
-                                            type: 'cardcontainer',
-                                            direction: 'vertical',
-                                            items: [
-                                                {
-                                                    type: 'cardtext',
-                                                    text: char.text,
-                                                    name: 'char_name'
-                                                },
-                                                {
-                                                    type: 'cardtext',
-                                                    text: char.value
-                                                }
-                                            ]
-                                        }
-                                    ]
+                                    items: [{
+                                        type: 'cardcontainer',
+                                        direction: 'vertical',
+                                        items: [{
+                                                type: 'cardtext',
+                                                text: char.text,
+                                                name: 'char_name'
+                                            },
+                                            {
+                                                type: 'cardtext',
+                                                text: char.value
+                                            }
+                                        ]
+                                    }]
                                 }
                             });
                             resolve(results);
@@ -220,12 +217,12 @@ $(document).ready( () => {
             raidName: selectRaid.value,
             content: tinymce.activeEditor.getBody().innerHTML
         };
-        if(action.value === "update") {
+        if (action.value === "update") {
             plan.id = selectPlan.value;
         }
         $.ajax({
             contentType: 'application/json',
-            type:"POST",
+            type: "POST",
             url: postUrl,
             data: JSON.stringify(plan),
             dataType: "json",
@@ -254,13 +251,13 @@ $(document).ready( () => {
 
     function setPlans(data) {
         selectPlan.innerHTML = '';
-        if(data.length > 0) {
-            for(let i = 0; i < data.length ; i++) {
+        if (data.length > 0) {
+            for (let i = 0; i < data.length; i++) {
                 let option = document.createElement("option");
                 option.value = data[i].id;
                 option.innerText = data[i].planName;
                 selectPlan.appendChild(option);
-                if(i == 0) {
+                if (i == 0) {
                     setTextAreaContent(data[0]);
                     updatePreview();
                 }
@@ -273,5 +270,36 @@ $(document).ready( () => {
         title.value = plan.planName;
         let content = tinymce.activeEditor.getBody();
         content.innerHTML = plan.content;
+    }
+
+
+
+    function setPlansButtonListener() {
+        let downgradeBtn = document.getElementsByClassName("downgrade");
+        let upgradeBtn = document.getElementsByClassName("upgrade");
+
+        for (let i = 0; i < downgradeBtn.length; i++) {
+            downgradeBtn[i].addEventListener("click", changePriority(downgradeBtn[i], -1));
+        }
+        for (let i = 0; i < upgradeBtn.length; i++) {
+            upgradeBtn[i].addEventListener("click", changePriority(upgradeBtn[i], 1));
+        }
+    }
+
+    function changePriority(btn, priority) {
+
+        let planId = btn.dataset.planid;
+        let urlCall = "/manager/plan/update/" + planId;
+        $.ajax({
+            url: urlCall,
+            method: "POST",
+            data: priority,
+            success: (data) => {
+                //TODO update view;
+            },
+            error: () => {
+                //todo handle error
+            }
+        })
     }
 });

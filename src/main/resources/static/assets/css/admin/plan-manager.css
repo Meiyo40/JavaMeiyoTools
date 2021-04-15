@@ -5,10 +5,12 @@
     flex-direction: row;
     align-items: center;
 }
+
 #planSelectors select {
     max-width: 10rem;
 }
-#planSelectors > * {
+
+#planSelectors>* {
     padding: 4px;
     margin: 4px;
 }
@@ -21,11 +23,11 @@
 }
 
 #roster,
-#reorderPlan{
+#reorderPlan {
     display: none;
 }
 
-#rosterDisplay{
+#rosterDisplay {
     display: flex;
     flex-direction: column;
     margin-right: 2rem;
@@ -33,7 +35,7 @@
 }
 
 #editorContainer,
-#commandContainer{
+#commandContainer {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -53,4 +55,16 @@
 .downgrade:hover,
 .upgrade:hover {
     cursor: grab;
+}
+
+.plan {
+    padding: 4px;
+    margin: 2px;
+    background-color: #006014;
+    box-shadow: 3px 3px 1px 1px #034912;
+}
+
+.plan:active {
+    background-color: #034912;
+    transition: transform translateY(1px);
 }
