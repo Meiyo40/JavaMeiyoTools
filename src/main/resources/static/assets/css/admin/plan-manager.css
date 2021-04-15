@@ -1,6 +1,6 @@
 #planSelectors {
     text-align: center;
-    padding: 2rem;
+    padding: 5px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -20,16 +20,37 @@
     border: 1px solid #006014;
 }
 
-#roster{
+#roster,
+#reorderPlan{
     display: none;
 }
+
 #rosterDisplay{
     display: flex;
     flex-direction: column;
     margin-right: 2rem;
+    margin-top: 2rem;
 }
 
-#editorContainer {
+#editorContainer,
+#commandContainer{
     display: flex;
     flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+#planListContainer {
+    margin: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    border: 1px solid #006014;
+}
+
+.downgrade:hover,
+.upgrade:hover {
+    cursor: grab;
 }

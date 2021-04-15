@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,11 +44,31 @@ public class PlanService {
     }
 
     public List<Plan> getAllPlans() {
-        return this.repository.findAll();
+        Optional<List<Plan>> optionalList = this.repository.findAllByOrderByRaidNameAsc();
+        List<Plan> list;
+
+        if(optionalList.isPresent()) {
+            list = RaidToolBox.orderPlanByRaidTier(optionalList.get());
+        } else {
+            return null;
+        }
+        return list;
     }
 
     public Plan getPlanById(Long planId) {
         Optional<Plan> plan = this.repository.findById(planId);
         return plan.isPresent() ? plan.get() : null;
+    }
+
+    public List<List<Plan>> getAllPlansOrdered() {
+        Optional<List<Plan>> optionalList = this.repository.findAllByOrderByRaidNameAsc();
+        List<List<Plan>> list;
+
+        if(optionalList.isPresent()) {
+            list = RaidToolBox.raidListByTier(optionalList.get());
+        } else {
+            return null;
+        }
+        return list;
     }
 }

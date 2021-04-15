@@ -56,7 +56,7 @@ public class PageService {
     public void setPlanManager(HttpServletRequest request, Model model) {
         String username = request.getSession().getAttribute("user").toString();
         User user = userService.getUser(username);
-        List<Plan> plans = planService.getAllPlans();
+        List<List<Plan>> plans = planService.getAllPlansOrdered();
         List<Player> players = playerService.getAllPlayers();
 
         model.addAttribute("user", user.getUsername());

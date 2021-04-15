@@ -14,6 +14,8 @@ public class Plan {
     @Lob
     private String content;
     private LocalDate createdAt;
+    @Column(columnDefinition = "integer default 0")
+    private int priority;
 
     public Plan() {
     }
@@ -25,12 +27,21 @@ public class Plan {
         this.createdAt = createdAt;
     }
 
-    public Plan(Long id, String planName, String raidName, String content, LocalDate createdAt) {
+    public Plan(String planName, String raidName, String content, LocalDate createdAt, int priority) {
+        this.planName = planName;
+        this.raidName = raidName;
+        this.content = content;
+        this.createdAt = createdAt;
+        this.priority = priority;
+    }
+
+    public Plan(Long id, String planName, String raidName, String content, LocalDate createdAt, int priority) {
         this.id = id;
         this.planName = planName;
         this.raidName = raidName;
         this.content = content;
         this.createdAt = createdAt;
+        this.priority = priority;
     }
 
     @Override
@@ -41,6 +52,7 @@ public class Plan {
         sb.append(", raidName='").append(raidName).append('\'');
         sb.append(", content='").append(content).append('\'');
         sb.append(", createdAt=").append(createdAt);
+        sb.append(", priority=").append(priority);
         sb.append('}');
         return sb.toString();
     }
@@ -83,5 +95,13 @@ public class Plan {
 
     public void setCreatedAt(LocalDate createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
     }
 }
