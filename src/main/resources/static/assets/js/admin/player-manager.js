@@ -45,7 +45,7 @@ $(document).ready(function() {
     addPlayerButton.addEventListener("click", () => {
         let url = "/player";
         let data = {
-            name: document.getElementById("playername").value,
+            name: document.getElementById("playername").value.trim(),
             className: document.getElementById("class").value,
             role: document.getElementById("role").value,
             comment: document.getElementById("comment").value

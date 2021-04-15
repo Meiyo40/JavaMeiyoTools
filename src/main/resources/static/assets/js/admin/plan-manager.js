@@ -8,6 +8,7 @@ $(document).ready( () => {
     let dropzoneBox = document.getElementById("dropZoneBox");
     let PLAYERS = setPlayers();
     let isTinyNotSet = true;
+    let TIMER = null;
 
 
     setTimeout( () => {
@@ -70,12 +71,7 @@ $(document).ready( () => {
         }
     });
 
-    setInterval(() => {
-        let text = tinymce.activeEditor.getBody().innerHTML;
-        preview.innerHTML = coloredClass(text);
-    }, 2000);
-
-    function coloredClass(text) {
+    function coloredClass(text, PLAYERS) {
         if(PLAYERS != null) {
             for(let i = 0; i < PLAYERS.length; i++) {
                 let coloredName = "<span class='" + PLAYERS[i].className + "'>" + PLAYERS[i].name + "</span>";
@@ -83,10 +79,15 @@ $(document).ready( () => {
             }
         } else {
             PLAYERS = setPlayers();
-            console.log(PLAYERS);
         }
-
         return text;
+    }
+
+    function updatePreview(editor = null) {
+        TIMER = setTimeout(() => {
+            let text = tinymce.activeEditor.getBody().innerHTML;
+            preview.innerHTML = coloredClass(text, PLAYERS);
+        }, 1000);
     }
 
     function setPlayers() {
@@ -102,9 +103,9 @@ $(document).ready( () => {
     }
 
     function newTinyMCE(specialChars) {
-        console.log("Tiny Setup");
         //var specialChars = val;
         tinymce.init({
+            onchange_callback : "updatePreview",
             selector: 'textarea',
             height: 300,
             menubar: false,
@@ -122,6 +123,11 @@ $(document).ready( () => {
                 '//www.tiny.cloud/css/codepen.min.css'
             ],
             setup: function (editor) {
+
+                editor.on("keyup", function(e) {
+                    updatePreview(e);
+                });
+
                 var onAction = function (autocompleteApi, rng, value) {
                     editor.selection.setRng(rng);
                     editor.insertContent(value);
@@ -178,25 +184,6 @@ $(document).ready( () => {
             content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
         });
     }
-
-    function getPlayers() {
-        let getUrl = "/player";
-        $.ajax({
-            url: getUrl,
-            type: "GET",
-            success: (data) => {
-                return data;
-            },
-            error: () => {
-                console.log("GET::Impossible de récupérer les joueurs.");
-                return null;
-            }
-        });
-    }
-
-    let players = new Promise( (resolve, reject) => {
-
-    })
 
     function getPlan(id) {
         let getUrl = "/manager/plan/" + id;
@@ -275,6 +262,7 @@ $(document).ready( () => {
                 selectPlan.appendChild(option);
                 if(i == 0) {
                     setTextAreaContent(data[0]);
+                    updatePreview();
                 }
             }
         }

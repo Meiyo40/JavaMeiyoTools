@@ -38,12 +38,16 @@ class RaidToolBox {
 
         for (Plan el: plans) {
             if(el.getRaidName().equals("karazhan") || el.getRaidName().equals("gruul_mag")) {
+                el.setRaidName( el.getRaidName().equals("karazhan") ? "KZ" : "OD" );
                 t4.add(el);
             } else if (el.getRaidName().equals("ssc") || el.getRaidName().equals("tempestKeep")) {
+                el.setRaidName( el.getRaidName().equals("ssc") ? "SSC" : "TK" );
                 t5.add(el);
             } else if(el.getRaidName().equals("hyjal") || el.getRaidName().equals("blackTemple")) {
+                el.setRaidName( el.getRaidName().equals("hyjal") ? "Hyjal" : "BT" );
                 t6.add(el);
             } else if(el.getRaidName().equals("sunwell")) {
+                el.setRaidName("SW");
                 t65.add(el);
             } else {
                 unmatchted.add(el);

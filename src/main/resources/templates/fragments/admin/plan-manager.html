@@ -20,7 +20,6 @@
             <input type="checkbox" id="planListBox" name="planListBox">
         </div>
         <div id="planListContainer">
-            <h4>Organisation des plans</h4>
             <div id="t4List">
                 <th:block th:each="plan: ${plans[0]}">
                     <div class="plan raid-t4" th:attr="data-planId=${plan.id}">
