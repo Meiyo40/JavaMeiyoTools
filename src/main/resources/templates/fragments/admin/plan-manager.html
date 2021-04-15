@@ -68,9 +68,11 @@
             <div id="tinyMce">
                 <div style="display: flex; flex-direction: row">
                     <label for="rosterBox">Afficher liste joueurs:</label>
-                    <input type="checkbox" id="rosterBox" name="rosterBox"checked  style="margin-right: 1rem;">
+                    <input type="checkbox" id="rosterBox" name="rosterBox" checked  style="margin-right: 1rem;">
                     <label for="planTitle">Nom du plan:</label>
                     <input type="text" id="planTitle">
+                    <label for="dropZoneBox" style="margin-left: 1rem;">Afficher dropzone:</label>
+                    <input type="checkbox" id="dropZoneBox" name="dropZoneBox"  style="margin-right: 1rem;">
                 </div>
                 <br>
                 <div id='textarea-container'>
@@ -80,6 +82,18 @@
                 <br>
                 <div>
                     <a id="subBtn" class="smbBtn" href="#">Envoyer</a>
+                </div>
+            </div>
+            <div id="drop-area">
+                <form class="dropareaform">
+                    <p>Drag&Drop File</p>
+                    <input type="file" id="fileElem" multiple accept="image/*" onchange="handleFiles(this.files)" />
+                </form>
+                <progress id="progress-bar" max=100 value=0></progress>
+                <div id="gallery" /></div>
+                <div id="datareturn">
+                    <label class="button" for="fileElem">URL:</label>
+                    <input type="text" id="urlreturn" />
                 </div>
             </div>
         </div>
