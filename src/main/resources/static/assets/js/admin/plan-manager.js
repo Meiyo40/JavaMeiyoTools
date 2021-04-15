@@ -5,6 +5,7 @@ $(document).ready( () => {
     let submitBtn = document.getElementById("subBtn");
     let preview = document.getElementById("previewContainer");
     let rosterBox = document.getElementById("rosterBox");
+    let dropzoneBox = document.getElementById("dropZoneBox");
     let PLAYERS = setPlayers();
     let isTinyNotSet = true;
 
@@ -33,6 +34,14 @@ $(document).ready( () => {
             document.getElementById("rosterDisplay").style.display = "flex";
         } else {
             document.getElementById("rosterDisplay").style.display = "none";
+        }
+    });
+
+    dropzoneBox.addEventListener("change", () => {
+        if(dropzoneBox.checked === true) {
+            document.getElementById("drop-area").style.display = "flex";
+        } else {
+            document.getElementById("drop-area").style.display = "none";
         }
     });
 
