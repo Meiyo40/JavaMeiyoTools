@@ -36,6 +36,7 @@ public class PlanService {
 
     public Plan setPlan(Plan plan) {
         plan.setCreatedAt(LocalDate.now());
+        plan.setVersion(plan.getVersion() + 1);
         return this.repository.save(plan);
     }
 
@@ -44,7 +45,7 @@ public class PlanService {
     }
 
     public List<Plan> getAllPlans() {
-        Optional<List<Plan>> optionalList = this.repository.findAllByOrderByRaidNameAsc();
+        Optional<List<Plan>> optionalList = this.repository.findAllByOrderByPriorityDesc();
         List<Plan> list;
 
         if(optionalList.isPresent()) {
@@ -61,7 +62,7 @@ public class PlanService {
     }
 
     public List<List<Plan>> getAllPlansOrdered() {
-        Optional<List<Plan>> optionalList = this.repository.findAllByOrderByRaidNameAsc();
+        Optional<List<Plan>> optionalList = this.repository.findAllByOrderByPriorityDesc();
         List<List<Plan>> list;
 
         if(optionalList.isPresent()) {

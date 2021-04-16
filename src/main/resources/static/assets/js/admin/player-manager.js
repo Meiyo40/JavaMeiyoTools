@@ -30,12 +30,12 @@ $(document).ready(function() {
                     url: url,
                     type: "DELETE",
                     success: () => {
-                        alert("Succès.")
+                        ajaxMessage("warning", "Joueur supprimé.");
                         let row = document.getElementById(deletePlayer[i].dataset.playerid);
                         row.parentNode.removeChild(row);
                     },
                     error: () => {
-                        alert("Erreur.")
+                        ajaxMessage("fail", "Erreur processus.");
                     }
                 })
             }
@@ -60,11 +60,11 @@ $(document).ready(function() {
                 data: JSON.stringify(data),
                 dataType: "json",
                 success: (data) => {
-                    alert("Joueur ajouté.")
+                    ajaxMessage("success", "Joueur ajouté.");
                     createNewRow(data)
                 },
                 error: () => {
-                    alert("Erreur.")
+                    ajaxMessage("fail", "Erreur processus.");
                 }
             });
         }
@@ -154,13 +154,14 @@ $(document).ready(function() {
                 data: JSON.stringify(data),
                 dataType: "json",
                 success: (data) => {
-                    alert("Joueur modifié.")
+                    document.getElementById(PlayerId).parentNode.removeChild(document.getElementById(PlayerId));
+                    ajaxMessage("success", "Joueur modifié.");
                     createNewRow(data)
                 },
                 error: () => {
-                    alert("Erreur.")
+                    ajaxMessage("fail", "Erreur processus.");
                 }
             });
         })
     }
-})
+});

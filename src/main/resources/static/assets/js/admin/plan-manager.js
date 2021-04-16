@@ -64,7 +64,7 @@ $(document).ready(() => {
         e.preventDefault();
 
         if (action.value === "delete") {
-            let deleteIt = confirm("Voulez vous réellement ce plan ?");
+            let deleteIt = confirm("Voulez vous réellement supprimer ce plan ?");
             if (deleteIt) {
                 deletePlan(selectPlan.value);
             }
@@ -225,10 +225,13 @@ $(document).ready(() => {
         let plan = {
             planName: document.getElementById('planTitle').value,
             raidName: selectRaid.value,
-            content: tinymce.activeEditor.getBody().innerHTML
+            content: tinymce.activeEditor.getBody().innerHTML,
+            priority: document.getElementById("priority").value,
+            version: 1
         };
         if (action.value === "update") {
             plan.id = selectPlan.value;
+            plan.version = submitBtn.dataset.planversion;
         }
         $.ajax({
             contentType: 'application/json',
@@ -237,10 +240,11 @@ $(document).ready(() => {
             data: JSON.stringify(plan),
             dataType: "json",
             success: () => {
-                alert("Plan upload.");
+                submitBtn.dataset.planversion = parseInt(submitBtn.dataset.planversion) + 1;
+                ajaxMessage("success", "Plan réceptionné par le serveur.");
             },
             error: () => {
-                alert("Erreur.")
+                ajaxMessage("fail", "Erreur dans le processus");
             }
         });
     }
@@ -278,11 +282,13 @@ $(document).ready(() => {
     function setTextAreaContent(plan) {
         let title = document.getElementById('planTitle');
         title.value = plan.planName;
+        document.getElementById("priority").value = plan.priority;
         let content = tinymce.activeEditor.getBody();
         content.innerHTML = plan.content;
+
+        submitBtn.dataset.planid = plan.id;
+        submitBtn.dataset.planversion = plan.version;
     }
-
-
 
     function setPlansButtonListener() {
         let downgradeBtn = document.getElementsByClassName("downgrade");

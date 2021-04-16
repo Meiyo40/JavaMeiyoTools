@@ -3,6 +3,7 @@ $(document).ready(function() {
     let RaidSelector = document.getElementById("RaidSelector");
     let PlanSelector = document.getElementById("PlanSelector");
     let PLAYERS = setPlayers();
+    let CURRENT = null;
     const REFRESH_TIMER = 10000;
 
     setTimeout( () => {
@@ -56,12 +57,25 @@ $(document).ready(function() {
             url: getUrl,
             type: "GET",
             success: (data) => {
-                PlanContainer.innerHTML = coloredClass(data.content);
+                setContent(data)
             },
             error: () => {
-                alert("Erreur.")
+                ajaxMessage("fail", "Erreur dans l'actualisation.")
             }
         })
+    }
+
+    function setContent(data) {
+        if(CURRENT == null) {
+            CURRENT = data;
+            PlanContainer.innerHTML = coloredClass(data.content);
+        } else {
+            if(CURRENT.version == data.version) {
+                return;
+            }
+            PlanContainer.innerHTML = coloredClass(data.content);
+            CURRENT = data;
+        }
     }
 
     function $_GET(param) {

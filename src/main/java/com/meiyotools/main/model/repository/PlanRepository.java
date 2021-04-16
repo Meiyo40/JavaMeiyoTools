@@ -12,5 +12,5 @@ public interface PlanRepository extends JpaRepository<Plan, Long> {
     Optional<Plan> findByPlanName(String planName);
     Optional<Plan> findByRaidNameAndPlanName(String raidName, String planName);
     Optional<List<Plan>> findAllByRaidName(String raidName);
-    Optional<List<Plan>> findAllByOrderByRaidNameAsc();
+    Optional<List<Plan>> findAllByOrderByPriorityDesc();
 }
