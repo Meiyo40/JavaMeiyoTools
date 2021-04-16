@@ -46,7 +46,7 @@ public class LoginController {
     public String getLoginPage(Model model, HttpServletRequest request) {
         if(userService.isLogged(request)) {
             this.pageService.setPlayerManager(request, model);
-            return "manager";
+            return "redirect:/manager";
         } else {
             return "login";
         }

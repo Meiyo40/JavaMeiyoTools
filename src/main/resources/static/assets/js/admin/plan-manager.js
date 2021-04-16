@@ -6,12 +6,14 @@ $(document).ready(() => {
     let preview = document.getElementById("previewContainer");
     let rosterBox = document.getElementById("rosterBox");
     let dropzoneBox = document.getElementById("dropZoneBox");
+    let planListBox = document.getElementById("planListBox");
     let PLAYERS = setPlayers();
     let isTinyNotSet = true;
     let TIMER = null;
 
 
     setTimeout(() => {
+        setPlansButtonListener();
         if (isTinyNotSet) {
             let pValues = [PLAYERS.length];
             for (let i = 0; i < PLAYERS.length; i++) {
@@ -43,6 +45,14 @@ $(document).ready(() => {
             document.getElementById("drop-area").style.display = "flex";
         } else {
             document.getElementById("drop-area").style.display = "none";
+        }
+    });
+
+    planListBox.addEventListener("change", () => {
+        if (planListBox.checked === true) {
+            document.getElementById("planListContainer").style.display = "flex";
+        } else {
+            document.getElementById("planListContainer").style.display = "none";
         }
     });
 
@@ -279,16 +289,21 @@ $(document).ready(() => {
         let upgradeBtn = document.getElementsByClassName("upgrade");
 
         for (let i = 0; i < downgradeBtn.length; i++) {
-            downgradeBtn[i].addEventListener("click", changePriority(downgradeBtn[i], -1));
+            downgradeBtn[i].addEventListener("click", () => {changePriority(downgradeBtn[i], -1)});
         }
         for (let i = 0; i < upgradeBtn.length; i++) {
-            upgradeBtn[i].addEventListener("click", changePriority(upgradeBtn[i], 1));
+            upgradeBtn[i].addEventListener("click", () => {changePriority(upgradeBtn[i], 1)});
         }
     }
 
     function changePriority(btn, priority) {
+        console.log(priority + " " + btn.dataset.planid)
 
-        let planId = btn.dataset.planid;
+        let planval = document.getElementById("planval-" + btn.dataset.planid);
+        planval.innerText = "(" + priority + ")";
+
+        /*
+        * let planId = btn.dataset.planid;
         let urlCall = "/manager/plan/update/" + planId;
         $.ajax({
             url: urlCall,
@@ -301,5 +316,6 @@ $(document).ready(() => {
                 //todo handle error
             }
         })
+        * */
     }
 });

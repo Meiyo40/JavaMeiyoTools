@@ -54,6 +54,7 @@
 
 .downgrade:hover,
 .upgrade:hover {
+    color: red;
     cursor: grab;
 }
 
@@ -67,4 +68,10 @@
 .plan:active {
     background-color: #034912;
     transition: transform translateY(1px);
+}
+
+.separator {
+    margin: 1rem 0;
+    border-top: 8px solid #034912;
+    border-radius: 5px;
 }

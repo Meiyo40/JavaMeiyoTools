@@ -17,137 +17,14 @@
             <label for="dropZoneBox" style="margin-left: 1rem;">Afficher dropzone:</label>
             <input type="checkbox" id="dropZoneBox" name="dropZoneBox"  style="margin-right: 1rem;">
             <label for="planListBox" style="margin-left: 1rem;">Afficher planList:</label>
-            <input type="checkbox" id="planListBox" name="planListBox">
+            <input type="checkbox" id="planListBox" name="planListBox" checked>
         </div>
-        <div id="planListContainer">
-            <div id="t4List">
-                <th:block th:each="plan: ${plans[0]}">
-                    <div class="plan raid-t4" th:attr="data-planId=${plan.id}">
-                        <i class="fas fa-arrow-down downgrade" th:attr="data-planId=${plan.id}"></i>
-                        <i class="fas fa-arrow-up upgrade" th:attr="data-planId=${plan.id}"></i>
-                        <th:block th:text="'[' + ${plan.raidName} + ']' "></th:block>
-                        <th:block th:text="${plan.planName}"></th:block>
-                        <th:block th:text="' (' + ${plan.priority} + ')'"></th:block>
-                    </div>
-                </th:block>
-            </div>
-            <div id="t5List">
-                <th:block th:each="plan: ${plans[1]}">
-                    <div class="plan raid-t5" th:attr="data-planId=${plan.id}">
-                        <i class="fas fa-arrow-down downgrade" th:attr="data-planId=${plan.id}"></i>
-                        <i class="fas fa-arrow-up upgrade" th:attr="data-planId=${plan.id}"></i>
-                        <th:block th:text="'[' + ${plan.raidName} + ']' "></th:block>
-                        <th:block th:text="${plan.planName}"></th:block>
-                        <th:block th:text="' (' + ${plan.priority} + ')'"></th:block>
-                    </div>
-                </th:block>
-            </div>
-            <div id="t6List">
-                <th:block th:each="plan: ${plans[2]}">
-                    <div class="plan raid-t6" th:attr="data-planId=${plan.id}">
-                        <i class="fas fa-arrow-down downgrade" th:attr="data-planId=${plan.id}"></i>
-                        <i class="fas fa-arrow-up upgrade" th:attr="data-planId=${plan.id}"></i>
-                        <th:block th:text="'[' + ${plan.raidName} + ']' "></th:block>
-                        <th:block th:text="${plan.planName}"></th:block>
-                        <th:block th:text="' (' + ${plan.priority} + ')'"></th:block>
-                    </div>
-                </th:block>
-            </div>
-            <div id="t65List">
-                <th:block th:each="plan: ${plans[3]}">
-                    <div class="plan raid-t65" th:attr="data-planId=${plan.id}">
-                        <i class="fas fa-arrow-down downgrade" th:attr="data-planId=${plan.id}"></i>
-                        <i class="fas fa-arrow-up upgrade" th:attr="data-planId=${plan.id}"></i>
-                        <th:block th:text="'[' + ${plan.raidName} + ']' "></th:block>
-                        <th:block th:text="${plan.planName}"></th:block>
-                        <th:block th:text="' (' + ${plan.priority} + ')'"></th:block>
-                    </div>
-                </th:block>
-            </div>
-        </div>
-        <div id="editorContainer">
-            <div id="roster">
-                <th:block th:each="player: ${players}">
-                    <span th:classappend="${player.className} + '-color'" th:text="${player.name}"></span>
-                </th:block>
-            </div>
-            <div id="rosterDisplay">
-                <th:block th:each="player: ${players}">
-                    <th:block th:if="${player.role} == 'tank'">
-                        <span>
-                            <i class="fal fa-shield-alt"></i>
-                            <span th:classappend="${player.className} + '-color'" th:text="${player.name}"></span>
-                        </span>
-                    </th:block>
-                    <th:block th:if="${player.role} == 'heal'">
-                        <span>
-                            <i class="far fa-cross"></i>
-                            <span th:classappend="${player.className} + '-color'" th:text="${player.name}"></span>
-                        </span>
-                    </th:block>
-                    <th:block th:if="${player.role} == 'dps'">
-                        <span>
-                            <i class="fad fa-swords"></i>
-                            <span th:classappend="${player.className} + '-color'" th:text="${player.name}"></span>
-                        </span>
-                    </th:block>
-                </th:block>
-            </div>
-            <div id="tinyMce">
-                <div style="display: flex; flex-direction: row">
 
-                    <div id="planSelectors">
-                        <label for="action">Action:</label>
-                        <select class="select-css" name="action" id="action">
-                            <option value="update">Modifier</option>
-                            <option value="create">Créer</option>
-                            <option value="delete">Supprimer</option>
-                        </select>
+        <th:block th:replace="fragments/admin/plan-manager-fragments/planlist :: planlist(${plans})"/>
 
-                        <label for="raidName">Raid:</label>
-                        <select class="select-css" name="raidName" id="raidName">
-                            <option value="karazhan">Karazhan</option>
-                            <option value="gruul_mag">Gruul/Mag</option>
-                            <option value="ssc">SSC</option>
-                            <option value="tempestKeep">TK</option>
-                            <option value="hyjal">Hyjal</option>
-                            <option value="blackTemple">Temple noir</option>
-                            <option value="sunwell">Sunwell</option>
-                        </select>
+        <th:block th:replace="fragments/admin/plan-manager-fragments/editor :: editor(${players}, ${plans})"/>
 
-                        <label for="planName">Plan:</label>
-                        <select class="select-css" name="planName" id="planName">
-                            <option value="null" id="optionNull">Null.</option>
-                        </select>
 
-                        <div>
-                            <label for="planTitle">Nom du plan:</label>
-                            <input type="text" id="planTitle">
-                        </div>
-                    </div>
-                </div>
-                <div id='textarea-container'>
-                    <textarea id="tinyTextArea"></textarea>
-                </div>
-                <br>
-                <br>
-                <div>
-                    <a id="subBtn" class="smbBtn" href="#">Envoyer</a>
-                </div>
-            </div>
-            <div id="drop-area">
-                <form class="dropareaform">
-                    <p>Drag&Drop File</p>
-                    <input type="file" id="fileElem" multiple accept="image/*" onchange="handleFiles(this.files)" />
-                </form>
-                <progress id="progress-bar" max=100 value=0></progress>
-                <div id="gallery" /></div>
-                <div id="datareturn">
-                    <label class="button" for="fileElem">URL:</label>
-                    <input type="text" id="urlreturn" />
-                </div>
-            </div>
-        </div>
     </div>
 
     <div id="previewContainer">

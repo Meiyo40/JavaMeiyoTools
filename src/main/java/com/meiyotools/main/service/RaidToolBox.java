@@ -6,6 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 class RaidToolBox {
+
+    /**
+     * Take a list of plans and ordered the content by tier priority index 0 :: T4 > T5 > T6 > T65 > N
+     * @param rawList
+     * @return Return an ordered list of the plans T4 > T5 > T6 > T65 > N
+     */
     static List<Plan> orderPlanByRaidTier(List<Plan> rawList){
         List<Plan> list = new ArrayList<Plan>();
         List<List<Plan>> tierList = raidListByTier(rawList);
@@ -28,12 +34,18 @@ class RaidToolBox {
         return list;
     }
 
+    /**
+     * Build a list of list containing all plans, each sub list inside the main list is a game tier (T4/5/6/65/N)
+     * @param plans
+     * @return Return a list of list of plans, the list contains all plans, each sublist is a tier (T4/5/6/65/N)
+     */
     static List<List<Plan>> raidListByTier(List<Plan> plans) {
         List<List<Plan>> list = new ArrayList<>();
         List<Plan> t4 = new ArrayList<Plan>();
         List<Plan> t5 = new ArrayList<Plan>();
         List<Plan> t6 = new ArrayList<Plan>();
         List<Plan> t65 = new ArrayList<Plan>();
+        List<Plan> za = new ArrayList<Plan>();
         List<Plan> unmatchted = new ArrayList<Plan>();
 
         for (Plan el: plans) {
@@ -49,6 +61,9 @@ class RaidToolBox {
             } else if(el.getRaidName().equals("sunwell")) {
                 el.setRaidName("SW");
                 t65.add(el);
+            } else if(el.getRaidName().equals("zulaman")) {
+                el.setRaidName("ZA");
+                za.add(el);
             } else {
                 unmatchted.add(el);
             }
@@ -58,6 +73,7 @@ class RaidToolBox {
         list.add(t5);
         list.add(t6);
         list.add(t65);
+        list.add(za);
         list.add(unmatchted);
 
         return list;

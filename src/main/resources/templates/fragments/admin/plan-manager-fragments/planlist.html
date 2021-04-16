@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <th:block th:fragment="planlist(plans)" >
+        <div id="planListContainer">
+            <div id="t4List" th:if="${!plans[0].empty}">
+                <th:block th:each="plan: ${plans[0]}">
+                    <div class="plan raid-t4 raidkz" th:id="'plan-' + ${plan.id}" th:if="${plan.raidName} == 'KZ'">
+                        <i class="fas fa-arrow-down downgrade" th:attr="data-planId=${plan.id}"></i>
+                        <i class="fas fa-arrow-up upgrade" th:attr="data-planId=${plan.id}"></i>
+                        <th:block th:text="'[' + ${plan.raidName} + ']' "></th:block>
+                        <th:block th:text="${plan.planName}"></th:block>
+                        <span th:id="'planval-' + ${plan.id}" th:text="' (' + ${plan.priority} + ')'"></span>
+                    </div>
+                </th:block>
+                <div class="separator"></div>
+                <th:block th:each="plan: ${plans[0]}">
+                    <div class="plan raid-t4 raidod" th:id="'plan-' + ${plan.id}" th:if="${plan.raidName} == 'OD'">
+                        <i class="fas fa-arrow-down downgrade" th:attr="data-planId=${plan.id}"></i>
+                        <i class="fas fa-arrow-up upgrade" th:attr="data-planId=${plan.id}"></i>
+                        <th:block th:text="'[' + ${plan.raidName} + ']' "></th:block>
+                        <th:block th:text="${plan.planName}"></th:block>
+                        <span th:id="'planval-' + ${plan.id}" th:text="' (' + ${plan.priority} + ')'"></span>
+                    </div>
+                </th:block>
+            </div>
+            <div id="t5List" th:if="${!plans[1].empty}">
+                <th:block th:each="plan: ${plans[1]}">
+                    <div class="plan raid-t5 raidssc" th:id="'plan-' + ${plan.id}" th:if="${plan.raidName} == 'SSC'">
+                        <i class="fas fa-arrow-down downgrade" th:attr="data-planId=${plan.id}"></i>
+                        <i class="fas fa-arrow-up upgrade" th:attr="data-planId=${plan.id}"></i>
+                        <th:block th:text="'[' + ${plan.raidName} + ']' "></th:block>
+                        <th:block th:text="${plan.planName}"></th:block>
+                        <span th:id="'planval-' + ${plan.id}" th:text="' (' + ${plan.priority} + ')'"></span>
+                    </div>
+                </th:block>
+                <div class="separator"></div>
+                <th:block th:each="plan: ${plans[1]}">
+                    <div class="plan raid-t5 raidtk" th:id="'plan-' + ${plan.id}" th:if="${plan.raidName} == 'TK'">
+                        <i class="fas fa-arrow-down downgrade" th:attr="data-planId=${plan.id}"></i>
+                        <i class="fas fa-arrow-up upgrade" th:attr="data-planId=${plan.id}"></i>
+                        <th:block th:text="'[' + ${plan.raidName} + ']' "></th:block>
+                        <th:block th:text="${plan.planName}"></th:block>
+                        <span th:id="'planval-' + ${plan.id}" th:text="' (' + ${plan.priority} + ')'"></span>
+                    </div>
+                </th:block>
+
+            </div>
+            <div id="t6List" th:if="${!plans[2].empty}">
+                <th:block th:each="plan: ${plans[2]}">
+                    <div class="plan raid-t6 raidbt" th:id="'plan-' + ${plan.id}" th:if="${plan.raidName} == 'BT'">
+                        <i class="fas fa-arrow-down downgrade" th:attr="data-planId=${plan.id}"></i>
+                        <i class="fas fa-arrow-up upgrade" th:attr="data-planId=${plan.id}"></i>
+                        <th:block th:text="'[' + ${plan.raidName} + ']' "></th:block>
+                        <th:block th:text="${plan.planName}"></th:block>
+                        <span th:id="'planval-' + ${plan.id}" th:text="' (' + ${plan.priority} + ')'"></span>
+                    </div>
+                </th:block>
+                <div class="separator"></div>
+                <th:block th:each="plan: ${plans[2]}">
+                    <div class="plan raid-t6 raidhyjal" th:id="'plan-' + ${plan.id}" th:if="${plan.raidName} == 'Hyjal'">
+                        <i class="fas fa-arrow-down downgrade" th:attr="data-planId=${plan.id}"></i>
+                        <i class="fas fa-arrow-up upgrade" th:attr="data-planId=${plan.id}"></i>
+                        <th:block th:text="'[' + ${plan.raidName} + ']' "></th:block>
+                        <th:block th:text="${plan.planName}"></th:block>
+                        <span th:id="'planval-' + ${plan.id}" th:text="' (' + ${plan.priority} + ')'"></span>
+                    </div>
+                </th:block>
+            </div>
+            <div id="t65List" th:if="${!plans[3].empty}">
+                <th:block th:each="plan: ${plans[3]}">
+                    <div class="plan raid-t65" th:id="'plan-' + ${plan.id}">
+                        <i class="fas fa-arrow-down downgrade" th:attr="data-planId=${plan.id}"></i>
+                        <i class="fas fa-arrow-up upgrade" th:attr="data-planId=${plan.id}"></i>
+                        <th:block th:text="'[' + ${plan.raidName} + ']' "></th:block>
+                        <th:block th:text="${plan.planName}"></th:block>
+                        <span th:id="'planval-' + ${plan.id}" th:text="' (' + ${plan.priority} + ')'"></span>
+                    </div>
+                </th:block>
+            </div>
+
+            <div id="zalist" th:if="${!plans[4].empty}">
+                <th:block th:each="plan: ${plans[4]}">
+                    <div class="plan raid-za" th:id="'plan-' + ${plan.id}">
+                        <i class="fas fa-arrow-down downgrade" th:attr="data-planId=${plan.id}"></i>
+                        <i class="fas fa-arrow-up upgrade" th:attr="data-planId=${plan.id}"></i>
+                        <th:block th:text="'[' + ${plan.raidName} + ']' "></th:block>
+                        <th:block th:text="${plan.planName}"></th:block>
+                        <span th:id="'planval-' + ${plan.id}" th:text="' (' + ${plan.priority} + ')'"></span>
+                    </div>
+                </th:block>
+            </div>
+
+            <div id="errorlist" th:if="${!plans[5].empty}">
+                <th:block th:each="plan: ${plans[5]}">
+                    <div class="plan raid-error" th:attr="data-planId=${plan.id}">
+                        <i class="fas fa-arrow-down downgrade" th:attr="data-planId=${plan.id}"></i>
+                        <i class="fas fa-arrow-up upgrade" th:attr="data-planId=${plan.id}"></i>
+                        <th:block th:text="'[' + ${plan.raidName} + ']' "></th:block>
+                        <th:block th:text="${plan.planName}"></th:block>
+                        <th:block th:text="' (' + ${plan.priority} + ')'"></th:block>
+                        <span th:id="'planval-' + ${plan.id}" th:text="' (' + ${plan.priority} + ')'"></span>
+                    </div>
+                </th:block>
+            </div>
+        </div>
+    </th:block>
+</body>
+</html>
