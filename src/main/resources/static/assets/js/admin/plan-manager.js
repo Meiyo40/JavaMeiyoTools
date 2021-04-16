@@ -78,6 +78,8 @@ $(document).ready(() => {
             tinymce.activeEditor.getBody().innerHTML = '';
             document.getElementById('planTitle').value = '';
             document.getElementById('planTitle').innerText = '';
+            submitBtn.dataset.planid = "";
+            submitBtn.dataset.planversion = "0";
         }
     });
 
@@ -107,7 +109,7 @@ $(document).ready(() => {
             players[i] = {
                 name: playersContainer[i].innerText,
                 className: playersContainer[i].className
-            }
+            };
         }
         return players;
     }
@@ -201,7 +203,7 @@ $(document).ready(() => {
                 setTextAreaContent(data);
             },
             error: () => {
-                alert("Erreur.")
+                ajaxMessage("fail", "Impossible de récupérer le plan: " + id);
             }
         })
     }
@@ -211,11 +213,11 @@ $(document).ready(() => {
             url: "/manager/delete/" + id,
             type: "GET",
             success: () => {
-                alert('Plan supprimé');
+                ajaxMessage("success", "L'élément a bien été supprimé.");
                 getPlans();
             },
             error: () => {
-                alert("Erreur.")
+                ajaxMessage("fail", "Impossible d'effectuer cette action.");
             }
         })
     }
@@ -258,7 +260,7 @@ $(document).ready(() => {
                 setPlans(data);
             },
             error: () => {
-                alert("Erreur.")
+                ajaxMessage("fail", "Impossible de récupérer les plans.")
             }
         })
     }
@@ -302,26 +304,88 @@ $(document).ready(() => {
         }
     }
 
-    function changePriority(btn, priority) {
-        console.log(priority + " " + btn.dataset.planid)
+    function changePriority(btn, pPriority) {
+        let planId = btn.dataset.planid;
+        let plan = document.getElementById("plan-" + planId);
+        let myData = setPriority(plan, pPriority);
+        if(myData != null) {
+            $.ajax({
+                url: "/manager/plan/priority/" + planId + "/" + myData.newPriority,
+                method: "GET",
+                success: (data) => {
+                    ajaxMessage("success", "Priorité mise à jours. Tentative de rafraîchissement, press F5 en cas de pépin.");
+                    setPlansDisplay(myData.list, plan.parentNode);
+                },
+                error: () => {
+                    ajaxMessage("fail", "Impossible de mettre à jour ce plan. (Erreur requête)")
+                }
+            })
+        } else {
+            ajaxMessage("fail", "Impossible de mettre à jour ce plan. (Erreur données)")
+        }
+    }
 
-        let planval = document.getElementById("planval-" + btn.dataset.planid);
-        planval.innerText = "(" + priority + ")";
-
-        /*
-        * let planId = btn.dataset.planid;
-        let urlCall = "/manager/plan/update/" + planId;
-        $.ajax({
-            url: urlCall,
-            method: "POST",
-            data: priority,
-            success: (data) => {
-                //TODO update view;
-            },
-            error: () => {
-                //todo handle error
+    function setPriority(plan, order) {
+        let raidType = null;
+        plan.classList.forEach( (e) => {
+            if(e.includes("raidType-")) {
+                raidType = e.match("raidType-").input;
             }
-        })
-        * */
+        });
+        if(raidType != null) {
+            let current;
+            let list = document.getElementsByClassName(raidType);
+            for(let i = 0; i < list.length; i++) {
+                if(list[i].id === plan.id) {
+                    current = i;
+                    break;
+                }
+            }
+            console.log('current: ' + current + " order: " + order);
+            if(
+                (order > 0 && (current < list.length-1)) ||
+                (order < 0 && (current > 0))
+            ) {
+                let newList = new Array(list.length);
+                let index = order < 0 ? current + 1 : current - 1;
+
+                for(let i = 0; i < newList.length; i++) {
+                    let div = document.createElement("div");
+                    div.className = list[0].className;
+                    if( i == index) {
+                        div.id = list[current].id;
+                        div.innerHTML = list[current].innerHTML;
+                        div.dataset.priority = list[index].dataset.priority;
+                    } else if (i == current) {
+                        div.id = list[index].id;
+                        div.innerHTML = list[index].innerHTML;
+                        div.dataset.priority = list[current].dataset.priority;
+                    } else {
+                        div.id = list[i].id;
+                        div.innerHTML = list[i].innerHTML;
+                        div.dataset.priority = list[i].dataset.priority;
+                    }
+                    newList[i] = div;
+                }
+                let data = {
+                    newPriority: newList[index].dataset.priority,
+                    list: newList
+                };
+                console.log(data);
+                return data;
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
+    }
+
+    function setPlansDisplay(data, parent) {
+        parent.innerHTML = "";
+        for(let i = 0; i < data.length; i++) {
+            parent.appendChild(data[i]);
+        }
+        setPlansButtonListener();
     }
 });

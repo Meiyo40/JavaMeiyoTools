@@ -57,6 +57,15 @@ public class PlanController {
         }
     }
 
+    @GetMapping("/plan/priority/{planId}/{priority}")
+    public ResponseEntity<Plan> newPriority(@PathVariable Long planId, @PathVariable int priority, HttpServletRequest request) {
+        if(userService.isLogged(request)) {
+            return new ResponseEntity<>(this.service.updatePriority(planId, priority), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+        }
+    }
+
     @PutMapping("/plan")
     public ResponseEntity<Plan> updatePlan(@RequestBody Plan plan, HttpServletRequest request) {
         if(userService.isLogged(request)) {

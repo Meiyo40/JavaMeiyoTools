@@ -30,7 +30,7 @@ public class PlanService {
     }
 
     public List<Plan> getRaidPlans(String raidName) {
-        Optional<List<Plan>> list = this.repository.findAllByRaidName(raidName);
+        Optional<List<Plan>> list = this.repository.findAllByRaidNameOrderByPriorityDesc(raidName);
         return list.isPresent() ? list.get() : null;
     }
 
@@ -71,5 +71,17 @@ public class PlanService {
             return null;
         }
         return list;
+    }
+
+    public Plan updatePriority(Long id, int priority) {
+        Optional<Plan> old = this.repository.findById(id);
+        if(old.isPresent()) {
+            System.out.println(old.get().toString());
+            old.get().setPriority(priority);
+            System.out.println(old.get().toString());
+            return this.repository.save(old.get());
+        } else {
+            return null;
+        }
     }
 }
