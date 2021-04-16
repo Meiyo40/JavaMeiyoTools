@@ -297,10 +297,10 @@ $(document).ready(() => {
         let upgradeBtn = document.getElementsByClassName("upgrade");
 
         for (let i = 0; i < downgradeBtn.length; i++) {
-            downgradeBtn[i].addEventListener("click", () => {changePriority(downgradeBtn[i], -1)});
+            downgradeBtn[i].addEventListener("click", () => {changePriority(downgradeBtn[i], 1)});
         }
         for (let i = 0; i < upgradeBtn.length; i++) {
-            upgradeBtn[i].addEventListener("click", () => {changePriority(upgradeBtn[i], 1)});
+            upgradeBtn[i].addEventListener("click", () => {changePriority(upgradeBtn[i], -1)});
         }
     }
 
@@ -309,20 +309,26 @@ $(document).ready(() => {
         let plan = document.getElementById("plan-" + planId);
         let myData = setPriority(plan, pPriority);
         if(myData != null) {
-            $.ajax({
-                url: "/manager/plan/priority/" + planId + "/" + myData.newPriority,
-                method: "GET",
-                success: (data) => {
-                    ajaxMessage("success", "Priorité mise à jours. Tentative de rafraîchissement, press F5 en cas de pépin.");
-                    setPlansDisplay(myData.list, plan.parentNode);
-                },
-                error: () => {
-                    ajaxMessage("fail", "Impossible de mettre à jour ce plan. (Erreur requête)")
-                }
-            })
+            callToPriority(planId, myData.newPriority, myData.list, true, plan)
         } else {
             ajaxMessage("fail", "Impossible de mettre à jour ce plan. (Erreur données)")
         }
+    }
+
+    function callToPriority(planId, newPriority, list = null, executeRoutine = false, plan = null) {
+        $.ajax({
+            url: "/manager/plan/priority/" + planId + "/" + newPriority,
+            method: "GET",
+            success: (data) => {
+                if(executeRoutine) {
+                    ajaxMessage("success", "Priorité mise à jours. Tentative de rafraîchissement, press F5 en cas de pépin.");
+                    setPlansDisplay(list, plan.parentNode);
+                }
+            },
+            error: () => {
+                ajaxMessage("fail", "Impossible de mettre à jour ce plan. (Erreur requête)")
+            }
+        })
     }
 
     function setPriority(plan, order) {
@@ -347,7 +353,7 @@ $(document).ready(() => {
                 (order < 0 && (current > 0))
             ) {
                 let newList = new Array(list.length);
-                let index = order < 0 ? current + 1 : current - 1;
+                let index = order < 0 ? current - 1 : current + 1;
 
                 for(let i = 0; i < newList.length; i++) {
                     let div = document.createElement("div");
@@ -360,6 +366,8 @@ $(document).ready(() => {
                         div.id = list[index].id;
                         div.innerHTML = list[index].innerHTML;
                         div.dataset.priority = list[current].dataset.priority;
+                        let id = div.id.replace("plan-", "");
+                        callToPriority(id, div.dataset.priority);
                     } else {
                         div.id = list[i].id;
                         div.innerHTML = list[i].innerHTML;
