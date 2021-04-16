@@ -26,6 +26,7 @@
     <!-- Place your stylesheet here-->
     <link th:href="@{/assets/css/style.css}" rel="stylesheet" type="text/css" />
     <link rel="icon" type="image/png" th:href="@{/assets/image/SMB_small.png}" />
+    <link rel="stylesheet" th:href="@{/assets/css/message.css}"/>
 
     <th:block th:if="${page == 'manager'}">
         <th:block th:replace="fragments/header :: manager(${logged})" /></th:block>
@@ -40,6 +41,7 @@
     </th:block>
 
     <script th:src="@{/assets/js/lib/jquery.js}"></script>
+    <script th:src="@{/assets/js/ajaxmessage.js}"></script>
 
     <th:block th:replace="fragments/script :: manager(${logged}, ${page})"> </th:block>
 </body>

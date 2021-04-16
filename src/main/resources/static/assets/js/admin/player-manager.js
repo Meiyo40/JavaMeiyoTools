@@ -10,12 +10,12 @@ $(document).ready(function() {
             let close = document.getElementsByClassName("close")[0];
             close.onclick = () => {
                 modal.style.display = "none";
-            }
+            };
             window.onclick = function(event) {
                 if (event.target == modal) {
                     modal.style.display = "none";
                 }
-            }
+            };
 
             setModalData(editPlayer[i].dataset.playerid)
         })
@@ -30,12 +30,12 @@ $(document).ready(function() {
                     url: url,
                     type: "DELETE",
                     success: () => {
-                        alert("Succès.")
+                        ajaxMessage("warning", "Joueur supprimé.");
                         let row = document.getElementById(deletePlayer[i].dataset.playerid);
                         row.parentNode.removeChild(row);
                     },
                     error: () => {
-                        alert("Erreur.")
+                        ajaxMessage("fail", "Erreur processus.");
                     }
                 })
             }
@@ -45,7 +45,7 @@ $(document).ready(function() {
     addPlayerButton.addEventListener("click", () => {
         let url = "/player";
         let data = {
-            name: document.getElementById("playername").value,
+            name: document.getElementById("playername").value.trim(),
             className: document.getElementById("class").value,
             role: document.getElementById("role").value,
             comment: document.getElementById("comment").value
@@ -60,11 +60,11 @@ $(document).ready(function() {
                 data: JSON.stringify(data),
                 dataType: "json",
                 success: (data) => {
-                    alert("Joueur ajouté.")
+                    ajaxMessage("success", "Joueur ajouté.");
                     createNewRow(data)
                 },
                 error: () => {
-                    alert("Erreur.")
+                    ajaxMessage("fail", "Erreur processus.");
                 }
             });
         }
@@ -154,13 +154,14 @@ $(document).ready(function() {
                 data: JSON.stringify(data),
                 dataType: "json",
                 success: (data) => {
-                    alert("Joueur modifié.")
+                    document.getElementById(PlayerId).parentNode.removeChild(document.getElementById(PlayerId));
+                    ajaxMessage("success", "Joueur modifié.");
                     createNewRow(data)
                 },
                 error: () => {
-                    alert("Erreur.")
+                    ajaxMessage("fail", "Erreur processus.");
                 }
             });
         })
     }
-})
+});

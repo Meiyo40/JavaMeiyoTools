@@ -1,14 +1,16 @@
 #planSelectors {
     text-align: center;
-    padding: 2rem;
+    padding: 5px;
     display: flex;
     flex-direction: row;
     align-items: center;
 }
+
 #planSelectors select {
     max-width: 10rem;
 }
-#planSelectors > * {
+
+#planSelectors>* {
     padding: 4px;
     margin: 4px;
 }
@@ -20,16 +22,56 @@
     border: 1px solid #006014;
 }
 
-#roster{
+#roster,
+#reorderPlan {
     display: none;
 }
-#rosterDisplay{
+
+#rosterDisplay {
     display: flex;
     flex-direction: column;
     margin-right: 2rem;
+    margin-top: 2rem;
 }
 
-#editorContainer {
+#editorContainer,
+#commandContainer {
     display: flex;
     flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+#planListContainer {
+    margin: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    border: 1px solid #006014;
+}
+
+.downgrade:hover,
+.upgrade:hover {
+    color: red;
+    cursor: grab;
+}
+
+.plan {
+    padding: 4px;
+    margin: 2px;
+    background-color: #006014;
+    box-shadow: 3px 3px 1px 1px #034912;
+}
+
+.plan:active {
+    background-color: #034912;
+    transition: transform translateY(1px);
+}
+
+.separator {
+    margin: 1rem 0;
+    border-top: 8px solid #034912;
+    border-radius: 5px;
 }

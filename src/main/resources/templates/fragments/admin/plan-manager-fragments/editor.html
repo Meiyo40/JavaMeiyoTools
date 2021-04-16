@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <th:block th:fragment="editor(players, plans)">
+        <div id="editorContainer">
+            <div id="roster">
+                <th:block th:each="player: ${players}">
+                    <span th:classappend="${player.className} + '-color'" th:text="${player.name}"></span>
+                </th:block>
+            </div>
+            <div id="rosterDisplay">
+                <th:block th:each="player: ${players}">
+                    <th:block th:if="${player.role} == 'tank'">
+                        <span>
+                            <i class="fal fa-shield-alt"></i>
+                            <span th:classappend="${player.className} + '-color'" th:text="${player.name}"></span>
+                        </span>
+                    </th:block>
+                    <th:block th:if="${player.role} == 'heal'">
+                        <span>
+                            <i class="far fa-cross"></i>
+                            <span th:classappend="${player.className} + '-color'" th:text="${player.name}"></span>
+                        </span>
+                    </th:block>
+                    <th:block th:if="${player.role} == 'dps'">
+                        <span>
+                            <i class="fad fa-swords"></i>
+                            <span th:classappend="${player.className} + '-color'" th:text="${player.name}"></span>
+                        </span>
+                    </th:block>
+                </th:block>
+            </div>
+            <div id="tinyMce">
+                <div style="display: flex; flex-direction: row">
+
+                    <div id="planSelectors">
+                        <label for="action">Action:</label>
+                        <select class="select-css" name="action" id="action">
+                            <option value="update">Modifier</option>
+                            <option value="create">Créer</option>
+                            <option value="delete">Supprimer</option>
+                        </select>
+
+                        <label for="raidName">Raid:</label>
+                        <select class="select-css" name="raidName" id="raidName">
+                            <option value="karazhan">Karazhan</option>
+                            <option value="gruul_mag">Gruul/Mag</option>
+                            <option value="ssc">SSC</option>
+                            <option value="tempestKeep">TK</option>
+                            <option value="zulaman">Zul'Aman</option>
+                            <option value="hyjal">Hyjal</option>
+                            <option value="blackTemple">Temple noir</option>
+                            <option value="sunwell">Sunwell</option>
+                        </select>
+
+                        <label for="planName">Plan:</label>
+                        <select class="select-css" name="planName" id="planName">
+                            <option value="null" id="optionNull">Null.</option>
+                        </select>
+
+                        <div>
+                            <label for="planTitle">Nom du plan:</label>
+                            <input type="text" id="planTitle">
+                        </div>
+                        <div>
+                            <label for="priority">Priorité:</label>
+                            <input type="text" id="priority" style="width: 1.5rem" value="0">
+                        </div>
+                    </div>
+                </div>
+                <div id='textarea-container'>
+                    <textarea id="tinyTextArea"></textarea>
+                </div>
+                <br>
+                <br>
+                <div>
+                    <a id="subBtn" class="smbBtn" href="#">Envoyer</a>
+                </div>
+            </div>
+            <div id="drop-area">
+                <form class="dropareaform">
+                    <p>Drag&Drop File</p>
+                    <input type="file" id="fileElem" multiple accept="image/*" onchange="handleFiles(this.files)" />
+                </form>
+                <progress id="progress-bar" max=100 value=0></progress>
+                <div id="gallery" /></div>
+            <div id="datareturn">
+                <label class="button" for="fileElem">URL:</label>
+                <input type="text" id="urlreturn" />
+            </div>
+        </div>
+        </div>
+    </th:block>
+</body>
+</html>

@@ -28,6 +28,11 @@ public class PlanController {
         return new ResponseEntity<>(this.service.getAllPlans(), HttpStatus.OK);
     }
 
+    @GetMapping("/plans/ordered")
+    public ResponseEntity<List<List<Plan>>> getPlansOrdered() {
+        return new ResponseEntity<>(this.service.getAllPlansOrdered(), HttpStatus.OK);
+    }
+
     @GetMapping("/plan/{planId}")
     public ResponseEntity<Plan> getPlanById(@PathVariable Long planId) {
         return new ResponseEntity<>(this.service.getPlanById(planId), HttpStatus.OK);
@@ -45,13 +50,20 @@ public class PlanController {
 
     @PostMapping("/plan")
     public ResponseEntity<Plan> setPlan(@RequestBody Plan plan, HttpServletRequest request) {
-        return new ResponseEntity<>(this.service.setPlan(plan), HttpStatus.CREATED);
+        if(userService.isLogged(request)) {
+            return new ResponseEntity<>(this.service.setPlan(plan), HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>(plan, HttpStatus.FORBIDDEN);
+        }
+    }
 
-//        if(userService.isLogged(request)) {
-//            return new ResponseEntity<>(this.service.setPlan(plan), HttpStatus.CREATED);
-//        } else {
-//            return new ResponseEntity<>(plan, HttpStatus.FORBIDDEN);
-//        }
+    @GetMapping("/plan/priority/{planId}/{priority}")
+    public ResponseEntity<Plan> newPriority(@PathVariable Long planId, @PathVariable int priority, HttpServletRequest request) {
+        if(userService.isLogged(request)) {
+            return new ResponseEntity<>(this.service.updatePriority(planId, priority), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+        }
     }
 
     @PutMapping("/plan")

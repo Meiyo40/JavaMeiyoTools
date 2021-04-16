@@ -1,4 +1,4 @@
-$(document).ready( () => {
+$(document).ready(() => {
     let action = document.getElementById("action");
     let selectPlan = document.getElementById("planName");
     let selectRaid = document.getElementById("raidName");
@@ -6,14 +6,17 @@ $(document).ready( () => {
     let preview = document.getElementById("previewContainer");
     let rosterBox = document.getElementById("rosterBox");
     let dropzoneBox = document.getElementById("dropZoneBox");
+    let planListBox = document.getElementById("planListBox");
     let PLAYERS = setPlayers();
     let isTinyNotSet = true;
+    let TIMER = null;
 
 
-    setTimeout( () => {
-        if(isTinyNotSet) {
+    setTimeout(() => {
+        setPlansButtonListener();
+        if (isTinyNotSet) {
             let pValues = [PLAYERS.length];
-            for(let i = 0; i < PLAYERS.length; i++) {
+            for (let i = 0; i < PLAYERS.length; i++) {
                 pValues[i] = {
                     text: PLAYERS[i].name.toLowerCase(),
                     value: PLAYERS[i].name
@@ -30,7 +33,7 @@ $(document).ready( () => {
     });
 
     rosterBox.addEventListener("change", () => {
-        if(rosterBox.checked === true) {
+        if (rosterBox.checked === true) {
             document.getElementById("rosterDisplay").style.display = "flex";
         } else {
             document.getElementById("rosterDisplay").style.display = "none";
@@ -38,10 +41,18 @@ $(document).ready( () => {
     });
 
     dropzoneBox.addEventListener("change", () => {
-        if(dropzoneBox.checked === true) {
+        if (dropzoneBox.checked === true) {
             document.getElementById("drop-area").style.display = "flex";
         } else {
             document.getElementById("drop-area").style.display = "none";
+        }
+    });
+
+    planListBox.addEventListener("change", () => {
+        if (planListBox.checked === true) {
+            document.getElementById("planListContainer").style.display = "flex";
+        } else {
+            document.getElementById("planListContainer").style.display = "none";
         }
     });
 
@@ -52,9 +63,9 @@ $(document).ready( () => {
     submitBtn.addEventListener("click", (e) => {
         e.preventDefault();
 
-        if(action.value === "delete") {
-            let deleteIt = confirm("Voulez vous réellement ce plan ?");
-            if(deleteIt) {
+        if (action.value === "delete") {
+            let deleteIt = confirm("Voulez vous réellement supprimer ce plan ?");
+            if (deleteIt) {
                 deletePlan(selectPlan.value);
             }
         } else {
@@ -63,48 +74,50 @@ $(document).ready( () => {
     });
 
     action.addEventListener("change", () => {
-        if(action === "create") {
+        if (action === "create") {
             tinymce.activeEditor.getBody().innerHTML = '';
             document.getElementById('planTitle').value = '';
             document.getElementById('planTitle').innerText = '';
+            submitBtn.dataset.planid = "";
+            submitBtn.dataset.planversion = "0";
         }
     });
 
-    setInterval(() => {
-        let text = tinymce.activeEditor.getBody().innerHTML;
-        preview.innerHTML = coloredClass(text);
-    }, 2000);
-
-    function coloredClass(text) {
-        if(PLAYERS != null) {
-            for(let i = 0; i < PLAYERS.length; i++) {
+    function coloredClass(text, PLAYERS) {
+        if (PLAYERS != null) {
+            for (let i = 0; i < PLAYERS.length; i++) {
                 let coloredName = "<span class='" + PLAYERS[i].className + "'>" + PLAYERS[i].name + "</span>";
                 text = text.replaceAll(PLAYERS[i].name, coloredName);
             }
         } else {
             PLAYERS = setPlayers();
-            console.log(PLAYERS);
         }
-
         return text;
+    }
+
+    function updatePreview(editor = null) {
+        TIMER = setTimeout(() => {
+            let text = tinymce.activeEditor.getBody().innerHTML;
+            preview.innerHTML = coloredClass(text, PLAYERS);
+        }, 1000);
     }
 
     function setPlayers() {
         let playersContainer = document.getElementById("roster").children;
         let players = [playersContainer.length];
-        for(let i = 0; i < playersContainer.length ; i++) {
+        for (let i = 0; i < playersContainer.length; i++) {
             players[i] = {
                 name: playersContainer[i].innerText,
                 className: playersContainer[i].className
-            }
+            };
         }
         return players;
     }
 
     function newTinyMCE(specialChars) {
-        console.log("Tiny Setup");
         //var specialChars = val;
         tinymce.init({
+            onchange_callback: "updatePreview",
             selector: 'textarea',
             height: 300,
             menubar: false,
@@ -121,15 +134,20 @@ $(document).ready( () => {
                 '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
                 '//www.tiny.cloud/css/codepen.min.css'
             ],
-            setup: function (editor) {
-                var onAction = function (autocompleteApi, rng, value) {
+            setup: function(editor) {
+
+                editor.on("keyup", function(e) {
+                    updatePreview(e);
+                });
+
+                var onAction = function(autocompleteApi, rng, value) {
                     editor.selection.setRng(rng);
                     editor.insertContent(value);
                     autocompleteApi.hide();
                 };
 
-                var getMatchedChars = function (pattern) {
-                    return specialChars.filter(function (char) {
+                var getMatchedChars = function(pattern) {
+                    return specialChars.filter(function(char) {
                         return char.text.indexOf(pattern) !== -1;
                     });
                 };
@@ -144,30 +162,27 @@ $(document).ready( () => {
                     columns: 1,
                     highlightOn: ['char_name'],
                     onAction: onAction,
-                    fetch: function (pattern) {
-                        return new tinymce.util.Promise(function (resolve) {
-                            var results = getMatchedChars(pattern).map(function (char) {
+                    fetch: function(pattern) {
+                        return new tinymce.util.Promise(function(resolve) {
+                            var results = getMatchedChars(pattern).map(function(char) {
                                 return {
                                     type: 'cardmenuitem',
                                     value: char.value,
                                     label: char.text,
-                                    items: [
-                                        {
-                                            type: 'cardcontainer',
-                                            direction: 'vertical',
-                                            items: [
-                                                {
-                                                    type: 'cardtext',
-                                                    text: char.text,
-                                                    name: 'char_name'
-                                                },
-                                                {
-                                                    type: 'cardtext',
-                                                    text: char.value
-                                                }
-                                            ]
-                                        }
-                                    ]
+                                    items: [{
+                                        type: 'cardcontainer',
+                                        direction: 'vertical',
+                                        items: [{
+                                                type: 'cardtext',
+                                                text: char.text,
+                                                name: 'char_name'
+                                            },
+                                            {
+                                                type: 'cardtext',
+                                                text: char.value
+                                            }
+                                        ]
+                                    }]
                                 }
                             });
                             resolve(results);
@@ -179,25 +194,6 @@ $(document).ready( () => {
         });
     }
 
-    function getPlayers() {
-        let getUrl = "/player";
-        $.ajax({
-            url: getUrl,
-            type: "GET",
-            success: (data) => {
-                return data;
-            },
-            error: () => {
-                console.log("GET::Impossible de récupérer les joueurs.");
-                return null;
-            }
-        });
-    }
-
-    let players = new Promise( (resolve, reject) => {
-
-    })
-
     function getPlan(id) {
         let getUrl = "/manager/plan/" + id;
         $.ajax({
@@ -207,7 +203,7 @@ $(document).ready( () => {
                 setTextAreaContent(data);
             },
             error: () => {
-                alert("Erreur.")
+                ajaxMessage("fail", "Impossible de récupérer le plan: " + id);
             }
         })
     }
@@ -217,11 +213,11 @@ $(document).ready( () => {
             url: "/manager/delete/" + id,
             type: "GET",
             success: () => {
-                alert('Plan supprimé');
+                ajaxMessage("success", "L'élément a bien été supprimé.");
                 getPlans();
             },
             error: () => {
-                alert("Erreur.")
+                ajaxMessage("fail", "Impossible d'effectuer cette action.");
             }
         })
     }
@@ -231,22 +227,26 @@ $(document).ready( () => {
         let plan = {
             planName: document.getElementById('planTitle').value,
             raidName: selectRaid.value,
-            content: tinymce.activeEditor.getBody().innerHTML
+            content: tinymce.activeEditor.getBody().innerHTML,
+            priority: document.getElementById("priority").value,
+            version: 1
         };
-        if(action.value === "update") {
+        if (action.value === "update") {
             plan.id = selectPlan.value;
+            plan.version = submitBtn.dataset.planversion;
         }
         $.ajax({
             contentType: 'application/json',
-            type:"POST",
+            type: "POST",
             url: postUrl,
             data: JSON.stringify(plan),
             dataType: "json",
             success: () => {
-                alert("Plan upload.");
+                submitBtn.dataset.planversion = parseInt(submitBtn.dataset.planversion) + 1;
+                ajaxMessage("success", "Plan réceptionné par le serveur.");
             },
             error: () => {
-                alert("Erreur.")
+                ajaxMessage("fail", "Erreur dans le processus");
             }
         });
     }
@@ -260,21 +260,22 @@ $(document).ready( () => {
                 setPlans(data);
             },
             error: () => {
-                alert("Erreur.")
+                ajaxMessage("fail", "Impossible de récupérer les plans.")
             }
         })
     }
 
     function setPlans(data) {
         selectPlan.innerHTML = '';
-        if(data.length > 0) {
-            for(let i = 0; i < data.length ; i++) {
+        if (data.length > 0) {
+            for (let i = 0; i < data.length; i++) {
                 let option = document.createElement("option");
                 option.value = data[i].id;
                 option.innerText = data[i].planName;
                 selectPlan.appendChild(option);
-                if(i == 0) {
+                if (i == 0) {
                     setTextAreaContent(data[0]);
+                    updatePreview();
                 }
             }
         }
@@ -283,7 +284,116 @@ $(document).ready( () => {
     function setTextAreaContent(plan) {
         let title = document.getElementById('planTitle');
         title.value = plan.planName;
+        document.getElementById("priority").value = plan.priority;
         let content = tinymce.activeEditor.getBody();
         content.innerHTML = plan.content;
+
+        submitBtn.dataset.planid = plan.id;
+        submitBtn.dataset.planversion = plan.version;
+    }
+
+    function setPlansButtonListener() {
+        let downgradeBtn = document.getElementsByClassName("downgrade");
+        let upgradeBtn = document.getElementsByClassName("upgrade");
+
+        for (let i = 0; i < downgradeBtn.length; i++) {
+            downgradeBtn[i].addEventListener("click", () => {changePriority(downgradeBtn[i], 1)});
+        }
+        for (let i = 0; i < upgradeBtn.length; i++) {
+            upgradeBtn[i].addEventListener("click", () => {changePriority(upgradeBtn[i], -1)});
+        }
+    }
+
+    function changePriority(btn, pPriority) {
+        let planId = btn.dataset.planid;
+        let plan = document.getElementById("plan-" + planId);
+        let myData = setPriority(plan, pPriority);
+        if(myData != null) {
+            callToPriority(planId, myData.newPriority, myData.list, true, plan)
+        } else {
+            ajaxMessage("fail", "Impossible de mettre à jour ce plan. (Erreur données)")
+        }
+    }
+
+    function callToPriority(planId, newPriority, list = null, executeRoutine = false, plan = null) {
+        $.ajax({
+            url: "/manager/plan/priority/" + planId + "/" + newPriority,
+            method: "GET",
+            success: (data) => {
+                if(executeRoutine) {
+                    ajaxMessage("success", "Priorité mise à jours. Tentative de rafraîchissement, press F5 en cas de pépin.");
+                    setPlansDisplay(list, plan.parentNode);
+                }
+            },
+            error: () => {
+                ajaxMessage("fail", "Impossible de mettre à jour ce plan. (Erreur requête)")
+            }
+        })
+    }
+
+    function setPriority(plan, order) {
+        let raidType = null;
+        plan.classList.forEach( (e) => {
+            if(e.includes("raidType-")) {
+                raidType = e.match("raidType-").input;
+            }
+        });
+        if(raidType != null) {
+            let current;
+            let list = document.getElementsByClassName(raidType);
+            for(let i = 0; i < list.length; i++) {
+                if(list[i].id === plan.id) {
+                    current = i;
+                    break;
+                }
+            }
+            console.log('current: ' + current + " order: " + order);
+            if(
+                (order > 0 && (current < list.length-1)) ||
+                (order < 0 && (current > 0))
+            ) {
+                let newList = new Array(list.length);
+                let index = order < 0 ? current - 1 : current + 1;
+
+                for(let i = 0; i < newList.length; i++) {
+                    let div = document.createElement("div");
+                    div.className = list[0].className;
+                    if( i == index) {
+                        div.id = list[current].id;
+                        div.innerHTML = list[current].innerHTML;
+                        div.dataset.priority = list[index].dataset.priority;
+                    } else if (i == current) {
+                        div.id = list[index].id;
+                        div.innerHTML = list[index].innerHTML;
+                        div.dataset.priority = list[current].dataset.priority;
+                        let id = div.id.replace("plan-", "");
+                        callToPriority(id, div.dataset.priority);
+                    } else {
+                        div.id = list[i].id;
+                        div.innerHTML = list[i].innerHTML;
+                        div.dataset.priority = list[i].dataset.priority;
+                    }
+                    newList[i] = div;
+                }
+                let data = {
+                    newPriority: newList[index].dataset.priority,
+                    list: newList
+                };
+                console.log(data);
+                return data;
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
+    }
+
+    function setPlansDisplay(data, parent) {
+        parent.innerHTML = "";
+        for(let i = 0; i < data.length; i++) {
+            parent.appendChild(data[i]);
+        }
+        setPlansButtonListener();
     }
 });
