@@ -362,16 +362,18 @@ $(document).ready(() => {
                         div.id = list[current].id;
                         div.innerHTML = list[current].innerHTML;
                         div.dataset.priority = list[index].dataset.priority;
+                        div.dataset.planid = div.id.replace("plan-", "");
                     } else if (i == current) {
                         div.id = list[index].id;
                         div.innerHTML = list[index].innerHTML;
                         div.dataset.priority = list[current].dataset.priority;
-                        let id = div.id.replace("plan-", "");
-                        callToPriority(id, div.dataset.priority);
+                        div.dataset.planid = div.id.replace("plan-", "");
+                        callToPriority(div.dataset.planid, div.dataset.priority);
                     } else {
                         div.id = list[i].id;
                         div.innerHTML = list[i].innerHTML;
                         div.dataset.priority = list[i].dataset.priority;
+                        div.dataset.planid = div.id.replace("plan-", "");
                     }
                     newList[i] = div;
                 }
@@ -393,6 +395,8 @@ $(document).ready(() => {
         parent.innerHTML = "";
         for(let i = 0; i < data.length; i++) {
             parent.appendChild(data[i]);
+            let val = document.getElementById("planval-" + data[i].dataset.planid);
+            val.innerText = data[i].dataset.priority;
         }
         setPlansButtonListener();
     }
