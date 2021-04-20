@@ -355,13 +355,16 @@ $(document).ready(() => {
                 let newList = new Array(list.length);
                 let index = order < 0 ? current - 1 : current + 1;
 
+                let or = list[current].dataset.priority;
+                let dest =  list[index].dataset.priority;
+
                 for(let i = 0; i < newList.length; i++) {
                     let div = document.createElement("div");
                     div.className = list[0].className;
                     if( i == index) {
                         div.id = list[current].id;
                         div.innerHTML = list[current].innerHTML;
-                        div.dataset.priority = list[index].dataset.priority;
+                        div.dataset.priority = or === dest ? parseInt(dest) + 1 : list[index].dataset.priority;
                         div.dataset.planid = div.id.replace("plan-", "");
                     } else if (i == current) {
                         div.id = list[index].id;
