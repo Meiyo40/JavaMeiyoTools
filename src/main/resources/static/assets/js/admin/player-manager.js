@@ -48,7 +48,8 @@ $(document).ready(function() {
             name: document.getElementById("playername").value.trim(),
             className: document.getElementById("class").value,
             role: document.getElementById("role").value,
-            comment: document.getElementById("comment").value
+            comment: document.getElementById("comment").value,
+            main : document.getElementById("main").value
         };
         if(data.name == "") {
             alert("Vous ne pouvez pas ajouter de joueur sans pseudo.")
@@ -71,6 +72,7 @@ $(document).ready(function() {
     });
 
     function createNewRow(data) {
+        console.log(data);
         let table = document.getElementById("tableBody");
         let row = document.createElement("tr");
 
@@ -92,13 +94,17 @@ $(document).ready(function() {
         row.append(td);
 
         td = document.createElement("td");
+        td.innerText = data.main ? "Oui" : "Non";
+        row.append(td);
+
+        td = document.createElement("td");
         let i = document.createElement("i");
         i.className = "fas fa-user-minus tooltip grab";
         i.dataset.playerid = data.id;
         let span = document.createElement("span");
         span.classList.add("tooltiptext");
         span.innerText = "Supprimer joueur";
-        i.append(span)
+        i.append(span);
         td.append(i);
         i = document.createElement("i");
         i.className = "fas fa-cogs tooltip grab";
@@ -106,7 +112,7 @@ $(document).ready(function() {
         span = document.createElement("span");
         span.classList.add("tooltiptext");
         span.innerText = "Modifier joueur";
-        i.append(span)
+        i.append(span);
         td.append(i);
         row.append(td);
 
@@ -119,6 +125,7 @@ $(document).ready(function() {
         let playerClass = document.getElementById("modalClassName");
         let role = document.getElementById("modalRoleName");
         let comment = document.getElementById("modalComment");
+        let main = document.getElementById("modalMain");
         name.value = element.children[0].innerText;
         name.dataset.playerid = PlayerId;
 
@@ -136,6 +143,14 @@ $(document).ready(function() {
             }
         }
 
+        for(let i = 0; i < main.options.length; i++) {
+            let isMain = element.children[4].innerText === "Oui" ? "true" : "false";
+            if(main.options[i].value == isMain) {
+                main.options[i].selected = true;
+                break;
+            }
+        }
+
         comment.value = element.children[3].innerText;
 
         let modalSubmit = document.getElementById("modalButtonAdd");
@@ -145,8 +160,9 @@ $(document).ready(function() {
                 name: name.value,
                 className: playerClass.value,
                 role: role.value,
-                comment: comment.value
-            }
+                comment: comment.value,
+                main: main.value
+            };
             $.ajax({
                 contentType: 'application/json',
                 type:"PUT",

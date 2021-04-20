@@ -26,7 +26,7 @@ public class PlayerServiceTest {
     @BeforeEach
     void setup() {
         underTest = new PlayerService(repository);
-        sample = new Player("playername", "warrior", "tank", null);
+        sample = new Player("playername", "warrior", "tank", null, true);
     }
 
     @Test

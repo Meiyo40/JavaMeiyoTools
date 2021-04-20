@@ -54,7 +54,7 @@ public class PlanRepositoryTest {
         Plan sample2 = new Plan("test", "raidName", "test", LocalDate.now());
         underTest.save(sample2);
         //when
-        Optional<List<Plan>> expected = underTest.findAllByRaidName(sample.getRaidName());
+        Optional<List<Plan>> expected = underTest.findAllByRaidNameOrderByPriorityDesc(sample.getRaidName());
         //then
         assertThat(expected.get().size()).isEqualTo(2);
     }

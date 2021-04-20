@@ -34,10 +34,15 @@
                 <option value="tank">tank</option>
                 <option value="dps">dps</option>
             </select>
+            <label for="main">Main:</label>
+            <select name="main" id="main">
+                <option value="true">Oui</option>
+                <option value="false">Non</option>
+            </select>
         </div>
         <div class="apc-el">
             <label for="comment">Comment:</label>
-            <input type="text" id="comment" placeholder="Non obligatoire">
+            <textarea name="comment" id="comment" placeholder="Non obligatoire" cols="20" rows="2"></textarea>
         </div>
         <button class="greenButton" id="PlayerAddButton">Ajouter</button>
     </div>
@@ -52,6 +57,7 @@
                 <th>Classe</th>
                 <th>Role</th>
                 <th>Comment</th>
+                <th>Main</th>
                 <th>Actions</th>
             </tr>
             </thead>
@@ -72,6 +78,10 @@
                 <td th:text="${player.className}"></td>
                 <td th:text="${player.role}"></td>
                 <td th:text="${player.comment}"></td>
+                <td>
+                    <th:block th:if="${player.isMain} == true"> Oui </th:block>
+                    <th:block th:if="${player.isMain} == false"> Non </th:block>
+                </td>
                 <td>
                     <i class="fas fa-user-minus tooltip grab deletePlayer" id="deletePlayer" th:attr="data-playerId=${player.id}">
                         <span class="tooltiptext">Supprimer joueur</span>
@@ -115,10 +125,15 @@
                         <option value="tank">tank</option>
                         <option value="dps">dps</option>
                     </select>
+                    <label for="modalMain">Main:</label>
+                    <select name="main" id="modalMain">
+                        <option value="true">Oui</option>
+                        <option value="false">Non</option>
+                    </select>
                 </div>
                 <div class="apc-el">
                     <label for="modalComment">Comment:</label>
-                    <input type="text" id="modalComment" placeholder="Non obligatoire">
+                    <textarea name="comment" id="modalComment" placeholder="Non obligatoire" cols="20" rows="2"></textarea>
                 </div>
                 <button class="greenButton" id="modalButtonAdd">Modifier</button>
             </div>
