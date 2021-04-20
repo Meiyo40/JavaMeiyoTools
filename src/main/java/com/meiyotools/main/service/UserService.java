@@ -108,7 +108,7 @@ public class UserService {
         if(user != null) {
             String jws = Jwts.builder().setSubject(user.getUsername()).signWith(SECRET).compact();
             Cookie token = new Cookie("token", jws);
-            token.setMaxAge(5 * 60);
+            token.setMaxAge(30 * 60);
             token.setPath("/");
             return token;
         } else {
