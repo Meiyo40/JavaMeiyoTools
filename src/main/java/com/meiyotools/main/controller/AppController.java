@@ -28,4 +28,12 @@ public class AppController {
 
         return "index";
     }
+
+    @GetMapping("/teron")
+    public String getTeronGame(Model model, HttpServletRequest request) {
+
+        this.pageService.setTeronPage(request, model);
+
+        return "index";
+    }
 }

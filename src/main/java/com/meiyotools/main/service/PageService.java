@@ -76,4 +76,10 @@ public class PageService {
         model.addAttribute("page", "manager");
         model.addAttribute("players", players);
     }
+
+    public void setTeronPage(HttpServletRequest request, Model model) {
+        model.addAttribute("logged", "false");
+        model.addAttribute("title", "SMB Game");
+        model.addAttribute("page", "teron");
+    }
 }

@@ -13,6 +13,12 @@ a{
     color: white;
 }
 
+h1{
+    text-align: center;
+    margin-top: 0;
+    color: #006014;
+}
+
 .tooltip {
     position: relative;
     display: inline-block;
@@ -52,6 +58,13 @@ a{
     opacity: 1;
 }
 
+#public-navbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
 .nav-el,
 .smbBtn{
     color: snow;
@@ -75,8 +88,6 @@ a{
     box-shadow: 2px 2px rgb(0, 58, 14);
     transform: translateY(2px);
 }
-
-
 
 .warrior-color{
     color: #934c05;
