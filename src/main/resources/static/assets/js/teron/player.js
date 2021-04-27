@@ -102,7 +102,7 @@ class Player {
         };
 
         this.debuff.spawned = false;
-        this.debuff.remaining = 6;
+        this.debuff.remaining = 18;
         this.debuff.image.src = "assets/css/teron/img/spells/player_debuff.jpg";
         this.debuff.image.width = 30;
         this.debuff.image.height = 30;
@@ -180,7 +180,7 @@ class Player {
         } else {
             if (spell.damage.min > 0 && spell.targets.ghosts &&
                 (Tools.distance(this.x, this.y, target.x, target.y) < spell.range * 4)) {
-                let damage = Math.floor(Math.random() * spell.damage.max) + spell.damage.min;
+                let damage = Math.floor(Math.random() * (spell.damage.max - spell.damage.min + 1) + spell.damage.min);
                 console.log("HIT: " + damage + " EFFECT: " + spell.effect.name);
                 let cast = new Shot(this.x, this.y, "assets/css/teron/img/spells/bolt_poop.png", target, damage, spell, this);
                 this.shots.push(cast);

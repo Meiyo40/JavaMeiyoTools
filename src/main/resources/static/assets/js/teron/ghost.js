@@ -232,7 +232,7 @@ class Shot {
         this.target.forEach((e) => {
             let dist = Tools.distance(this.x, this.y, e.x, e.y);
             if (dist < this.source.range * 4) {
-                let damage = Math.floor(Math.random() * this.source.damage.max) + this.source.damage.min;
+                let damage = Math.floor(Math.random() * (this.source.damage.max - this.source.damage.min + 1) + this.source.damage.min);
                 e.applyStatus(this.source);
                 e.getHit(damage);
                 console.log("HIT: " + damage + " EFFECT: " + this.source.effect.name);
