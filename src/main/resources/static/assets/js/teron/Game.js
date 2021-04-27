@@ -38,7 +38,14 @@ class TeronGame {
         this.ghosts = new Array();
 
         this.teron = new Teron(this.canvas.width / 2, 22);
-        this.ui = { spells: new Array() };
+        this.ui = {
+            spells: new Array(),
+            mobinfo: document.getElementById("mob-info"),
+            mobName: document.getElementById("mob-name"),
+            mobIcon: document.getElementById("mob-icon"),
+            mobHealthBar: document.getElementById("mob-percent-health"),
+            mobHealthText: document.getElementById("mob-health-text")
+        };
 
         this.ui.spells = this.initSpellsUi();
 
@@ -53,7 +60,7 @@ class TeronGame {
             } else if (e.code === "Digit3") {
                 this.player.shot("chains", this.ghosts);
             } else if (e.code === "Digit4") {
-                this.player.shot("volley");
+                this.player.shot("volley", this.ghosts);
             } else if (e.code === "Digit5") {
                 this.player.shot("shield");
             } else if (e.key == "r") {
@@ -68,35 +75,46 @@ class TeronGame {
             this.collider(mx, my)
         });
 
-
         console.log("init");
     }
 
     update() {
         this.player.update();
-        if (this.player.debuff.remaining <= 0 && this.player.debuff.spawned == false) {
+        if (this.player.debuff.remaining <= 0 && !this.player.debuff.spawned) {
             this.spawnGhost();
+            this.player.debuff.spawned = true;
         }
 
         if (this.ghosts.length > 0) {
+            let toDel = new Array();
             this.ghosts.forEach((g) => {
                 if (g.status.alive) {
                     g.friends = this.ghosts;
                     g.update(this.dt);
-                    if (g.collide(this.teron.x, this.teron.y)) {
+                    if (g.collide(this.teron.x, this.teron.y) && g.y <= 30) {
+                        console.log("Silverback eat the banana!");
                         g.status.alive = false;
                         this.teron.ghostHit++;
                     }
+                } else {
+                    toDel.push(this.ghosts.indexOf(g));
                 }
             });
+            if(toDel.length > 0) {
+                toDel.forEach( (del) => {
+                    this.ghosts.splice(del, 1);
+                });
+            }
         }
 
         if (this.teron.ghostHit > 1) {
             clearInterval(this.interval);
             this.gameOver();
-        } else if (this.ghosts.length <= 0 && this.player.spawned) {
+        } else if (this.ghosts.length <= 0 && this.player.debuff.spawned) {
             this.win();
         }
+
+        this.updateUi();
     }
 
     draw(ctx) {
@@ -118,7 +136,6 @@ class TeronGame {
         if (this.ghosts.length > 0) {
             this.ghosts.forEach((e) => {
                 if (e.status.alive) {
-
                     ctx.beginPath();
                     ctx.rect(e.x - 15, e.y - 20, 30, 0);
                     ctx.lineWidth = 7;
@@ -167,23 +184,44 @@ class TeronGame {
         })
     }
 
+    updateUi() {
+        if(this.player.target != null) {
+            if(this.player.target.currentHealth > 0) {
+                this.ui.mobinfo.style.display = "flex";
+                this.ui.mobIcon.setAttribute("src", this.player.target.image.src);
+                this.ui.mobName.innerText = "Ghost"+this.player.target.id;
+                this.ui.mobHealthText.dataset.label = this.player.target.currentHealth + " / " + this.player.target.maxHealth;
+                this.ui.mobHealthBar.style.width = this.player.target.getPercentHealth() * 100 + "%";
+            }
+        } else {
+            this.ui.mobName.innerText = "No target";
+            this.ui.mobHealthText.dataset.label = "0 / 0";
+            this.ui.mobHealthBar.style.width = "100%";
+            this.ui.mobIcon.setAttribute("src", "assets/css/teron/img/player.png");
+        }
+    }
+
     spawnGhost() {
         this.player.debuff.spawned = true;
 
         let xCorrected = this.setGhostX(this.player.x - 30);
         let yCorrected = this.setGhostY(this.player.y - 30);
+        console.log("X: " + xCorrected + " Y: " + yCorrected);
         this.ghosts.push(new Ghost(1, { x: xCorrected, y: yCorrected}, this.canvas));
 
         xCorrected = this.setGhostX(this.player.x + 30);
         yCorrected = this.setGhostY(this.player.y - 30);
+        console.log("X: " + xCorrected + " Y: " + yCorrected);
         this.ghosts.push(new Ghost(2, { x: xCorrected, y: yCorrected }, this.canvas));
 
         xCorrected = this.setGhostX(this.player.x - 30);
         yCorrected = this.setGhostY(this.player.y + 30);
+        console.log("X: " + xCorrected + " Y: " + yCorrected);
         this.ghosts.push(new Ghost(3, { x: xCorrected, y: yCorrected }, this.canvas));
 
         xCorrected = this.setGhostX(this.player.x + 30);
         yCorrected = this.setGhostY(this.player.y + 30);
+        console.log("X: " + xCorrected + " Y: " + yCorrected);
         this.ghosts.push(new Ghost(4, { x: xCorrected, y: yCorrected }, this.canvas));
     }
 
@@ -195,7 +233,7 @@ class TeronGame {
         if(xCorrected >= (this.canvas.width - 5)) {
             xCorrected = this.canvas.width - 15;
         }
-        return xCorrected;
+        return parseInt(xCorrected);
     }
 
     setGhostY(y) {
@@ -206,7 +244,7 @@ class TeronGame {
         if(yCorrected >= (this.canvas.height - 5)) {
             yCorrected = this.canvas.height - 15;
         }
-        return yCorrected;
+        return parseInt(yCorrected);
     }
 
     startMessage() {
@@ -237,12 +275,17 @@ class TeronGame {
         //ghost
         if (this.ghosts.length > 0) {
             let hasTouch = { state: false, target: null };
+            console.log("X: " + mX + " Y:" + mY);
             this.ghosts.forEach((e) => {
+                let dist = Tools.distance(mX, mY, e.x, e.y);
+                console.log("G[" + e.id + "] X: " + e.x + " Y:" + e.y);
+                console.log("G[" + e.id + "] X: " + (e.x + e.image.width)  + " Y:" + (e.y - Math.floor(e.image.height/2)));
+                console.log(dist);
                 let x = e.x - e.image.width / 2;
                 if ((mX < x + e.image.width) &&
                     (mX > x) &&
-                    (mY < e.y + Math.floor(e.image.height/2)) &&
-                    (mY > e.y)) {
+                    (mY < e.y - Math.floor(e.image.height/2)) &&
+                    (mY > e.y) || dist < 15) {
                     if (hasTouch.state && hasTouch.target != null) {
                         hasTouch.target.select(false);
                         hasTouch.target = null;

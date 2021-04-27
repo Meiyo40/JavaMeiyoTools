@@ -136,9 +136,18 @@ class Ghost {
     }
 
     getPercentHealth() {
-        let rawPct = this.currentHealth / this.maxHealth * 100;
-        let decimal = parseFloat("0." + rawPct);
-        return rawPct == 100 ? 1 : decimal;
+        if(this.currentHealth > 0) {
+            let rawPct = this.currentHealth / this.maxHealth * 100;
+            let decimal = 0;
+            if(rawPct < 10) {
+                decimal = parseFloat("0.0" + rawPct);
+            } else {
+                decimal = parseFloat("0." + rawPct);
+            }
+            return rawPct == 100 ? 1 : decimal;
+        } else {
+            return 0;
+        }
     }
 
     getHit(amount) {
@@ -186,8 +195,8 @@ class Shot {
                 this.target.applyStatus(this.source);
                 this.target.getHit(this.damage);
             }
-        } else if (this.source.name == "chains") {
-            this.chains();
+        } else if (this.source.name == "chains" ||this.source.name == "volley") {
+            this.zoneEffect();
         }
     }
 
@@ -219,7 +228,7 @@ class Shot {
         return img;
     }
 
-    chains() {
+    zoneEffect() {
         this.target.forEach((e) => {
             let dist = Tools.distance(this.x, this.y, e.x, e.y);
             if (dist < this.source.range * 4) {

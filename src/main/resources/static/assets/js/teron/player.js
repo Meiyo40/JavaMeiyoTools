@@ -17,7 +17,8 @@ class Player {
 
         this.keys = { keyRight: false, keyLeft: false, keyDown: false, keyUp: false };
 
-        this.spells = [{
+        this.spells = [
+            {
             name: "strike",
             range: 10,
             damage: { min: 638, max: 862 },
@@ -98,10 +99,10 @@ class Player {
 
         this.debuff = {
             image: new Image()
-        }
+        };
 
         this.debuff.spawned = false;
-        this.debuff.remaining = 20;
+        this.debuff.remaining = 6;
         this.debuff.image.src = "assets/css/teron/img/spells/player_debuff.jpg";
         this.debuff.image.width = 30;
         this.debuff.image.height = 30;
@@ -143,13 +144,13 @@ class Player {
     }
 
     shot(spell, ennemies = null) {
-        if (this.target != null || spell === "chains") {
+        if (this.target != null || spell === "chains" || spell === "volley") {
             let index = null;
             this.spells.forEach((s) => {
                 if (s.name == spell) {
                     index = this.spells.indexOf(s);
                 }
-            })
+            });
             if (this.spells[index].current_cooldown <= 0) {
                 this.doSpellEffect(this.spells[index], this.target, ennemies);
                 if (this.spells[index].cooldown > 0) {
@@ -171,10 +172,10 @@ class Player {
 
     doSpellEffect(spell, target, ennemies) {
         console.log("Cast: " + spell.name);
-        if (spell.name == "chains") {
+        if (spell.name === "chains" || spell.name === "volley") {
             if (ennemies != null) {
-                let chains = new Shot(this.x, this.y, null, ennemies, null, spell, this);
-                this.shots.push(chains);
+                let cast = new Shot(this.x, this.y, null, ennemies, null, spell, this);
+                this.shots.push(cast);
             }
         } else {
             if (spell.damage.min > 0 && spell.targets.ghosts &&
@@ -216,13 +217,15 @@ class Player {
             let min = 1000;
             let index = null;
             ghosts.forEach((g) => {
-                let dist = Tools.distance(g.x, g.y, this.x, this.y);
-                if (dist < min) {
-                    min = dist;
-                    index = ghosts.indexOf(g);
+                if(g.status.alive) {
+                    let dist = Tools.distance(g.x, g.y, this.x, this.y);
+                    if (dist < min) {
+                        min = dist;
+                        index = ghosts.indexOf(g);
+                    }
                 }
                 g.select(false);
-            })
+            });
             this.target = ghosts[index];
             this.target.select(true);
         } else {

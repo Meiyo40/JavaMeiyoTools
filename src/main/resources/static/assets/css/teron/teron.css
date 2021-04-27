@@ -18,8 +18,11 @@ li {
     padding: 1rem;
 }
 
-#gameContainer {
+#gameContainer,
+#mob-info,
+#mob-data-text{
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
@@ -27,4 +30,42 @@ li {
 #game-canvas {
     background-color: black;
     border: 2px solid #034912;
+}
+#mob-info {
+    width: 250px;
+    flex-direction: row;
+    margin-bottom: 10px;
+}
+
+#mob-data-text {
+    width: 200px;
+    align-items: flex-start;
+}
+
+#mob-icon {
+    max-width: 50px;
+    max-height: 50px;
+}
+
+.progress {
+    height: 1.5em;
+    width: 100%;
+    background-color: red;
+    position: relative;
+}
+
+.progress:before {
+    content: attr(data-label);
+    font-size: 0.8em;
+    position: absolute;
+    text-align: center;
+    top: 5px;
+    left: 0;
+    right: 0;
+}
+
+.progress .value {
+    background-color: #034912;
+    display: inline-block;
+    height: 100%;
 }
