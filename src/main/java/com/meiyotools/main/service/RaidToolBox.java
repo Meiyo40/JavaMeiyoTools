@@ -52,6 +52,9 @@ class RaidToolBox {
             if(el.getRaidName().equals("karazhan") || el.getRaidName().equals("gruul_mag")) {
                 el.setRaidName( el.getRaidName().equals("karazhan") ? "KZ" : "OD" );
                 t4.add(el);
+            } else if (el.getRaidName().equals("karazhan2")) {
+                el.setRaidName("KZ2");
+                t4.add(el);
             } else if (el.getRaidName().equals("ssc") || el.getRaidName().equals("tempestKeep")) {
                 el.setRaidName( el.getRaidName().equals("ssc") ? "SSC" : "TK" );
                 t5.add(el);
@@ -61,8 +64,8 @@ class RaidToolBox {
             } else if(el.getRaidName().equals("sunwell")) {
                 el.setRaidName("SW");
                 t65.add(el);
-            } else if(el.getRaidName().equals("zulaman")) {
-                el.setRaidName("ZA");
+            } else if(el.getRaidName().equals("zulaman") || el.getRaidName().equals("zulaman2")) {
+                el.setRaidName( el.getRaidName().equals("zulaman") ? "ZA" : "ZA2" );
                 za.add(el);
             } else {
                 unmatchted.add(el);
