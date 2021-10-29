@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.springframework.org/schema/mvc">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <th:block th:fragment="public-navbar($page)">
+        <div id="public-navbar">
+            <a class="smbBtn" th:href="@{/auth/login}">Administration</a>
+            <a class="smbBtn" th:href="@{/}">Public Manager</a>
+            <a class="smbBtn" th:href="@{/teron}">Teron Game</a>
+        </div>
+    </th:block>
+</body>
+</html>

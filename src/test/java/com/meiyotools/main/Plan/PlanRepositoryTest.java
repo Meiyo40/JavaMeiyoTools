@@ -56,7 +56,11 @@ public class PlanRepositoryTest {
         //when
         Optional<List<Plan>> expected = underTest.findAllByRaidNameOrderByPriorityDesc(sample.getRaidName());
         //then
-        assertThat(expected.get().size()).isEqualTo(2);
+        if(expected.isPresent()) {
+            assertThat(expected.get().size()).isEqualTo(2);
+        } else {
+            assertThat(false);
+        }
     }
 
 }

@@ -3,11 +3,6 @@ label {
     padding: 2px;
 }
 
-h1{
-    margin-top: 0;
-    color: #006014;
-}
-
 #select-container,
 .selectElement {
     display: flex;
