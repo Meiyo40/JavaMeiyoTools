@@ -5,6 +5,8 @@ import com.meiyotools.main.model.entity.User;
 import com.meiyotools.main.model.repository.UserRepository;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.firewall.RequestRejectedException;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import java.security.Key;
 import java.time.LocalDate;
 import java.util.Optional;
 
@@ -19,6 +22,7 @@ import java.util.Optional;
 public class UserService {
     private final UserRepository repository;
     private PasswordEncoder passwordEncoder;
+    static final Key SECRET = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
     @Autowired
     public UserService(UserRepository pRepository, PasswordEncoder pPasswordEncoder) {
@@ -64,9 +68,11 @@ public class UserService {
         String username = (String)request.getSession().getAttribute("user");
         Cookie[] cookies = request.getCookies();
         String token = null;
+        boolean userExist = false;
+        boolean tokenExist = false;
 
         if(username != null)
-            return true;
+            userExist = true;
 
         if(cookies != null) {
             for (Cookie cookie: cookies) {
@@ -77,14 +83,15 @@ public class UserService {
             }
             if(token != null) {
                 try {
-                    Jwts.parserBuilder().setSigningKey(LoginController.SECRET).build().parseClaimsJws(token);
-                    return true;
+                    String subject = Jwts.parserBuilder().setSigningKey(SECRET).build().parseClaimsJws(token).getBody().getSubject();
+                    request.getSession().setAttribute("user", subject);
+                    tokenExist = true;
                 }catch (JwtException e) {
-                    return false;
+                    tokenExist = false;
                 }
             }
         }
-        return false;
+        return userExist && tokenExist;
     }
 
     public User getUser(String username) {
@@ -93,6 +100,19 @@ public class UserService {
             return user.get();
         } else {
             throw new RequestRejectedException("User not found.");
+        }
+    }
+
+    public Cookie createUserCookieToken(User logs) {
+        User user = this.logUser(logs.getUsername(), logs.getPassword());
+        if(user != null) {
+            String jws = Jwts.builder().setSubject(user.getUsername()).signWith(SECRET).compact();
+            Cookie token = new Cookie("token", jws);
+            token.setMaxAge(30 * 60);
+            token.setPath("/");
+            return token;
+        } else {
+            return null;
         }
     }
 }

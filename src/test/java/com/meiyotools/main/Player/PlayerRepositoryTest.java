@@ -24,7 +24,7 @@ public class PlayerRepositoryTest {
 
     @BeforeEach
     void setup() {
-        sample = new Player("playername", "warrior", "tank", null);
+        sample = new Player("playername", "warrior", "tank", null, true);
     }
 
     @AfterEach
@@ -48,7 +48,7 @@ public class PlayerRepositoryTest {
         //given
         String classname = "warrior";
         underTest.save(sample);
-        Player sample2 = new Player("test", "warrior", "dps", null);
+        Player sample2 = new Player("test", "warrior", "dps", null, true);
         underTest.save(sample2);
         List<Player> list = new ArrayList<Player>();
         list.add(sample);
@@ -64,7 +64,7 @@ public class PlayerRepositoryTest {
         //given
         String role = "tank";
         underTest.save(sample);
-        Player sample2 = new Player("test", "warrior", "tank", null);
+        Player sample2 = new Player("test", "warrior", "tank", null, true);
         underTest.save(sample2);
         List<Player> list = new ArrayList<Player>();
         list.add(sample);

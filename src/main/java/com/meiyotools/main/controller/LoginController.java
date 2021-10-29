@@ -25,7 +25,6 @@ import java.security.Key;
 public class LoginController {
     private final UserService userService;
     private final PageService pageService;
-    public static final Key SECRET = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
     @Autowired
     public LoginController (UserService pService, PageService pPageService) {
@@ -36,6 +35,10 @@ public class LoginController {
     @GetMapping("/logout")
     public String disconnect(HttpServletRequest request, HttpServletResponse response, Model model) {
         HttpSession session = request.getSession();
+
+        Cookie token = new Cookie("token", null);
+        token.setMaxAge(0);
+        response.addCookie(token);
         if(session != null) {
             session.invalidate();
         }
@@ -56,11 +59,8 @@ public class LoginController {
     public String logUser(@RequestBody User logs, HttpServletRequest request, HttpServletResponse response) {
         User user = userService.logUser(logs.getUsername(), logs.getPassword());
         if(user != null) {
+            Cookie token = userService.createUserCookieToken(logs);
             request.getSession().setAttribute("user", user.getUsername());
-            String jws = Jwts.builder().setSubject(user.getUsername()).signWith(SECRET).compact();
-            Cookie token = new Cookie("token", jws);
-            token.setMaxAge(5*60);
-            token.setPath("/");
             response.addCookie(token);
             return "redirect:/manager";
         }

@@ -13,26 +13,64 @@
                 </th:block>
             </div>
             <div id="rosterDisplay">
-                <th:block th:each="player: ${players}">
-                    <th:block th:if="${player.role} == 'tank'">
-                        <span>
-                            <i class="fal fa-shield-alt"></i>
-                            <span th:classappend="${player.className} + '-color'" th:text="${player.name}"></span>
-                        </span>
+                <div id="rosterReroll">
+
+                    <th:block th:each="player: ${players}">
+                        <th:block th:if="${player.main} == false">
+
+                            <th:block th:if="${player.role} == 'tank'">
+                                <span>
+                                    <i class="fal fa-registered"></i>
+                                    <i class="fal fa-shield-alt"></i>
+                                    <span th:classappend="${player.className} + '-color'" th:text="${player.name}"></span>
+                                </span>
+                            </th:block>
+                            <th:block th:if="${player.role} == 'heal'">
+                                <span>
+                                    <i class="fal fa-registered"></i>
+                                    <i class="far fa-cross"></i>
+                                    <span th:classappend="${player.className} + '-color'" th:text="${player.name}"></span>
+                                </span>
+                            </th:block>
+                            <th:block th:if="${player.role} == 'dps'">
+                                <span>
+                                    <i class="fal fa-registered"></i>
+                                    <i class="fad fa-swords"></i>
+                                    <span th:classappend="${player.className} + '-color'" th:text="${player.name}"></span>
+                                </span>
+                            </th:block>
+
+                        </th:block>
                     </th:block>
-                    <th:block th:if="${player.role} == 'heal'">
-                        <span>
-                            <i class="far fa-cross"></i>
-                            <span th:classappend="${player.className} + '-color'" th:text="${player.name}"></span>
-                        </span>
+
+                </div>
+                <div id="rosterMain">
+
+                    <th:block th:each="player: ${players}">
+                        <th:block th:if="${player.main} == true">
+
+                            <th:block th:if="${player.role} == 'tank'">
+                                <span>
+                                    <i class="fal fa-shield-alt"></i>
+                                    <span th:classappend="${player.className} + '-color'" th:text="${player.name}"></span>
+                                </span>
+                            </th:block>
+                            <th:block th:if="${player.role} == 'heal'">
+                                <span>
+                                    <i class="far fa-cross"></i>
+                                    <span th:classappend="${player.className} + '-color'" th:text="${player.name}"></span>
+                                </span>
+                            </th:block>
+                            <th:block th:if="${player.role} == 'dps'">
+                                <span>
+                                    <i class="fad fa-swords"></i>
+                                    <span th:classappend="${player.className} + '-color'" th:text="${player.name}"></span>
+                                </span>
+                            </th:block>
+
+                        </th:block>
                     </th:block>
-                    <th:block th:if="${player.role} == 'dps'">
-                        <span>
-                            <i class="fad fa-swords"></i>
-                            <span th:classappend="${player.className} + '-color'" th:text="${player.name}"></span>
-                        </span>
-                    </th:block>
-                </th:block>
+                </div>
             </div>
             <div id="tinyMce">
                 <div style="display: flex; flex-direction: row">

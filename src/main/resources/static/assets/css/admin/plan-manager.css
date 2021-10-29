@@ -27,17 +27,23 @@
     display: none;
 }
 
-#rosterDisplay {
+#rosterDisplay,
+#editorContainer,
+#commandContainer,
+#planListContainer{
+    display: flex;
+    flex-direction: row;
+}
+
+#rosterMain,
+#rosterReroll {
     display: flex;
     flex-direction: column;
-    margin-right: 2rem;
-    margin-top: 2rem;
+    margin-right: 1rem;
 }
 
 #editorContainer,
 #commandContainer {
-    display: flex;
-    flex-direction: row;
     align-items: center;
     justify-content: center;
 }
@@ -45,8 +51,6 @@
 #planListContainer {
     margin: 10px;
     padding: 10px;
-    display: flex;
-    flex-direction: row;
     justify-content: space-around;
     align-items: center;
     border: 1px solid #006014;

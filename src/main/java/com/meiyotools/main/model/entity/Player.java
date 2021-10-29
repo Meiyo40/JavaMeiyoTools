@@ -14,34 +14,27 @@ public class Player {
     private String role;
     @Column(nullable = true)
     private String comment;
+    @Column(columnDefinition = "tinyint(1) default 1")
+    private boolean isMain;
 
     public Player() {
     }
 
-    public Player(String name, String className, String role, String comment) {
+    public Player(String name, String className, String role, String comment, boolean isMain) {
         this.name = name;
         this.className = className;
         this.role = role;
         this.comment = comment;
+        this.isMain = isMain;
     }
 
-    public Player(Long id, String name, String className, String role, String comment) {
+    public Player(Long id, String name, String className, String role, String comment, boolean isMain) {
         this.id = id;
         this.name = name;
         this.className = className;
         this.role = role;
         this.comment = comment;
-    }
-
-    @Override
-    public String toString() {
-        return "Player{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", className='" + className + '\'' +
-                ", role='" + role + '\'' +
-                ", comment='" + comment + '\'' +
-                '}';
+        this.isMain = isMain;
     }
 
     public Long getId() {
@@ -82,5 +75,26 @@ public class Player {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public boolean isMain() {
+        return isMain;
+    }
+
+    public void setMain(boolean main) {
+        isMain = main;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("Player{");
+        sb.append("id=").append(id);
+        sb.append(", name='").append(name).append('\'');
+        sb.append(", className='").append(className).append('\'');
+        sb.append(", role='").append(role).append('\'');
+        sb.append(", comment='").append(comment).append('\'');
+        sb.append(", isMain=").append(isMain);
+        sb.append('}');
+        return sb.toString();
     }
 }

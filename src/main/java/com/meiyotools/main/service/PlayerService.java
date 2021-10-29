@@ -38,11 +38,20 @@ public class PlayerService {
     }
 
     public Player newPlayer(Player player) {
+        player = this.clearPlayer(player);
         return repository.save(player);
     }
 
     public Player updatePlayer(Player player) {
+        player = this.clearPlayer(player);
         return repository.save(player);
+    }
+
+    private Player clearPlayer(Player player) {
+        player.setName(player.getName().trim());
+        player.setClassName(player.getClassName().trim());
+        player.setRole(player.getRole().trim());
+        return player;
     }
 
     public void deletePlayer(Long id) {
