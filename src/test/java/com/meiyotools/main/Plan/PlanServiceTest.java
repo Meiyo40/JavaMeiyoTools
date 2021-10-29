@@ -104,7 +104,7 @@ public class PlanServiceTest {
         List<Plan> list = new ArrayList<Plan>();
         list.add(sample);
         list.add(sample);
-        given(repository.findAllByRaidName(raidName)).willReturn(
+        given(repository.findAllByRaidNameOrderByPriorityDesc(raidName)).willReturn(
                 Optional.of(list)
         );
         //when
@@ -117,7 +117,7 @@ public class PlanServiceTest {
     void itShouldReturnNullFromRaidName() {
         //given
         String raidName = "raidnonexist";
-        given(repository.findAllByRaidName(raidName)).willReturn(Optional.empty());
+        given(repository.findAllByRaidNameOrderByPriorityDesc(raidName)).willReturn(Optional.empty());
         //when
         List<Plan> expected = underTest.getRaidPlans(raidName);
         //then
