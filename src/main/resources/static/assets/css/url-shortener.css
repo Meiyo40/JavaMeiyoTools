@@ -1,0 +1,20 @@
+#url-shortener-container,
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#url-shortener-container{
+}
+
+form {
+    width: 30%;
+    margin: 10px;
+    padding: 5px;
+}
+
+input {
+    width: 100%;
+}
