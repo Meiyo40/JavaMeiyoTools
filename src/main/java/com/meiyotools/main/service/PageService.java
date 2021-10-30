@@ -86,11 +86,15 @@ public class PageService {
 
     public void setUrlShortenerPage(HttpServletRequest request, Model model, String shortUrl) {
 
-        String constructUrl = ServletUriComponentsBuilder.fromRequestUri(request)
-                .replacePath(null)
-                .build()
-                .toUriString();
-        constructUrl = constructUrl + "/url/" + shortUrl;
+        String constructUrl = "";
+        if(!shortUrl.isEmpty())
+        {
+             constructUrl = ServletUriComponentsBuilder.fromRequestUri(request)
+                    .replacePath(null)
+                    .build()
+                    .toUriString();
+            constructUrl = constructUrl + "/url/" + shortUrl;
+        }
 
         model.addAttribute("logged", "false");
         model.addAttribute("title", "URL SHORT TOOL");
