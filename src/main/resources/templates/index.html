@@ -36,6 +36,10 @@
         <th:block th:replace="fragments/header :: manager(${logged})" /></th:block>
     </th:block>
 
+    <th:block th:if="${page == 'url-shortener'}">
+        <th:block th:replace="fragments/header :: url-shortener" /></th:block>
+    </th:block>
+
 </head>
 
 <body>
@@ -49,6 +53,10 @@
 
     <th:block th:if="${page == 'teron'}">
         <th:block th:replace="fragments/teron :: teron" /></th:block>
+    </th:block>
+
+    <th:block th:if="${page == 'url-shortener'}">
+        <th:block th:replace="fragments/url-shortener :: url-shortener"> </th:block>
     </th:block>
 
     <script th:src="@{/assets/js/lib/jquery.js}"></script>

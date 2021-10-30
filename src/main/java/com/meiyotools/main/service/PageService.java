@@ -10,6 +10,7 @@ import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -81,5 +82,23 @@ public class PageService {
         model.addAttribute("logged", "false");
         model.addAttribute("title", "SMB Game");
         model.addAttribute("page", "teron");
+    }
+
+    public void setUrlShortenerPage(HttpServletRequest request, Model model, String shortUrl) {
+
+        String constructUrl = "";
+        if(!shortUrl.isEmpty())
+        {
+             constructUrl = ServletUriComponentsBuilder.fromRequestUri(request)
+                    .replacePath(null)
+                    .build()
+                    .toUriString();
+            constructUrl = constructUrl + "/url/" + shortUrl;
+        }
+
+        model.addAttribute("logged", "false");
+        model.addAttribute("title", "URL SHORT TOOL");
+        model.addAttribute("page", "url-shortener");
+        model.addAttribute("shortUrl", constructUrl);
     }
 }
