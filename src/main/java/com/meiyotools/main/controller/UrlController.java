@@ -43,9 +43,12 @@ public class UrlController {
     public String addUrl(@RequestBody String url, HttpServletRequest request, HttpServletResponse response, Model model)
     {
         url = url.split("url=")[1];
+
+        if(url.length() < 10)
+            return "index";
+
         url = java.net.URLDecoder.decode(url);
         String shortUrl = this.urlService.addUrl(url);
-
 
         //System.out.println(shortUrl + "  ##  " + url);
 

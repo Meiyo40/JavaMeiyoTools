@@ -44,7 +44,7 @@
 
 <body>
 
-    <h1>SMB <th:block th:text="${title}"></th:block></h1>
+    <h1><th:block th:text="${title}"></th:block></h1>
     <th:block th:replace="fragments/public-navbar :: public-navbar(${page})"></th:block>
 
     <th:block th:if="${page == 'manager'}">

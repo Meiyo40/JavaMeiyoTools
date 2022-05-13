@@ -16,10 +16,10 @@
         <form method="post" action="/url" enctype="application/x-www-form-urlencoded">
 
             <th:block th:if="${!#strings.isEmpty(shortUrl)}">
-                <input type="text" name="url" th:value="${shortUrl}"/>
+                <input minlength="10" type="text" name="url" th:value="${shortUrl}"/>
             </th:block>
             <th:block th:if="${#strings.isEmpty(shortUrl)}">
-                <input type="text" name="url" placeholder="Your URL"/>
+                <input minlength="10" type="text" name="url" placeholder="Your URL"/>
             </th:block>
 
             <button class="smbBtn" type="submit">SHORT!</button>
