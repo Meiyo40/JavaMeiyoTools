@@ -67,6 +67,7 @@ h1{
 
 .nav-el,
 .smbBtn{
+    background: none;
     color: snow;
     margin: 1rem;
     padding: 3px;
