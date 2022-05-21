@@ -101,4 +101,14 @@ public class PageService {
         model.addAttribute("page", "url-shortener");
         model.addAttribute("shortUrl", constructUrl);
     }
+
+    public void setOfficePage(HttpServletRequest request, Model model) {
+        String username = request.getSession().getAttribute("user").toString();
+        User user = userService.getUser(username);
+
+        model.addAttribute("logged", true);
+        model.addAttribute("title", "Mon bureau distant");
+        model.addAttribute("page", "office");
+        model.addAttribute("user", username);
+    }
 }

@@ -52,4 +52,15 @@ public class AdminController {
             return "redirect:/auth/login";
         }
     }
+
+    @GetMapping("/office")
+    public String getDistantOffice(HttpServletRequest request, Model model) {
+        if(userService.isLogged(request))
+        {
+            this.pageService.setOfficePage(request, model);
+            return "office";
+        } else {
+            return "redirect:/auth/login";
+        }
+    }
 }

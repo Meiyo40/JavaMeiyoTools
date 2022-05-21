@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.springframework.org/schema/mvc">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="SMB Manager V2" />
+    <meta name="author" content="Meiyo" />
+
+    <title th:text="${title}"></title>
+
+    <!-- Place your stylesheet here-->
+    <link th:href="@{/assets/css/style.css}" rel="stylesheet" type="text/css" />
+    <link rel="icon" type="image/png" th:href="@{/assets/image/SMB_small.png}" />
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+
+    <link rel="stylesheet" th:href="@{/assets/css/admin/manager.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/admin/table.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/select.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/style.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/message.css}"/>
+
+    <th:block th:replace="fragments/header :: navbar" /></th:block>
+
+    <th:block th:if="${page == 'player-manager'}">
+        <th:block th:replace="fragments/header :: player-manager" /></th:block>
+    </th:block>
+
+</head>
+
+<body>
+<div id="admin-container">
+    <div id="ajaxinfo" class="ajaxmessage info fade-out">Info message</div>
+    <div id="ajaxsuccess" class="ajaxmessage success fade-out">Successful operation message</div>
+    <div id="ajaxwarning" class="ajaxmessage warning fade-out">Warning message</div>
+    <div id="ajaxerror" class="ajaxmessage error fade-out">Error message</div>
+    <div id="ajaxvalidation" class="ajaxmessage validation fade-out">Validation message 1<br>Validation message 2</div>
+
+    <th:block th:replace="fragments/admin/admin-navbar :: navbar(${user})" /></th:block>
+
+    <div id="office-container">
+
+        <div id="office-actions">
+            <a class="nav-el" th:href="@{/manager/players}" id="managePlayerButton">Gérer joueurs</a>
+            <a class="nav-el" th:href="@{/manager/plan}" id="managePlanButton">Gérer plans</a>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/assets/js/ajaxmessage.js}"></script>
+
+<th:block th:replace="fragments/script :: manager(${logged}, ${page})"> </th:block>
+</body>
+
+</html>
