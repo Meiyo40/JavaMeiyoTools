@@ -111,4 +111,32 @@ public class PageService {
         model.addAttribute("page", "office");
         model.addAttribute("user", username);
     }
+
+    public void setLootsPage(HttpServletRequest request, Model model)
+    {
+        String username = request.getSession().getAttribute("user").toString();
+        User user = userService.getUser(username);
+
+        List<Player> players = playerService.getAllPlayers();
+
+        model.addAttribute("logged", true);
+        model.addAttribute("title", "Page des loots");
+        model.addAttribute("page", "loots");
+        model.addAttribute("user", username);
+        model.addAttribute("players", players);
+    }
+
+    public void setAssignPage(HttpServletRequest request, Model model)
+    {
+        String username = request.getSession().getAttribute("user").toString();
+        User user = userService.getUser(username);
+
+        List<Player> players = playerService.getAllPlayers();
+
+        model.addAttribute("logged", true);
+        model.addAttribute("title", "Page du butin");
+        model.addAttribute("page", "assign");
+        model.addAttribute("user", username);
+        model.addAttribute("players", players);
+    }
 }

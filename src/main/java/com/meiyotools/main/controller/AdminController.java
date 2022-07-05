@@ -63,4 +63,26 @@ public class AdminController {
             return "redirect:/auth/login";
         }
     }
+
+    @GetMapping("/loots")
+    public String getLootsPage(HttpServletRequest request, Model model) {
+        if(userService.isLogged(request))
+        {
+            this.pageService.setLootsPage(request, model);
+            return "loots";
+        } else {
+            return "redirect:/auth/login";
+        }
+    }
+
+    @GetMapping("/assign")
+    public String getAssignPage(HttpServletRequest request, Model model) {
+        if(userService.isLogged(request))
+        {
+            this.pageService.setAssignPage(request, model);
+            return "assign";
+        } else {
+            return "redirect:/auth/login";
+        }
+    }
 }

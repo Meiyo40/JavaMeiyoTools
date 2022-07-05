@@ -49,6 +49,14 @@
         <th:block th:replace="fragments/admin/plan-manager :: plan-manager(${user}, ${plans}, ${players})" /></th:block>
     </th:block>
 
+    <th:block th:if="${page == 'loots-manager'}">
+        <th:block th:replace="fragments/admin/loots-manager :: loots-manager(${user}, ${players})" /></th:block>
+    </th:block>
+
+    <th:block th:if="${page == 'assign-manager'}">
+        <th:block th:replace="fragments/admin/assign-manager :: assign-manager(${user}, ${players})" /></th:block>
+    </th:block>
+
 </div>
 
 <script th:src="@{/assets/js/lib/jquery.js}"></script>
