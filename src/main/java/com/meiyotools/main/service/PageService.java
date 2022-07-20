@@ -27,12 +27,15 @@ public class PageService {
 
     private final ItemService itemService;
 
+    private final HistoryService historyService;
+
     @Autowired
-    public PageService(UserService pUserService, PlanService pPlanService, PlayerService pPlayerService, ItemService pItemService) {
+    public PageService(UserService pUserService, HistoryService pHistoryService, PlanService pPlanService, PlayerService pPlayerService, ItemService pItemService) {
         this.planService = pPlanService;
         this.playerService = pPlayerService;
         this.userService = pUserService;
         this.itemService = pItemService;
+        this.historyService = pHistoryService;
     }
 
     public void setAdminIndex(HttpServletRequest request, Model model) {
@@ -121,8 +124,8 @@ public class PageService {
         String username = request.getSession().getAttribute("user").toString();
         User user = userService.getUser(username);
 
-        List<Player> players = playerService.getAllPlayers();
-        List<History> history = itemService.getHistory();
+        List<Player> players = this.playerService.getAllPlayers();
+        List<History> history = this.historyService.getHistory();
 
         model.addAttribute("logged", true);
         model.addAttribute("title", "Page des loots");
