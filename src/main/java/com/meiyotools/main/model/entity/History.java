@@ -14,9 +14,19 @@ public class History {
 
     private int itemId;
 
+    private String itemName;
+
     private int cost;
 
     private LocalDate created_at;
+
+    public String getItemName() {
+        return itemName;
+    }
+
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
+    }
 
     public Long getId() {
         return id;

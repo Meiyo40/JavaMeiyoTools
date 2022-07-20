@@ -1,0 +1,18 @@
+#main-container,
+#additem-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#additem-container{
+    padding: 10px;
+    border: 1px solid rgb(163, 153, 153);
+    border-radius: 1rem;
+}
+
+#additem-container > label,
+#additem-container > button{
+    margin-top: 5px;
+}

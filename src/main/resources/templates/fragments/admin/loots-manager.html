@@ -5,8 +5,29 @@
     <title>Title</title>
 </head>
 <body>
-<th:block th:fragment="loots-manager(user, players)">
-
+<th:block th:fragment="loots-manager(user, players, history)">
+    <div id="list-loots">
+        <table id="table-loots">
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Player</th>
+                    <th>Prix</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="loot: ${history}" th:id="${loot.id}">
+                    <td th:text="${loot.itemName}"></td>
+                    <td th:text="${loot.playerName}"></td>
+                    <td th:text="${loot.cost}"></td>
+                    <td th:text="${loot.created_at}"></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </th:block>
 </body>
 </html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="./assign.css">
+</head>
+<body>
+    <div id="main-container">
+        <div id="additem-container">            
+            <h4>Ajout objet</h4>
+            <label for="inputItem">Item:</label>
+            <input type="text" id="inputItem">
+            <label for="inputCost">Prix:</label>
+            <input type="text" id="inputCost" value="0">
+            <label for="selectPlayer">Joueur:</label>
+            <select name="selectPlayer" id="selectPlayer">
+                <option value="meiyo">Meiyo</option>
+                <option value="pata">Pata</option>
+            </select>
+            <button id="btn-additem">Ajouter</button>
+
+            <div id="additem-preview">
+                
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/rxjs@%5E7/dist/bundles/rxjs.umd.min.js"></script>
+    <script src="./assign.js"></script>
+</body>
+</html>

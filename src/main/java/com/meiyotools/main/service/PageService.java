@@ -1,5 +1,6 @@
 package com.meiyotools.main.service;
 
+import com.meiyotools.main.model.entity.History;
 import com.meiyotools.main.model.entity.Plan;
 import com.meiyotools.main.model.entity.Player;
 import com.meiyotools.main.model.entity.User;
@@ -24,11 +25,14 @@ public class PageService {
     private final PlanService planService;
     private final PlayerService playerService;
 
+    private final ItemService itemService;
+
     @Autowired
-    public PageService(UserService pUserService, PlanService pPlanService, PlayerService pPlayerService) {
+    public PageService(UserService pUserService, PlanService pPlanService, PlayerService pPlayerService, ItemService pItemService) {
         this.planService = pPlanService;
         this.playerService = pPlayerService;
         this.userService = pUserService;
+        this.itemService = pItemService;
     }
 
     public void setAdminIndex(HttpServletRequest request, Model model) {
@@ -118,12 +122,14 @@ public class PageService {
         User user = userService.getUser(username);
 
         List<Player> players = playerService.getAllPlayers();
+        List<History> history = itemService.getHistory();
 
         model.addAttribute("logged", true);
         model.addAttribute("title", "Page des loots");
         model.addAttribute("page", "loots");
         model.addAttribute("user", username);
         model.addAttribute("players", players);
+        model.addAttribute("history", history);
     }
 
     public void setAssignPage(HttpServletRequest request, Model model)
