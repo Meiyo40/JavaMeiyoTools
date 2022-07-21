@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
-@RequestMapping("/item")
+@RequestMapping("/api/item")
 public class ItemController {
 
     private final ItemService itemService;

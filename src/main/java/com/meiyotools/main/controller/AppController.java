@@ -36,4 +36,10 @@ public class AppController {
 
         return "index";
     }
+
+    @GetMapping("/history")
+    public String getHistoryPage(Model model, HttpServletRequest request)
+    {
+        return "AngularPage";
+    }
 }

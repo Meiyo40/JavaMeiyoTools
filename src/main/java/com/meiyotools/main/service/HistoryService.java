@@ -12,19 +12,11 @@ import java.util.List;
 @Service
 public class HistoryService {
 
-    private final UserService userService;
-    private final PlayerService playerService;
-
-    private final ItemRepository itemRepository;
-
     private final HistoryRepository historyRepository;
 
     @Autowired
-    public HistoryService(UserService pUserService, HistoryRepository pHistoryRepository, PlayerService pPlayerService, ItemRepository pItemRepository) {
-        this.playerService = pPlayerService;
-        this.userService = pUserService;
+    public HistoryService(HistoryRepository pHistoryRepository) {
         this.historyRepository = pHistoryRepository;
-        this.itemRepository = pItemRepository;
     }
 
     public History create(History pHistory) {
@@ -35,6 +27,11 @@ public class HistoryService {
     public History update(History pHistory)
     {
         return this.historyRepository.save(pHistory);
+    }
+
+    public History getHistory(Long pHistoryId)
+    {
+        return this.historyRepository.findById(pHistoryId).orElse(null);
     }
 
     /**
@@ -52,5 +49,14 @@ public class HistoryService {
     public List<History> getHistory()
     {
         return this.historyRepository.findAll();
+    }
+
+    /**
+     * Delete the history at the given ID
+     * @param pHistoryId
+     */
+    public void deleteHistory(Long pHistoryId)
+    {
+        this.historyRepository.deleteById(pHistoryId);
     }
 }

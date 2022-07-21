@@ -20,6 +20,26 @@ public class History {
 
     private LocalDate created_at;
 
+    public History() {
+    }
+
+    public History(String playerName, int itemId, String itemName, int cost, LocalDate created_at) {
+        this.playerName = playerName;
+        this.itemId = itemId;
+        this.itemName = itemName;
+        this.cost = cost;
+        this.created_at = created_at;
+    }
+
+    public History(Long id, String playerName, int itemId, String itemName, int cost, LocalDate created_at) {
+        this.id = id;
+        this.playerName = playerName;
+        this.itemId = itemId;
+        this.itemName = itemName;
+        this.cost = cost;
+        this.created_at = created_at;
+    }
+
     public String getItemName() {
         return itemName;
     }

@@ -13,4 +13,7 @@ public interface HistoryRepository extends JpaRepository<History, Long> {
     Optional<List<History>> findAllByPlayerName(String pPlayerName);
     Optional<List<History>> findAllByItemName(String pItemName);
     Optional<List<History>> findAllByCreated_at(LocalDate pCreatedAt);
+    void deleteById(Long pHistoryId);
+
+    void delete(History pHistory);
 }

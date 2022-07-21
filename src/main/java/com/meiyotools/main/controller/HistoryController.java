@@ -14,7 +14,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping("/history")
+@RequestMapping("/api/history")
 public class HistoryController {
 
     private final HistoryService historyService;
